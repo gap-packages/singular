@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?LaTeX ExtraPreamble="\usepackage{amstex}"?>
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+
+<Book Name="singular">
+
+<TitlePage>
+  <Title> <Package>Singular</Package> </Title>
+  <Version>Version 4.04.07</Version>
+  <Author> Marco Costantini
+   <Email> costanti@science.unitn.it </Email>
+<Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
+  </Author>
+  <Author>Willem A. de Graaf
+    <Email> quagroup@hetnet.nl</Email>
+<Homepage>http://www-circa.mcs.st-and.ac.uk/~wdg/</Homepage>
+  </Author>
+
+  <Copyright>&copyright; 2003 Marco Costantini and Willem A. de Graaf <P/>
+  </Copyright>
+</TitlePage>
+
+<TableOfContents/>
+
+<Body>
+
+<Chapter> <Heading>The &GAP; interface to <Package>Singular</Package>
+</Heading>
+
+This is the manual of the &GAP; package ``<Package>singular</Package>''
+that provides an interface to the <Package>Singular</Package> 
+computer algebra system.
+One of the main things provided by this interface is a function
+for computing Groebner bases of ideals in polynomial rings. This 
+function uses
+the <Package>Singular</Package> implementation, which is very fast.
+
+<P/>
+
+This manual is yet incomplete, and the next version will be released
+shortly.
+
+<Section> <Heading>Background</Heading>
+
+The interface to <Package>Singular</Package> relies on the Gap function
+<A>InputOutputLocalProcess</A> (see the &GAP; manual), and this function
+is available only in Gap 4.2 (or newer) for an Unix environment or in Gap
+4.4 (or newer) for Windows with Cygwin; auto-detection is used.
+
+In the case that the Gap function <A>InputOutputLocalProcess</A> is not
+available, then the singular interface will use the Gap function
+<A>Process</A>; however in this case only a limited subset of the
+functionalities of the interface will be available: for example
+<A>StartSingular</A> and <Ref Func="GeneratorsOfInvariantRing"/> 
+are not available, but <Ref Func="GroebnerBasis"/> is.
+
+</Section>
+
+<Section> <Heading>How things are started</Heading>
+
+In order to use this interface one must have &GAP;4, and
+<Package>Singular</Package> installed. <Package>Singular</Package> can be
+obtained for free from <URL>http://www.singular.uni-kl.de</URL>. <P/>
+Then in order to use the interface, &GAP; has to be told where to find
+<Package>Singular</Package>. This can be done in three ways.
+First, if the <Package>Singular</Package> executable file is in the
+search path, then &GAP; will find it. Second, it is possible
+to edit one of the first lines of the file <A>singular/gap/singular.g</A>
+(that comes with this package). Third, it is possible to give the
+path of the <Package>Singular</Package> executable file during the &GAP;
+session assigning it to the variable <A>sing\_exec</A> (after this
+package has been loaded). For example:
+
+<Example>
+gap> LoadPackage("singular");
+The GAP interface to Singular
+true
+gap> sing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";;
+</Example>
+
+After the interface has been loaded, <Package>Singular</Package> is started
+when one of the functions of the interface is called. Alternatively,
+one can start <Package>Singular</Package> with the command
+<Example>
+StartSingular();
+</Example>
+If at some point <Package>Singular</Package> is no longer needed, then
+it can be closed with the command
+<Example>
+CloseSingular();
+</Example>
+
+<ManSection>
+<InfoClass Name="InfoSingular"/>
+<Description>
+This is the info class used by the interface. It can be set to levels
+0, 1, 2, 3. At level 0 no information is printed on the screen. At level
+1 (default) the interface prints a message when it starts
+<Package>Singular</Package>. At level 2, information on the activities
+of the interface are printed (e.g., when a Groebner basis calculation
+is started, or terminated). At level 3 all strings that &GAP; sends to
+<Package>Singular</Package> are printed, as well as all strings that
+<Package>Singular</Package> sends back.
+<Example>
+gap> SetInfoLevel( InfoSingular, 2 );
+gap> G:= SymmetricGroup( 3 );;
+gap> R:= PolynomialRing( GF(2), 3 );;
+gap> GeneratorsOfInvariantRing( R, G );
+#I  using temporary Directory("/tmp/tmp.9Aqqkx/")
+#I  Started Singular (version 2003)
+[ x_1+x_2+x_3, x_1*x_2+x_1*x_3+x_2*x_3, x_1*x_2*x_3 ]
+gap> I:= Ideal( R, last );;
+gap> GroebnerBasis( I );
+#I  running GroebnerBasis...
+#I  done GroebnerBasis.
+[ x_1+x_2+x_3, x_2^2+x_2*x_3+x_3^2, x_3^3 ]
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section> <Heading>The functions of the package</Heading>
+
+<ManSection>
+<Attr Name="TermOrdering" Arg = "R"/>
+<Description>
+
+All non-trivial algorithms in <Package>Singular</Package> require the 
+prior definition of a (polynomial) ring, and any polynomial (resp. vector) 
+in <Package>Singular</Package> is ordered w.r.t. a term 
+ordering (or, monomial ordering), which has to be specified together with 
+the declaration of a ring; see the documentation of 
+<Package>Singular</Package>, paragraph 
+``3.3 Rings and orderings''.
+<P/>
+Let <A>R</A> be a polynomial ring. The value of <A>TermOrdering
+( R )</A> can be a string, a list, or a monomial ordering of Gap. If it is 
+a string, for instance one of <A>"lp"</A>
+(lexicographical ordering), <A>"dp"</A> (degree reverse lexicographical
+ordering), or <A>"Dp"</A> (degree lexicographical ordering), this string 
+will be passed to <Package>Singular</Package> without being interpreted.
+It can also
+be a list of two elements, namely a string, and a list of positive integers.
+In that case the string has to be <A>"wp"</A> (weighted reverse 
+lexicographical
+ordering) or <A>"Wp"</A> (weighted lexicographical ordering); the second
+element is a list of length equal to the number of variables of the
+ring <A>R</A>, that specifies the degree of each variable. <P/>
+<A>SetTermOrdering</A> can be used to set the term ordering of a ring.
+The term ordering must be set before the ring is sent to 
+<Package>Singular</Package>, see <Ref Func="SingularSetBaseRing"/>.
+If no term ordering is set, then the default <A>"dp"</A> will be used.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> SetTermOrdering( R, [ "wp", [1,1,2] ] );
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Func Name="SingularSetBaseRing" Arg = "R"/>
+<Description>
+Here <A>R</A> is a polynomial ring. This function sets the base ring in
+<Package>Singular</Package> equal to <A>R</A>. After this, all functions 
+of the interface will work
+with this ring. However, for some functions it is not necessary to explicitly
+set the base ring first. This will be specified for each function in the 
+corresponing section of this manual.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> SingularSetBaseRing( R );
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="SingularLibrary" Arg = "string"/>
+<Description>
+Here <A>string</A> is a string containing the name of a
+<Package>Singular</Package> library. This function makes sure that
+this library is loaded into <Package>Singular</Package>.
+For some functionality of <Package>Singular</Package> this is necessary,
+see the example in <Ref Func="SingularInterface"/>.
+<Example>
+gap> SingularLibrary( "general.lib");
+</Example>
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Func Name="SingularHelp" Arg = "topic"/>
+<Description>
+Here <A>topic</A> is a string containing the name of a
+<Package>Singular</Package> topic. This function provides an help on that 
+topic using the <Package>Singular</Package> help system; see the 
+<Package>Singular</Package> documentation, paragraphs 
+``3.1.3 The online help system'' and ``5.1.43 help''. If <A>topic</A> is 
+the empty string, then the title page of the manual is displayed.
+
+<Example>
+gap> SingularHelp("");
+#I  // ** Displaying help in browser 'mozilla'.
+// ** Use 'system("--browser", &lt;browser>);' to change browser,
+// ** where &lt;browser> can be: "mozilla", "xinfo", "info", "builtin", "dummy", \
+"emacs".
+</Example>
+The <Package>Singular</Package> function <A>system</A> can be accessed 
+with the function <Ref Func="SingularInterface"/>.
+</Description>
+</ManSection>
+
+
+<ManSection>
+<Oper Name="GroebnerBasis" Arg="I"/>
+<Description>
+Here <A>I</A> is an ideal of a polynomial ring. This function computes
+a Groebner basis of <A>I</A>. For this function it is <E>not</E>
+necessary to set the base ring with <Ref Func="SingularSetBaseRing"/>. <P/>
+As term ordering <Package>Singular</Package> will use the value of
+<Ref Attr="TermOrdering"/> (of the corresponding ring). Again, if this 
+value is not set, then the degree reverse lexicographical ordering will
+be used (<A>"dp"</A>).
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> i:= IndeterminatesOfPolynomialRing(R);;
+gap> x:= i[1]; y:= i[2]; z:= i[3];
+x
+y
+z
+gap> r:= [ x*y*z -x^2*z, x^2*y*z-x*y^2*z-x*y*z^2, x*y-x*z-y*z];;
+gap> I:= Ideal( R, r );
+&lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
+gap> GroebnerBasis( I );
+[ x*y-x*z-y*z, x^2*z-x*z^2-y*z^2, x*z^3+y*z^3, -x*z^3+y^2*z^2-y*z^3 ]
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>         
+<Var Name="SINGULARGBASIS"/>
+<Description>
+This is a record containing the component <A>GroebnerBasis</A>. When
+this record is assigned to the global record <A>GBASIS</A>, then
+the computation of a Groebner basis via &GAP;'s internal function
+for that (<A>GroebnerBasis</A>, see the &GAP; manual) are done by
+<Package>Singular</Package>. <P/> 
+<Package>Singular</Package> claims that it ``features one 
+of the fastest and most general implementations of various algorithms for 
+computing Groebner bases''. The &GAP;'s internal function claims to be
+``a na{\"\i}ve implementation of Buchberger's algorithm (which is mainly 
+intended as a teaching tool): it might not be sufficient for serious 
+problems.''
+Currently, the term orderings that can be used with this 
+function are <A>MonomialLexOrdering</A>, <A>MonomialGrevlexOrdering</A>,
+<A>MonomialGrlexOrdering</A>.
+<Example>
+gap> R:= PolynomialRing( Rationals, 3 );;
+gap> i:= IndeterminatesOfPolynomialRing( R );;
+gap> pols:= [i[1]+i[2]+i[3], i[1]*i[2]+i[1]*i[3]+i[2]*i[3], i[1]*i[2]*i[3]];;
+gap> o:= MonomialLexOrdering();;
+gap> GroebnerBasis( pols, o );   # This is the internal GAP method.
+[ x_1+x_2+x_3, x_1*x_2+x_1*x_3+x_2*x_3, x_1*x_2*x_3, -x_2^2-x_2*x_3-x_3^2,
+  x_3^3 ]
+gap> GBASIS:= SINGULARGBASIS;;
+gap> GroebnerBasis( pols, o ); # Now this uses Singular.
+[ x_3^3, x_2^2+x_2*x_3+x_3^2, x_1+x_2+x_3 ]
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="HasTrivialGroebnerBasis" Arg = "I"/>
+<Description>
+This returns <A>true</A> if the Groebner basis of the ideal 
+<A>I</A> is trivial, false otherwise.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> i:= IndeterminatesOfPolynomialRing(R);;
+gap> x:= i[1];; y:= i[2];; z:= i[3];;
+gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);;
+gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);;
+gap> I:= Ideal( R, [f,g] );;
+gap> HasTrivialGroebnerBasis( I );
+false
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="GcdUsingSingular" Arg = "arg"/>
+<Description>
+Here <A>arg</A> are (possibly multivariate) polynomials separated by 
+commas,
+or it is a list of polynomials. This function returns the greatest common
+divisor of these polynomials. For this function it is <E>necessary</E>
+for the polynomials to lie in the base ring, as set by
+<Ref Func="SingularSetBaseRing"/>.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> i:= IndeterminatesOfPolynomialRing(R);;
+gap> x:= i[1];; y:= i[2];; z:= i[3];;
+gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
+x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);
+x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
+gap> SingularSetBaseRing( R );
+gap> GcdUsingSingular( f, g );
+-x*y*z+z^2
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="FactorsUsingSingularNC" Arg = "f"/>
+<Description>
+Here <A>f</A> is a (multivariate) polynomial. This function returns
+the factorization
+of <A>f</A> into irreducible factors. The function does not check that 
+the product of these
+factors gives <A>f</A> (for that use
+<Ref Func="FactorsUsingSingular"/>): <Package>Singular</Package> version 
+2-0-3 contains a bug so that the command <A>factorize</A> may give wrong 
+results.
+For this function it is <E>necessary</E>
+that <A>f</A> lies in the base ring, as set by
+<Ref Func="SingularSetBaseRing"/>.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> i:= IndeterminatesOfPolynomialRing(R);;
+gap> x:= i[1];; y:= i[2];; z:= i[3];;
+gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
+x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+gap> SingularSetBaseRing( R );
+gap> FactorsUsingSingularNC( f );
+[ 1, -x^2-x*y-y^2, -x*y+z, z ]
+</Example>
+</Description>
+</ManSection>
+<ManSection>
+
+<Func Name="FactorsUsingSingular" Arg = "f"/>
+<Description>
+This does the same as <Ref Func="FactorsUsingSingularNC"/>, except that
+on the &GAP; level it is checked that the product of these factors 
+gives
+<A>f</A>. Again it is <E>necessary</E> that <A>f</A> lies in the base 
+ring, as set by <Ref Func="SingularSetBaseRing"/>.
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="GeneratorsOfInvariantRing" Arg = "R, G"/>
+<Description>
+Here <A>R</A> is a polynomial ring, and <A>G</A> a finite group, which
+is either a matrix group or a permutation group. If it is a matrix group
+then its degree must be less than or equal to the number of indeterminates
+of <A>R</A>. If it is a permutation group, then its maximal moved point
+must be less than or equal to the number of indeterminates of <A>R</A>.
+This function computes a list of generators of the invariant ring of 
+<A>G</A>, corresponding to its action on <A>R</A>. This action is taken to
+be from the left. <P/>
+For this function it is <E>not</E> necessary to set the base ring
+with <Ref Func="SingularSetBaseRing"/>.
+<Example>
+gap> m:=[[1,1,1],[0,1,1],[0,0,1]]*One(GF(3));;
+gap> G:= Group( [m] );;
+gap> R:= PolynomialRing( GF(3), 3 );
+PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap> GeneratorsOfInvariantRing( R, G );
+[ x_3, x_1*x_3+x_2^2+x_2*x_3, x_1^3+x_1^2*x_3-x_1*x_2^2-x_1*x_2*x_3 ]
+</Example>
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="SingularInterface" Arg = "singcom, arguments, type\_output"/>
+<Description>
+Here <A>singcom</A> is a <Package>Singular</Package> command (given
+as a string),
+<A>arguments</A> is a list of &GAP; objects, and <A>type\_output</A> is
+the type of the output in <Package>Singular</Package> (given as a string). 
+The <A>type\_output</A>
+is one of following: "def", "ideal", "int", "intmat", "intvec", "link",
+"list", "map", "matrix", "module", "number", "poly", "proc", "qring", 
+"resolution", "ring", "string", "vector" (or the empty string "" if no 
+output is expected). If in doubt you can use "def".
+This function tries to pass the &GAP; objects to <Package>Singular</Package>
+and apply the function <A>singcom</A> to it. Finally it tries to convert
+the result back to &GAP;. <P/>
+<A>arguments</A> may also be a string: in this case it
+is assumed that it contains one or more <Package>Singular</Package> 
+identifiers,
+and it is passed to <Package>Singular</Package> without parsing or 
+checking.<P/>
+As this is a rather general function, 
+it is not guaranteed that it always works. When passing polynomials
+(or vectors, matrices)
+to <Package>Singular</Package>, it is a good idea to first set the base
+ring with <Ref Func="SingularSetBaseRing"/> in order to ensure that
+<Package>Singular</Package> knows about it. (This is not necessary if the
+input is a ring or an ideal.) <P/>
+In the next example we compute the primary decomposition of an ideal.
+Note that for that we need to load the <Package>Singular</Package>
+library <A>primdec.lib</A>.
+<Example>
+gap> R:= PolynomialRing( Rationals, ["x","y","z"] );;
+gap> i:= IndeterminatesOfPolynomialRing(R);;
+gap> x:= i[1];; y:= i[2];; z:= i[3];;
+gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);;
+gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);;
+gap> I:= Ideal( R, [f,g] );;
+gap> SingularLibrary("primdec.lib");
+gap> SingularInterface("primdecGTZ", [ I ], "def" );
+#I  Singular type "list"
+[ [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)>,
+      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)> ]
+    ,
+  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)>,
+      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)> ]
+    ,
+  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)>,
+      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)> ]
+    ,
+  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>,
+      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)>
+     ] ]
+</Example>
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section> <Heading>Troubleshooting</Heading>
+As every software, also this package may contain bugs. 
+If you find a bug, or a missing feature, or some other problems, or if you 
+need some help, write an e-mail to both the authors. Please use an e-mail 
+subject that begins with ``<A>singular package: </A>''.
+Please include in the report the code that cause the problem, so that we 
+can replicate the problem.
+If appropriate, you may set <Ref Func="InfoSingular"/> to <A>3</A>, to see 
+what happens between &GAP; and <Package>Singular</Package> (but this may 
+give a lot of output).
+<P/>
+The probability that your problem will be fixed quickly increases if you
+read the text ``How to Report Bugs Effectively'',
+<URL>http://www.chiark.greenend.org.uk/~sgtatham/bugs.html</URL> , and 
+send a bug report according to this text.
+
+<P/>
+The following performs a test of the package functionality (see the &GAP; 
+documentation ``Test Files'').
+
+<Example>
+gap> fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "test" );
+"/usr/local/gap_dev/4.0/pkg/singular/tst/test"
+gap> ReadTest( fn );
+true
+</Example>
+
+
+<ManSection>
+<Func Name="SingularReportInformations" Arg = ""/>
+<Description>
+
+The function <A>SingularReportInformations()</A> collects a description of 
+the system, that should be included in any bug report.
+
+<Example>
+gap> SingularReportInformations();
+Gap_Version := "4.dev";
+Gap_Architecture := "i686-pc-linux-gnu-gcc";
+Gap_BytesPerVariable := 4;
+uname := "Linux 2.4.20 i686";
+Singular_Version: := 2004;
+Singular_Name: := "/usr/local/Singular/2-0-4/ix86-Linux/Singular";
+
+"Gap_Version := \"4.dev\";\nGap_Architecture := \"i686-pc-linux-gnu-gcc\";\nGa\
+p_BytesPerVariable := 4;\nuname := \"Linux 2.4.20 i686\";\nSingular_Version: :\
+= 2004;\nSingular_Name: := \"/usr/local/Singular/2-0-4/ix86-Linux/Singular\";\
+\n"
+</Example>
+
+</Description>
+</ManSection>
+
+</Section>
+
+</Chapter>
+
+</Body>
+
+<TheIndex/>
+
+</Book>
