@@ -8,7 +8,7 @@
 
 <TitlePage>
   <Title> <Package>Singular</Package> </Title>
-  <Version>Version 4.04.07</Version>
+  <Version>Version 4.04.15</Version>
   <Author> Marco Costantini
    <Email> costanti@science.unitn.it </Email>
 <Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
@@ -388,7 +388,7 @@ the type of the output in <Package>Singular</Package> (given as a string).
 The <A>type\_output</A>
 is one of following: "def", "ideal", "int", "intmat", "intvec", "link",
 "list", "map", "matrix", "module", "number", "poly", "proc", "qring", 
-"resolution", "ring", "string", "vector" (or the empty string "" if no 
+"resolution", "ring", "string", "vector" (or the empty string "", if no 
 output is expected). If in doubt you can use "def".
 This function tries to pass the &GAP; objects to <Package>Singular</Package>
 and apply the function <A>singcom</A> to it. Finally it tries to convert

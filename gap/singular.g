@@ -1,4 +1,3 @@
- 
 ##############################################################################
 ##############################################################################
 
@@ -18,7 +17,9 @@ if not IsBound( Sing_Proc ) then
 
 sing_exec := "/home/graaf/Singular/2-0-3/ix86-Linux/Singular";
 
-# The directory separator is always '/' even under DOS/Windows or MacOS. 
+# The directory separator is always '/', even under DOS/Windows or MacOS,
+# as in the following example:
+# sing_exec= "/usr/local/Singular/2-0-4/ix86-Win/Singular.exe";
 
 # If the Singular executable is the the system $PATH, it should be non 
 # necessary adding this line, because the interface should be able to
@@ -250,6 +251,7 @@ CheckSingularExecutableAndTempDir := function (  )
     # check the Singular executable, and if needed try to autodetermine, 
     # or print an appropriate error message 
 
+    # correct in case that only the directory or the filename was supplied
     if IsBound( sing_exec ) and IsString( sing_exec ) then
          if IsDirectoryPath( sing_exec ) = true  then
             sing_exec := Filename( Directory( sing_exec ), "Singular" );
@@ -259,20 +261,23 @@ CheckSingularExecutableAndTempDir := function (  )
         fi;
    fi;
 
-    if not IsBound( sing_exec ) or not IsString( sing_exec ) or not 
-           IsExecutableFile( sing_exec ) = true  or
-           IsDirectoryPath( sing_exec ) = true  then
+    # try to detect the executable
+    if not IsBound( sing_exec ) or not IsString( sing_exec ) or 
+       not IsExecutableFile( sing_exec ) = true  or
+       IsDirectoryPath( sing_exec ) = true  then
         sing_exec := Filename( DirectoriesSystemPrograms(  ), "Singular" );
         if sing_exec <> fail then 
             Info( InfoSingular, 2, "found Singular executable ", sing_exec );
         fi;
     fi;
 
-    while not IsBound( sing_exec) or not IsString( sing_exec ) or not 
-          IsExecutableFile( sing_exec ) = true  do
+    # check the executable, if failed print an error message
+    while not IsBound( sing_exec ) or 
+          not IsString( sing_exec ) or 
+          not IsExecutableFile( sing_exec ) = true  do
         Print( "  Type 'sing_exec:=\"<path>\"; return;' where <path>\n" );
         Print( "  is the path of the Singular executable on your system.\n" );
-        if IsBound( sing_exec)  then
+        if IsBound( sing_exec )  then
             if not IsString( sing_exec )  then
                 Print( "  'sing_exec' must be a string.\n" );
             else
@@ -311,11 +316,11 @@ CheckSingularExecutableAndTempDir := function (  )
 
     # check the temporary directory that will be used for i/o with Singular
 
-    if not IsBound( SingularTempDirectory![1] ) or not 
-           IsDirectoryPath( SingularTempDirectory![1] ) = true or not 
-#           IsReadableFile( SingularTempDirectory![1] ) = true or not 
-           IsWritableFile( SingularTempDirectory![1] ) = true or not
-           IsExecutableFile( SingularTempDirectory![1] ) = true  then
+    if not IsBound( SingularTempDirectory![1] ) or 
+       not IsDirectoryPath( SingularTempDirectory![1] ) = true or 
+#       not IsReadableFile( SingularTempDirectory![1] ) = true or 
+       not IsWritableFile( SingularTempDirectory![1] ) = true or 
+       not IsExecutableFile( SingularTempDirectory![1] ) = true  then
         SingularTempDirectory := DirectoryTemporary( "Sing" );
 
         if SingularTempDirectory = fail  then
@@ -973,21 +978,36 @@ if ARCH_IS_UNIX(  ) and CompareVersionNumbers( VERSION, "4.2" ) or
  then
 
     # "InputOutputLocalProcess" is available
-    # choose one
-    SingularCommand := SingCommandInStreamOutStream;
-    #SingularCommand := SingCommandInFileOutStream;
-    #SingularCommand := SingCommandInFileOutFile;
-    #SingularCommand := SingCommandInStreamOutFile;
-    #SingularCommand := SingCommandUsingProcess; # not recommended!
+
+    # writing to a i/o stream is slow in windows (but fast in unix)
+    if ARCH_IS_WINDOWS(  ) then 
+        # choose one
+        #SingularCommand := SingCommandInStreamOutStream; # slow with windows
+        SingularCommand := SingCommandInFileOutStream;
+        #SingularCommand := SingCommandInFileOutFile;
+        #SingularCommand := SingCommandInStreamOutFile; # slow with windows
+        #SingularCommand := SingCommandUsingProcess; # not recommended!
+    else
+        # choose one
+        SingularCommand := SingCommandInStreamOutStream; # slow with windows
+        #SingularCommand := SingCommandInFileOutStream;
+        #SingularCommand := SingCommandInFileOutFile;
+        #SingularCommand := SingCommandInStreamOutFile; # slow with windows
+        #SingularCommand := SingCommandUsingProcess; # not recommended!
+    fi;
 
 else
 
     # "InputOutputLocalProcess" doesn't work yet, "Process" will be used
+    SingularCommand := SingCommandUsingProcess;
+
+fi;
+
+
+if SingularCommand = SingCommandUsingProcess  then
     SingCommandInStreamOutStream := ReturnFail;
     HasValidSingularIdentifier := ReturnFalse;
-    SingularCommand := SingCommandUsingProcess;
 #    SingularVersion := Int( SingularCommand( "", "system(\"version\");" ) );
-
 fi;
 
 
@@ -2010,7 +2030,7 @@ ParseSingProcToGapFunction := function ( string )
     # the definition of the Gap function
     func := Concatenation( 
        "function (", parameters, ") \n",
-       "    SingularCommand( \"\", \"", precommand, "\" );\n",
+       "    SingularCommand( \"", precommand, "\", \"\" );\n",
        "    return SingularInterface( \"GAP_proc\", [", parameters,
        "] , \"def\" );\n",
        "end;\n" );

@@ -8,10 +8,13 @@ SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "The GAP interface to Singular",
 
-Version := "4.04.07",
-Date := "07/04/2004",
+# on a new release, change the version/date twice here, in init.g and in 
+# doc/singular.xml
+
+Version := "4.04.15",
+Date := "15/04/2004",
 ArchiveURL := Concatenation([
- "http://www-math.science.unitn.it/~costanti/gap_code/singular/singular-",
+ "http://www-math.science.unitn.it/~costanti/gap_code/singular/singular-", 
   ~.Version]),
 ArchiveFormats := ".tar.gz",
 
@@ -71,7 +74,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := "4 (recommended >=4.2 under unix or >=4.4 under windows)",
+  GAP := "4", # recommended >=4.2 under unix or >=4.4 under windows
   NeededOtherPackages := [  ],
   SuggestedOtherPackages := [  ],
   ExternalConditions := [ ["Requires the computer algebra system Singular",
