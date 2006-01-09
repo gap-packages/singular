@@ -1,5 +1,6 @@
 
             singular: the GAP interface to Singular
+(http://www-math.science.unitn.it/~costanti/#singular)
 ===========================================================================
 
 This is the README file for the package `singular'; a GAP interface
@@ -28,7 +29,8 @@ true
 
    Use RequirePackage instead in GAP 4.x, 1 <= x <= 3.
 
-4) The documentation is in the `doc' subdirectory.
+4) The documentation is in the `doc' subdirectory: it is more up-to-date 
+   than this README file.
 
 
 
@@ -60,22 +62,24 @@ and free-resolution computations, and many more related functionalities."
 See http://www.singular.uni-kl.de/ . Singular is not included in the
 package, but can be downloaded for free from that site.)
 
-The package is available in the Gap cvs repository in the directory
+The package is available in the Gap CVS repository in the directory
 4.0/pkg/singular.
 
-All the warnings about the stuff in the cvs repository apply. Further,
-this package can hang the Gap session (you will have to type <ctrl>-C
-twice, and you will lose the content of the session, if it was not saved
-with SaveWorkspace). This should not happen during normal use (please
-report if it happens to you), but only with code designed to hang Gap,
-such as
-SingularInterface("execute", ["quit"], "def" );
+Now (August 2003) all the warnings about the stuff in the CVS repository
+apply. Further, this package can hang the Gap session (you will have to
+type <ctrl>-C twice, and you will lose the content of the session, if it
+was not saved with SaveWorkspace). This should not happen during normal
+use (please report if it happens to you), but only with code designed to
+hang Gap, such as
+SingularLibrary("all");
+SingularInterface("execute", ["pause()"], "def" );
 
 This package is designed for using the Gap function
 "InputOutputLocalProcess" available on Unix machines, and was tested with
 Linux, Sun and Alpha, but should work partially also with "Process" on
 non-Unix machines (not yet tested, reports are welcome). Auto-detection
-is used.
+is used. (Starting with Gap 4.4.2, this package is expected to work on 
+every operating system that supports both Gap and Singular.)
 
 This packages requires Gap 4.2 or newer: with Gap 4.1 "Process" is used
 instead of "InputOutputLocalProcess", as the latter was not yet there;
@@ -84,21 +88,9 @@ Gap version older than 4.4, some harmles errors "Syntax error: warning:
 unbound global variable in ..." are displayed.
 
 
-At this moment the package can handle only finite fields and the
-Rationals.
-
-The documentation that comes with the package is obsolete, and may be
-useless. However an "implicit documentation" is provided with the code
-(the code tells what the functions do), and some examples of usage are
-below.
-
 Hints, bug reports, patches, requests of other functionalities, and so on
-are welcomed. Add the output of SingularReportInformations(); to your
+are welcomed. Add the output of SingularReportInformation(); to your
 report.
-
-Now the package contains some stuff about Lie algebras, but an other
-package with it is planned.
-
 
 
 # load
@@ -113,7 +105,7 @@ sing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";
 
 # let's define some Gap objects
 
-R:=PolynomialRing( Rationals, ["x", "y", "z"]);;
+R:=PolynomialRing( Rationals, ["x", "y", "z"] : old );;
 gen:=GeneratorsOfLeftOperatorRingWithOne(R);;
 x:=gen[1];;y:=gen[2];;z:=gen[3];;
 pol1:=-3*x*z^3+x^3+x*y*z;;
@@ -231,19 +223,19 @@ type    Gap -> Singular                 Singular -> Gap
 def     (no sense)                      U (ask Singular for the type)
 ideal   *ParseGapIdealToSingIdeal       done
 int     ParseToSingInt                  Int
-intmat  done                            U done
-intvec  done                            done
+intmat  ParseGapIntmatToSingIntmat      U done
+intvec  ParseGapIntvecToSingIntvec      done
 link                                    U (done)
-list    done                            U done
-map
+list    ParseGapListToSingList          U done
+map	(planned)
 matrix  done                            U done
-module
-number  ParseGapNumberToSingNumber      [ ParseSingNumberToGapNumber, Rat ]
+module	*ParseGapModuleToSingModule	(U) done
+number  ParseGapNumberToSingNumber      ParseSingNumberToGapNumber
 poly    ParseGapPolyToSingPoly          ParseSingPolyToGapPoly
 proc                                    U ParseSingProcToGapFunction
 qring
 resolution
 ring    *ParseGapRingToSingRing         (planned)
 string  done                            x->x;
-vector  done                            (planned)
+vector  ParseGapVectorToSingVector      (U) done
 

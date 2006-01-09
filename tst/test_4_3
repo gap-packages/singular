@@ -7,13 +7,37 @@ gap> if not IsBound(LoadPackage) and IsBound(RequirePackage)  then
 >     LoadPackage := RequirePackage;
 > fi;
 gap> LoadPackage("singular");
-The GAP interface to Singular, by Marco Costantini and Willem de Graaf
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2781
+  if IsBound( PackageInfo ) then
+                          ^
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2783
+                         PackageInfo("singular")![1].Version, "\";\n" );
+                                    ^
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2797
+  if IsBound( GAPInfo ) then
+                      ^
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2800
+       String( GAPInfo.BytesPerVariable ), ";\n" );
+                      ^
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2875
+      str := ComposedXMLString( path, Concatenation( main, ".xml" ), files );
+                              ^
+Syntax error: warning: unbound global variable in /usr/local/gap4r3/pkg/singul\
+ar/gap/singular.g line 2876
+      r := ParseTreeXMLString( str );
+                             ^
 true
 gap> SetInfoLevel( InfoSingular, 1 );
 gap> StartSingular();
 gap> 
 gap> ValidatePackageInfo( Filename( DirectoriesPackageLibrary( "singular", "" ), "PackageInfo.g" ) );
-true
+Variable: 'ValidatePackageInfo' must have a value
+
 gap> 
 gap> # Examples from README file
 gap> 
@@ -28,37 +52,37 @@ y
 gap> z:=gen[3];
 z
 gap> pol1:=-3*x*z^3+x^3+x*y*z;
--3*x*z^3+x^3+x*y*z
+x^3+x*y*z-3*x*z^3
 gap> pol2:=-3*x^2*z^3+x^4+x^2*y*z-3*x*z^3+x^3+x*y*z;
--3*x^2*z^3+x^4+x^2*y*z-3*x*z^3+x^3+x*y*z
+x^3+x*y*z+x^4+x^2*y*z-3*x*z^3-3*x^2*z^3
 gap> pol3:=x*y+x*z+x+y+z;
-x*y+x*z+x+y+z
+x+y+z+x*y+x*z
 gap> I:=Ideal( R, [ pol1, pol2, pol3] );
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
 gap> SingularSetBaseRing( R );
 gap> J:=SingularInterface( "jacob", [ pol1 ], "ideal" );
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
 gap> GeneratorsOfTwoSidedIdeal( J );
-[ -3*z^3+3*x^2+y*z, x*z, -9*x*z^2+x*y ]
+[ 3*x^2+y*z-3*z^3, x*z, x*y-9*x*z^2 ]
 gap> SingularInterface( "dim", [ I ], "int" );
 2
 gap> std:=SingularInterface( "std", [ I ], "ideal" );
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
 gap> GeneratorsOfTwoSidedIdeal( std );
-[ x*y+x*z+x+y+z, 3*y*z^3+3*z^4-y^2*z-y*z^2+x^2-x-y-z, 
-  3*x*z^3-x^3+x*z^2+x*z+y*z+z^2 ]
+[ x+y+z+x*y+x*z, -x-y-z+x^2-y^2*z-y*z^2+3*y*z^3+3*z^4, 
+  x*z+y*z+z^2-x^3+x*z^2+3*x*z^3 ]
 gap> GroebnerBasis( I );
-[ x*y+x*z+x+y+z, 3*y*z^3+3*z^4-y^2*z-y*z^2+x^2-x-y-z, 
-  3*x*z^3-x^3+x*z^2+x*z+y*z+z^2 ]
+[ x+y+z+x*y+x*z, -x-y-z+x^2-y^2*z-y*z^2+3*y*z^3+3*z^4, 
+  x*z+y*z+z^2-x^3+x*z^2+3*x*z^3 ]
 gap> HasTrivialGroebnerBasis( I );
 false
 gap> SingularLibrary( "general.lib");
 gap> GcdUsingSingular( pol1, pol2, pol3 );
 1
 gap> FactorsUsingSingularNC( pol1 );
-[ -1, x, 3*z^3-x^2-y*z ]
+[ -1, x, -x^2-y*z+3*z^3 ]
 gap> FactorsUsingSingular( pol2 );
-[ -1, x, x+1, 3*z^3-x^2-y*z ]
+[ -1, x, 1+x, -x^2-y*z+3*z^3 ]
 gap> 
 gap> 
 gap> # Examples from manual
@@ -104,35 +128,35 @@ gap> i:= IndeterminatesOfPolynomialRing( R );
 gap> pols:= [i[1]+i[2]+i[3], i[1]*i[2]+i[1]*i[3]+i[2]*i[3], i[1]*i[2]*i[3]];
 [ x+y+z, x*y+x*z+y*z, x*y*z ]
 gap> o:= MonomialLexOrdering();
-MonomialLexOrdering()
+Variable: 'MonomialLexOrdering' must have a value
+
 gap> GBASIS:= GAPGBASIS;
-rec( name := "naive GAP version of Buchberger's algorithm", 
-  GroebnerBasis := function( elms, order ) ... end )
+Variable: 'GAPGBASIS' must have a value
+
 gap> gg:=GroebnerBasis( pols, o );   # This is the internal GAP method.
-[ x+y+z, x*y+x*z+y*z, x*y*z, -y^2-y*z-z^2, z^3 ]
+Variable: 'o' must have a value
+
 gap> GBASIS:= SINGULARGBASIS;
 rec( name := "singular interface for GroebnerBasis", 
   GroebnerBasis := function( pols, O ) ... end )
 gap> gs:=GroebnerBasis( pols, o );
-#I  running GroebnerBasis...
-#I  done GroebnerBasis.
-[ x+y+z, y^2+y*z+z^2, z^3 ]
+Variable: 'o' must have a value
+
 gap> gg[1]=gs[1] and -gg[4]=gs[2] and gg[5]=gs[3];
-true
+Variable: 'gg' must have a value
+
 gap> I:=Ideal(R, gs);
-<two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
+Variable: 'gs' must have a value
+
 gap> SingularInterface("reduce", [ gg[2], I ], "poly" );
-#I  running SingularInterface( "reduce", [ "poly", "ideal" ], "poly" )...
-#I  done SingularInterface.
-0
+Variable: 'gg' must have a value
+
 gap> SingularInterface("reduce", [ gg[3], I ], "poly" );
-#I  running SingularInterface( "reduce", [ "poly", "ideal" ], "poly" )...
-#I  done SingularInterface.
-0
+Variable: 'gg' must have a value
+
 gap> gs[2] in I;
-#I  running GroebnerBasis...
-#I  done GroebnerBasis.
-true
+Variable: 'gs' must have a value
+
 gap> R:= PolynomialRing( GaussianRationals, ["x","y","z"] : old );
 PolynomialRing(..., [ x, y, z ])
 gap> i:= IndeterminatesOfPolynomialRing(R);
@@ -144,9 +168,9 @@ y
 gap> z:= i[3];
 z
 gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
-x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+-x^2*z^2-x*y*z^2-y^2*z^2+x^3*y*z+x^2*y^2*z+x*y^3*z
 gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);
-x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
+-x^2*y*z^2-x*y^2*z^2-x*y*z^3+x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2
 gap> I:= Ideal( R, [f,g] );
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)>
 gap> HasTrivialGroebnerBasis( I );
@@ -164,19 +188,19 @@ y
 gap> z:= i[3];
 z
 gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
-x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+-x^2*z^2-x*y*z^2-y^2*z^2+x^3*y*z+x^2*y^2*z+x*y^3*z
 gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);
-x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
+-x^2*y*z^2-x*y^2*z^2-x*y*z^3+x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2
 gap> SingularSetBaseRing( R );
 gap> GcdUsingSingular( f, g );
--x*y*z+z^2
+z^2-x*y*z
 gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
-x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+-x^2*z^2-x*y*z^2-y^2*z^2+x^3*y*z+x^2*y^2*z+x*y^3*z
 gap> SingularSetBaseRing( R );
 gap> FactorsUsingSingularNC( f );
 #I  running SingularInterface( "factorize", [ "poly" ], "list" )...
 #I  done SingularInterface.
-[ 1, -x^2-x*y-y^2, -x*y+z, z ]
+[ 1, -x^2-x*y-y^2, z-x*y, z ]
 gap> m:=[[1,1,1],[0,1,1],[0,0,1]]*One(GF(3));
 [ [ Z(3)^0, Z(3)^0, Z(3)^0 ], [ 0*Z(3), Z(3)^0, Z(3)^0 ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
@@ -201,9 +225,9 @@ y
 gap> z:= i[3];
 z
 gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
-x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
+-x^2*z^2-x*y*z^2-y^2*z^2+x^3*y*z+x^2*y^2*z+x*y^3*z
 gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);
-x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
+-x^2*y*z^2-x*y^2*z^2-x*y*z^3+x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2
 gap> I:= Ideal( R, [f,g] );
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)>
 gap> SingularLibrary("primdec.lib");
@@ -221,7 +245,7 @@ gap> pd:=SingularInterface("primdecGTZ", [ I ], "def" );
       <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)> ] 
  ]
 gap> List(pd,x->List(x,GeneratorsOfTwoSidedIdeal));
-[ [ [ x*y-z ], [ x*y-z ] ], [ [ z ], [ z ] ], 
+[ [ [ -z+x*y ], [ -z+x*y ] ], [ [ z ], [ z ] ], 
   [ [ y^2+y*z+z^2, x+y+z ], [ y^2+y*z+z^2, x+y+z ] ], 
   [ [ y^3, x*y, x^2+y^2 ], [ y, x ] ] ]
 gap> 
@@ -271,7 +295,7 @@ gap>
 gap> SingularCommand("proc id_func (a){return (a);}", ""); # id_func = identity
 ""
 gap> R:=PolynomialRing( GF(32003), ["x"] : old );
-GF(32003)[x]
+PolynomialRing(..., [ x ])
 gap> SingularSetBaseRing( R );
 gap> SingularInterface("id_func", [Z(32003)], "def");
 #I  running SingularInterface( "id_func", [ "number" ], "def" )...
@@ -530,7 +554,7 @@ gap> if CompareVersionNumbers(VERSION, "4.4") then
 gap> SingularSetBaseRing(ring);
 gap> 
 gap> ideal:=Ideal(ring,[x*y, x+y]);
-<two-sided ideal in PolynomialRing(..., [ x, y ]), (2 generators)>
+<two-sided ideal in PolynomialRing(..., [ x_1, x_2 ]), (2 generators)>
 gap> int:=123456;
 123456
 gap> intmat:=[[12,34],[56,78]];
@@ -538,41 +562,44 @@ gap> intmat:=[[12,34],[56,78]];
 gap> intvec:=[98765,4321];
 [ 98765, 4321 ]
 gap> map:=AlgebraGeneralMappingByImages(ring,ring,[x,y],[x+y,x-y]);
-[ x, y ] -> [ x+y, x-y ]
+[ x_1, x_2 ] -> [ x_1+x_2, x_1-x_2 ]
 gap> matrix:=[[x+y, x*y],[x+y+x*y,x^2+y^2]];
-[ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ]
+[ [ x_1+x_2, x_1*x_2 ], [ x_1+x_2+x_1*x_2, x_1^2+x_2^2 ] ]
 gap> module:=LeftModuleByGenerators( ring, [[x+y+x*y,x-y], [x+x^2+x^3,y+x^2+y^3]]);
 <additive magma>
 gap> number:=Z(5)^3;
 Z(5)^3
 gap> poly:=x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y;
-x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y
+Z(5)^3*x_2+Z(5)^3*x_1^2+Z(5)^3*x_1*x_2+x_2^2+x_1^3+x_2^3
 gap> proc:=function() end;
 function(  ) ... end
 gap> string:="ciao";
 "ciao"
 gap> vector:=[x^3+y^3,+(5)^3*x^2+Z(5)^3,x*y+y^2+Z(5)^3*y];
-[ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ]
+[ x_1^3+x_2^3, Z(5)^3, Z(5)^3*x_2+x_1*x_2+x_2^2 ]
 gap> 
 gap> list1 := [ ideal, int, intmat, intvec, map, matrix, module, number,
 > poly, proc, ring, string, vector];
-[ <two-sided ideal in PolynomialRing(..., [ x, y ]), (2 generators)>, 123456, 
-  [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], [ x, y ] -> [ x+y, x-y ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, function(  ) ... end, 
-  PolynomialRing(..., [ x, y ]), "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+[ <two-sided ideal in PolynomialRing(..., [ x_1, x_2 ]), (2 generators)>, 
+  123456, [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
+  [ x_1, x_2 ] -> [ x_1+x_2, x_1-x_2 ], 
+  [ [ x_1+x_2, x_1*x_2 ], [ x_1+x_2+x_1*x_2, x_1^2+x_2^2 ] ], 
+  <additive magma>, Z(5)^3, 
+  Z(5)^3*x_2+Z(5)^3*x_1^2+Z(5)^3*x_1*x_2+x_2^2+x_1^3+x_2^3, 
+  function(  ) ... end, PolynomialRing(..., [ x_1, x_2 ]), "ciao", 
+  [ x_1^3+x_2^3, Z(5)^3, Z(5)^3*x_2+x_1*x_2+x_2^2 ] ]
 gap> List( list1, SingularType);
 [ "ideal", "int", "intmat", "intvec", "map", "matrix", "module", "number", 
   "poly", "proc", "ring", "string", "vector" ]
 gap> 
 gap> list2 := [ ideal, int, intmat, intvec, matrix, module, number,
 > poly, string, vector];
-[ <two-sided ideal in PolynomialRing(..., [ x, y ]), (2 generators)>, 123456, 
-  [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+[ <two-sided ideal in PolynomialRing(..., [ x_1, x_2 ]), (2 generators)>, 
+  123456, [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
+  [ [ x_1+x_2, x_1*x_2 ], [ x_1+x_2+x_1*x_2, x_1^2+x_2^2 ] ], 
+  <additive magma>, Z(5)^3, 
+  Z(5)^3*x_2+Z(5)^3*x_1^2+Z(5)^3*x_1*x_2+x_2^2+x_1^3+x_2^3, "ciao", 
+  [ x_1^3+x_2^3, Z(5)^3, Z(5)^3*x_2+x_1*x_2+x_2^2 ] ]
 gap> list3 := SingularInterface( "id_func", [list2], "def" );
 #I  running SingularInterface( "id_func", [ "list" ], "def" )...
 #I  done SingularInterface.
@@ -581,11 +608,12 @@ gap> list3 := SingularInterface( "id_func", [list2], "def" );
 #I  done SingularInterface.
 #I  running SingularInterface( "matrix", "...", "matrix" )...
 #I  done SingularInterface.
-[ <two-sided ideal in PolynomialRing(..., [ x, y ]), (2 generators)>, 123456, 
-  [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+[ <two-sided ideal in PolynomialRing(..., [ x_1, x_2 ]), (2 generators)>, 
+  123456, [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
+  [ [ x_1+x_2, x_1*x_2 ], [ x_1+x_2+x_1*x_2, x_1^2+x_2^2 ] ], 
+  <additive magma>, Z(5)^3, 
+  Z(5)^3*x_2+Z(5)^3*x_1^2+Z(5)^3*x_1*x_2+x_2^2+x_1^3+x_2^3, "ciao", 
+  [ x_1^3+x_2^3, Z(5)^3, Z(5)^3*x_2+x_1*x_2+x_2^2 ] ]
 gap> 
 gap> for i in [2,3,4,5,7,8,9,10] do
 >     if list2[i] <> list3[i] then
@@ -612,9 +640,9 @@ gap>
 gap> # this should be at the end of the test file:
 gap> 
 gap> [ SingularNr.Process, SingularNr.Input, SingularNr.Output ];
-[ 0, 1082, 1082 ]
+[ 0, 1050, 1050 ]
 gap> SingularBaseRing;
-PolynomialRing(..., [ x, y ])
+PolynomialRing(..., [ x_1, x_2 ])
 gap> CoefficientsRing( SingularBaseRing );
 GF(5)
 gap> SingularNames;
@@ -629,4 +657,4 @@ gap> SetInfoLevel( InfoSingular, 1 );
 gap> 
 gap> STOP_TEST( "test", 10000 );
 Test of the singular package
-GAP4stones: 4
+GAP4stones: 6

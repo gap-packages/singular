@@ -11,8 +11,8 @@ Subtitle := "The GAP interface to Singular",
 # on a new release, change the version/date twice here, in init.g and in 
 # doc/singular.xml
 
-Version := "4.04.15",
-Date := "15/04/2004",
+Version := "06.01.09",
+Date := "09/01/2006",
 ArchiveURL := Concatenation([
  "http://www-math.science.unitn.it/~costanti/gap_code/singular/singular-", 
   ~.Version]),
@@ -41,10 +41,16 @@ Persons := [
   FirstNames := "Willem",
   IsAuthor := true,
   IsMaintainer := true,
-  Email := "quagroup@hetnet.nl",
-  WWWHome := "http://www-circa.mcs.st-and.ac.uk/~wdg/",
-  Place := "Utrecht",
-  Institution := "Mathematisch Instituut Universiteit Utrecht"
+  Email := "degraaf@science.unitn.it",
+  WWWHome := "http://www.science.unitn.it/~degraaf/",
+  PostalAddress := Concatenation( [
+                     "Willem de Graaf\n",
+                     "Dipartimento di Matematica\n",
+                     "Università degli Studi di Trento\n",
+                     "I-38050 Povo (Trento)\n",
+                     "Italy" ] ),
+  Place := "Trento",
+  Institution := "Department of Mathematics, University of Trento"
   )
 ],
 
@@ -74,7 +80,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := "4", # recommended >=4.2 under unix or >=4.4 under windows
+  GAP := ">=4", # recommended >=4.2 under unix or >=4.4 under windows
   NeededOtherPackages := [  ],
   SuggestedOtherPackages := [  ],
   ExternalConditions := [ ["Requires the computer algebra system Singular",
@@ -83,10 +89,11 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 Autoload := false,
 # the banner
-BannerString := "The GAP interface to Singular\n",
+BannerString := 
+"The GAP interface to Singular, by Marco Costantini and Willem de Graaf\n",
 
 #TestFile := "tst/testall.g",
-Keywords := ["Groebner bases"]
+Keywords := [ "Interface to Singular", "Groebner bases" ]
 
 ));
 
