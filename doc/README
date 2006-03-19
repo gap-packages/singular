@@ -1,5 +1,5 @@
 # This directory contains the documentation of the Gap package 'singular'. It consist of the GAPDoc
-# source files, and the generated manual, in various formats. The .txt files can be viewed with the
+# source files, and the generated manual in various formats. The .txt files can be viewed with the
 # command 'less -r'. 
 
 
@@ -7,7 +7,6 @@
 # command
 
 LoadPackage("guava");
-
 MakeGAPDocDoc( DirectoriesPackageLibrary( "singular", "doc" )[1], "singular", [], "singular", "../../.." );;
 
 # this command produces the 'manual.lab' file
@@ -29,7 +28,7 @@ GAPDocManualLab( "singular" );
 # manual.dvi manual.ps manual.pdf manual.six *.txt *.html manual.lab
 
 
-# The generated temp and log files are
+# The generated temp and log files are (they can be removed)
 
 # rm singular.aux singular.idx singular.ilg singular.ind singular.log singular.bbl singular.blg
 # rm singular.pnr singular.tex singular.toc

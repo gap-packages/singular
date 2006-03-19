@@ -7,7 +7,7 @@
 <TitlePage>
   <Title><Package>singular</Package></Title>
   <Subtitle>the &GAP; interface to <Package>Singular</Package></Subtitle>
-  <Version>Version 06.01.09</Version>
+  <Version>Version 06.03.19</Version>
   <Author>Marco Costantini
    <Email>costanti@science.unitn.it</Email>
    <Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
@@ -17,7 +17,7 @@
     <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
   </Author>
 
-  <Date>9 January 2006</Date>
+  <Date>19 March 2006</Date>
   <Copyright>&copyright; 2003, 2004, 2005, 2006 Marco Costantini and Willem A. 
 de Graaf
   </Copyright>
@@ -660,7 +660,7 @@ and will use the previous value if any, or the default <A>"dp"</A>.
 <Example>
 gap> R1:= PolynomialRing( Rationals, ["x","y","z"] : old );;
 gap> SetTermOrdering( R1, "lp" );
-gap> R2:= PolynomialRing( GaloisField(9), ["x","y","z"] : old );;
+gap> R2:= PolynomialRing( GaloisField(9), 3 );;
 gap> SetTermOrdering( R2, [ "wp", [1,1,2] ] );
 gap> R3:= PolynomialRing( CyclotomicField(25), ["x","y","z"] : old );;
 gap> SetTermOrdering( R3, MonomialLexOrdering() );
@@ -704,7 +704,7 @@ gap> SingularSetBaseRing( R );
 </Example>
 
 The value of <A>SingularBaseRing</A> when the package is loaded is
-<A>PolynomialRing( GF( 32003 ), [ "x", "y", "z" ] : new )</A>, in order 
+<A>PolynomialRing( GF( 32003 ), 3 )</A>, in order 
 to match the default base-ring of <Package>Singular</Package>.
 
 <P/>
@@ -1013,21 +1013,21 @@ problems.</Q>
 
 <P/>
 
-(Note in the following example that unlike those calculated by
-<Package>Singular</Package>, the Groebner bases calculated by the &GAP;
-internal function are in general not reduced; for reduced bases see the
-&GAP; function <Ref Oper="ReducedGroebnerBasis" BookName="ref"/>.)
+(Note in the following example that the Groebner bases calculated by the
+&GAP; internal function are in general not reduced; for reduced bases
+see the &GAP; function <Ref Oper="ReducedGroebnerBasis" BookName="ref"/>.)
 
 <Example>
 gap> R:= PolynomialRing( Rationals, 3 );;
 gap> i:= IndeterminatesOfPolynomialRing( R );;
 gap> pols:= [i[1]+i[2]+i[3], i[1]*i[2]+i[1]*i[3]+i[2]*i[3], i[1]*i[2]*i[3]];;
 gap> o:= MonomialLexOrdering();;
+gap> GBASIS:= GAPGBASIS;;
 gap> GroebnerBasis( pols, o ); # This is the internal GAP method.
-[ x+y+z, y^2+y*z+z^2, z^3 ]
+[ x+y+z, x*y+x*z+y*z, x*y*z, -y^2-y*z-z^2, z^3 ]
 gap> GBASIS:= SINGULARGBASIS;;
-gap> GroebnerBasis( pols, o ); # Now this uses Singular via the interface.
-[ x+y+z, y^2+y*z+z^2, z^3 ]
+gap> GroebnerBasis( pols, o ); # This uses Singular via the interface.
+[ z^3, y^2+y*z+z^2, x+y+z ]
 </Example>
 </Description>
 </ManSection>
@@ -1168,9 +1168,9 @@ with <Ref Func="SingularSetBaseRing"/>.
 gap> m:=[[1,1,1],[0,1,1],[0,0,1]] * One( GF(3) );;
 gap> G:= Group( [m] );;
 gap> R:= PolynomialRing( GF(3), 3 );
-PolynomialRing(..., [ x, y, z ])
+PolynomialRing(..., [ x_1, x_2, x_3 ])
 gap> GeneratorsOfInvariantRing( R, G );
-[ z, x*z+y^2+y*z, x^3+x^2*z-x*y^2-x*y*z ]
+[ x_3, x_1*x_3+x_2^2+x_2*x_3, x_1^3+x_1^2*x_3-x_1*x_2^2-x_1*x_2*x_3 ]
 </Example>
 </Description>
 </ManSection>

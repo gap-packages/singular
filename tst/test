@@ -116,8 +116,8 @@ rec( name := "singular interface for GroebnerBasis",
 gap> gs:=GroebnerBasis( pols, o );
 #I  running GroebnerBasis...
 #I  done GroebnerBasis.
-[ x+y+z, y^2+y*z+z^2, z^3 ]
-gap> gg[1]=gs[1] and -gg[4]=gs[2] and gg[5]=gs[3];
+[ z^3, y^2+y*z+z^2, x+y+z ]
+gap> (gg[1]=gs[1] and -gg[4]=gs[2] and gg[5]=gs[3]) or (gg[5]=gs[1] and -gg[4]=gs[2] and gg[1]=gs[3]);
 true
 gap> I:=Ideal(R, gs);
 <two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
@@ -270,8 +270,7 @@ gap> # CoefficientsRing
 gap> 
 gap> SingularCommand("proc id_func (a){return (a);}", ""); # id_func = identity
 ""
-gap> R:=PolynomialRing( GF(32003), ["x"] : old );
-GF(32003)[x]
+gap> R:=PolynomialRing( GF(32003), ["x"] : old );;
 gap> SingularSetBaseRing( R );
 gap> SingularInterface("id_func", [Z(32003)], "def");
 #I  running SingularInterface( "id_func", [ "number" ], "def" )...
@@ -286,14 +285,12 @@ gap> SingularInterface("id_func", [last], "def");
 #I  Singular output of type "poly"
 Z(32003)^0
 gap> 
-gap> x:=Indeterminate(Rationals);
-x
+gap> x:=Indeterminate(Rationals);;
 gap> F1:=AlgebraicExtension(Rationals, x^5+4*x+1);
 <field in characteristic 0>
 gap> e1:=RootOfDefiningPolynomial(F1);
 (a)
-gap> x:=Indeterminate(GF(5));
-x_1
+gap> x:=Indeterminate(GF(5));;
 gap> F2:=AlgebraicExtension(GF(5), x^5+4*x+1);
 <field of size 3125>
 gap> e2:=RootOfDefiningPolynomial(F2);
@@ -307,13 +304,28 @@ gap> field_element := [
 > [ GF(25), Z(25)^4 ],
 > [ CF(3), -E(3) ],
 > [ CF(25), Random(CF(25)) ],
+> [ CF(25), E(5) ],
 > [ F1, e1^2 + e1 ],
 > [ F2, e2^3+One(F2) ]
 > ];;
 gap> 
 gap> for i in field_element do
+> 
 >     R := PolynomialRing( i[1], 2 );
 >     SingularSetBaseRing( R );
+> 
+>     # test of numbers
+>     u1:=i[2];
+>     u2:=SingularInterface( "id_func", [u1], "def" );
+>     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+>     u1:=Zero(i[1]);
+>     u2:=SingularInterface( "id_func", [u1], "def" );
+>     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+>     u1:=One(i[1]);
+>     u2:=SingularInterface( "id_func", [u1], "def" );
+>     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+> 
+>     # test of polynomials
 >     gen := GeneratorsOfLeftOperatorRingWithOne(R);
 >     p1 := (i[2]*gen[1]+i[2]*gen[2])^4;
 >     p2 := SingularInterface( "id_func", [p1], "def" );
@@ -324,25 +336,8 @@ gap> for i in field_element do
 >     p1:=One(R);
 >     p2:=SingularInterface( "id_func", [p1], "def" );
 >     if p1<>p2 then Error( "wrong conversion of zero polynomial!\n"); fi;
->     u1:=i[2];
->     u2:=SingularInterface( "id_func", [u1], "def" );
->     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
->     u1:=Zero(i[1]);
->     u2:=SingularInterface( "id_func", [u1], "def" );
->     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
->     u1:=One(i[1]);
->     u2:=SingularInterface( "id_func", [u1], "def" );
->     if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+> 
 > od;
-#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
-#I  done SingularInterface.
-#I  Singular output of type "poly"
-#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
-#I  done SingularInterface.
-#I  Singular output of type "poly"
-#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
-#I  done SingularInterface.
-#I  Singular output of type "poly"
 #I  running SingularInterface( "id_func", [ "int" ], "def" )...
 #I  done SingularInterface.
 #I  Singular output of type "int"
@@ -472,6 +467,24 @@ gap> for i in field_element do
 #I  running SingularInterface( "id_func", [ "number" ], "def" )...
 #I  done SingularInterface.
 #I  Singular output of type "number"
+#I  running SingularInterface( "id_func", [ "int" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "int"
+#I  running SingularInterface( "id_func", [ "int" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "int"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
+#I  running SingularInterface( "id_func", [ "number" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "number"
 #I  running SingularInterface( "id_func", [ "number" ], "def" )...
 #I  done SingularInterface.
 #I  Singular output of type "number"
@@ -496,6 +509,15 @@ gap> for i in field_element do
 #I  running SingularInterface( "id_func", [ "number" ], "def" )...
 #I  done SingularInterface.
 #I  Singular output of type "number"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
+#I  running SingularInterface( "id_func", [ "poly" ], "def" )...
+#I  done SingularInterface.
+#I  Singular output of type "poly"
 gap> 
 gap> 
 gap> # test the string conversion
@@ -612,7 +634,7 @@ gap>
 gap> # this should be at the end of the test file:
 gap> 
 gap> [ SingularNr.Process, SingularNr.Input, SingularNr.Output ];
-[ 0, 1082, 1082 ]
+[ 0, 1136, 1136 ]
 gap> SingularBaseRing;
 PolynomialRing(..., [ x, y ])
 gap> CoefficientsRing( SingularBaseRing );

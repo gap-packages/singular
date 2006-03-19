@@ -72,7 +72,7 @@ GBASIS:= GAPGBASIS;
 gg:=GroebnerBasis( pols, o );   # This is the internal GAP method.
 GBASIS:= SINGULARGBASIS;
 gs:=GroebnerBasis( pols, o );
-gg[1]=gs[1] and -gg[4]=gs[2] and gg[5]=gs[3];
+(gg[1]=gs[1] and -gg[4]=gs[2] and gg[5]=gs[3]) or (gg[5]=gs[1] and -gg[4]=gs[2] and gg[1]=gs[3]);
 I:=Ideal(R, gs);
 SingularInterface("reduce", [ gg[2], I ], "poly" );
 SingularInterface("reduce", [ gg[3], I ], "poly" );
@@ -135,16 +135,16 @@ f( 19 );
 # CoefficientsRing
 
 SingularCommand("proc id_func (a){return (a);}", ""); # id_func = identity
-R:=PolynomialRing( GF(32003), ["x"] : old );
+R:=PolynomialRing( GF(32003), ["x"] : old );;
 SingularSetBaseRing( R );
 SingularInterface("id_func", [Z(32003)], "def");
 One(SingularBaseRing);
 SingularInterface("id_func", [last], "def");
 
-x:=Indeterminate(Rationals);
+x:=Indeterminate(Rationals);;
 F1:=AlgebraicExtension(Rationals, x^5+4*x+1);
 e1:=RootOfDefiningPolynomial(F1);
-x:=Indeterminate(GF(5));
+x:=Indeterminate(GF(5));;
 F2:=AlgebraicExtension(GF(5), x^5+4*x+1);
 e2:=RootOfDefiningPolynomial(F2);
 
@@ -156,13 +156,28 @@ field_element := [
 [ GF(25), Z(25)^4 ],
 [ CF(3), -E(3) ],
 [ CF(25), Random(CF(25)) ],
+[ CF(25), E(5) ],
 [ F1, e1^2 + e1 ],
 [ F2, e2^3+One(F2) ]
 ];;
 
 for i in field_element do
+
     R := PolynomialRing( i[1], 2 );
     SingularSetBaseRing( R );
+
+    # test of numbers
+    u1:=i[2];
+    u2:=SingularInterface( "id_func", [u1], "def" );
+    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+    u1:=Zero(i[1]);
+    u2:=SingularInterface( "id_func", [u1], "def" );
+    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+    u1:=One(i[1]);
+    u2:=SingularInterface( "id_func", [u1], "def" );
+    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+
+    # test of polynomials
     gen := GeneratorsOfLeftOperatorRingWithOne(R);
     p1 := (i[2]*gen[1]+i[2]*gen[2])^4;
     p2 := SingularInterface( "id_func", [p1], "def" );
@@ -173,15 +188,7 @@ for i in field_element do
     p1:=One(R);
     p2:=SingularInterface( "id_func", [p1], "def" );
     if p1<>p2 then Error( "wrong conversion of zero polynomial!\n"); fi;
-    u1:=i[2];
-    u2:=SingularInterface( "id_func", [u1], "def" );
-    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
-    u1:=Zero(i[1]);
-    u2:=SingularInterface( "id_func", [u1], "def" );
-    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
-    u1:=One(i[1]);
-    u2:=SingularInterface( "id_func", [u1], "def" );
-    if u1<>u2 then Error( "wrong conversion of number!\n"); fi;
+
 od;
 
 

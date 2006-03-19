@@ -11,8 +11,8 @@ Subtitle := "The GAP interface to Singular",
 # on a new release, change the version/date twice here, in init.g and in 
 # doc/singular.xml
 
-Version := "06.01.09",
-Date := "09/01/2006",
+Version := "06.03.19",
+Date := "19/03/2006",
 ArchiveURL := Concatenation([
  "http://www-math.science.unitn.it/~costanti/gap_code/singular/singular-", 
   ~.Version]),
@@ -82,7 +82,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4", # recommended >=4.2 under unix or >=4.4 under windows
   NeededOtherPackages := [  ],
-  SuggestedOtherPackages := [  ],
+  # for reading online help, GapDoc is used
+  SuggestedOtherPackages := [ [ "GapDoc", ">= 0.99" ] ], 
   ExternalConditions := [ ["Requires the computer algebra system Singular",
                            "http://www.singular.uni-kl.de/"] ]
 ),

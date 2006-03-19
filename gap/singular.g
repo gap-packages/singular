@@ -1,3 +1,6 @@
+Revision.("singular/gap/singular.g") :=
+    "@(#)$Id: singular.g,v 1.52 2006/03/10 19:05:56 gap Exp $";
+
 ##############################################################################
 ##############################################################################
 
@@ -138,7 +141,7 @@ SingularSetBaseRing := function (  ) end; # it will be defined later...
 
 # The Base Ring in Singular; the provided default should match the
 # default of Singular.
-SingularBaseRing := PolynomialRing( GF( 32003 ), [ "x", "y", "z" ] : new );
+SingularBaseRing := PolynomialRing( GF( 32003 ), 3 );
 
 # The SingularBaseRing will be called GAP_ring in Singular;
 # ideals will be called GAP_ideal_1, GAP_ideal_2, ... in Singular.
@@ -641,7 +644,8 @@ AppendStringToFile := function ( file, s )
 end;
 
 
-# this function could replace NormalizedWhitespace
+# This function could replace use of NormalizedWhitespace, or could be
+# put inside ReadStringFromFile .
 RemovedNewline := function ( string )
     if Length( string ) > 0 and string[Length( string )] = '\n'  then
         Unbind( string[Length( string )] );
@@ -1083,7 +1087,13 @@ ParseGapNumberToSingNumber := function ( n )
                 return String( n );
             fi;
 
-            eroo := ExtRepOfObj( n );
+            if IsCyc( n ) then
+                eroo := CoeffsCyc( n , Conductor( CoefficientsRing( 
+                    SingularBaseRing ) ) );
+            else
+                eroo := ExtRepOfObj( n );
+            fi;
+
             str := "( ";
             for i  in [ 1 .. Length( eroo ) ]  do
                 if Characteristic( SingularBaseRing ) = 0  then
@@ -1319,22 +1329,15 @@ ParseGapOrderingToSingOrdering := function( tor )
 
     elif IsMonomialOrdering( tor )  then
         name := Name( tor );
-        if name = "MonomialLexOrdering()"  then
+        name := name{[ 1 .. Position( name, '(' ) - 1 ]};
+        if name = "MonomialLexOrdering"  then
             to := "lp";
-        elif name = "MonomialGrevlexOrdering()"  then
+        elif name = "MonomialGrevlexOrdering"  then
             to := "dp";
-        elif name = "MonomialGrlexOrdering()"  then
+        elif name = "MonomialGrlexOrdering"  then
             to := "Dp";
         else
             Error( "the ordering ", tor, " is not yet supported\n" );
-        fi;
-
-    elif IsFunction( tor )  then
-        if tor = MonomialTotalDegreeLess  then
-        # but now the name is MonomialExtGrlexLess
-            to := "dp";
-        else
-            Error( "the ordering ", tor, " is not yet implemented\n" );
         fi;
 
     else
@@ -2626,7 +2629,11 @@ SINGULARGBASIS := rec(
             R := PolynomialRing( LeftActingDomain( R ), ipr );
         fi;
 
-        SetTermOrdering( R, O );
+        if not ( HasTermOrdering( R ) and 
+                 IsIdenticalObj( TermOrdering( R ), O ) )  then
+            SetTermOrdering( R, O );
+            SingularSetBaseRing( R );
+        fi;
 
         I := Ideal( R, pols );
         return GroebnerBasis( I );
@@ -2778,6 +2785,12 @@ SingularReportInformation := function (  )
 
     string := "";
 
+    s := Concatenation( "Pkg_Revision := \"",
+                        Revision.("singular/gap/singular.g"), "\";\n" );
+    Print( s );
+    Append( string, s );
+  
+
   if IsBound( PackageInfo ) then
     s := Concatenation( "Pkg_Version := \"", 
                          PackageInfo("singular")![1].Version, "\";\n" );
@@ -2861,6 +2874,7 @@ SingularTest := function (  )
 
     return ReadTest( fn );
 end;
+
 
 
 
