@@ -1,8 +1,14 @@
 #############################################################################
 ##
-##  PackageInfo.g file for the package Singular
-##  Marco Costantini and Willem de Graaf
+#W    PackageInfo.g        Package singular            Willem de Graaf
+#W                                                     Marco Costantini
 ##
+#H    @(#)$Id: PackageInfo.g,v 1.21 2006/07/23 20:05:30 gap Exp $
+##
+#Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
+#Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
+##
+
 
 SetPackageInfo( rec(
 PackageName := "singular",
@@ -11,8 +17,8 @@ Subtitle := "The GAP interface to Singular",
 # on a new release, change the version/date twice here, in init.g and in 
 # doc/singular.xml
 
-Version := "06.03.19",
-Date := "19/03/2006",
+Version := "06.07.23",
+Date := "23/07/2006",
 ArchiveURL := Concatenation([
  "http://www-math.science.unitn.it/~costanti/gap_code/singular/singular-", 
   ~.Version]),
@@ -26,12 +32,6 @@ Persons := [
   IsMaintainer := true,
   Email := "costanti@science.unitn.it",
   WWWHome := "http://www-math.science.unitn.it/~costanti/",
-  PostalAddress := Concatenation( [
-                     "Marco Costantini\n",
-                     "Dipartimento di Matematica\n",
-                     "Università degli Studi di Trento\n",
-                     "I-38050 Povo (Trento)\n",
-                     "Italy" ] ),
   Place := "Trento",
   Institution := "Department of Mathematics, University of Trento"
   ),
@@ -40,7 +40,7 @@ Persons := [
   LastName := "de Graaf",
   FirstNames := "Willem",
   IsAuthor := true,
-  IsMaintainer := true,
+  IsMaintainer := false,
   Email := "degraaf@science.unitn.it",
   WWWHome := "http://www.science.unitn.it/~degraaf/",
   PostalAddress := Concatenation( [
@@ -98,3 +98,6 @@ Keywords := [ "Interface to Singular", "Groebner bases" ]
 
 ));
 
+
+#############################################################################
+#E

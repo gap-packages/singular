@@ -1,3 +1,4 @@
+@(#)$Id: README,v 1.17 2006/07/23 17:56:56 gap Exp $
 
             singular: the GAP interface to Singular
 (http://www-math.science.unitn.it/~costanti/#singular)
@@ -218,7 +219,7 @@ GAP_...	all the names of the Singular variables defined by the interface
 ** Type conversions:
 
 type    Gap -> Singular                 Singular -> Gap
-        * := sets basering              U := only on Unix
+        * := sets basering              U := only on Unix or with Gap >=4.4.2
 
 def     (no sense)                      U (ask Singular for the type)
 ideal   *ParseGapIdealToSingIdeal       done

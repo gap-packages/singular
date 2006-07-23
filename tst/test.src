@@ -2,8 +2,10 @@
 # gap < test.src
 
 
-if CompareVersionNumbers( VERSION, "4.4" )  then
+if CompareVersionNumbers( VERSION, "4.5" )  then
     testfile := "test";
+elif CompareVersionNumbers( VERSION, "4.4" )  then
+    testfile := "test_4_4";
 else
     testfile := "test_4_3";
 fi;

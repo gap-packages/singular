@@ -33,7 +33,7 @@ int k_dim=nrows(AGC);
 list AGC2=gaussred(AGC,1);
 int ag_mat_rank=AGC2[4];
 matrix ag_mat=AGC2[3];  
-list ans=ag_mat,n_length,k_dim,mat_rank;
+list ans=ag_mat,n_length,k_dim,ag_mat_rank;
 export(GAP_S);
 return(ans);
  };

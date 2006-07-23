@@ -1,20 +1,26 @@
 #############################################################################
 ##
-#W    init.g               Gap package `singular'             
+#W    init.g               Package singular            Willem de Graaf
+#W                                                     Marco Costantini
 ##
+#H    @(#)$Id: init.g,v 1.9 2006/07/23 20:05:30 gap Exp $
+##
+#Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
+#Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
 ##
 
-# Announce the package version and try to find `Singular' on the system.
-# If it is there, set up a process called `Sing_Proc'.
 
-DeclarePackage( "singular", "06.01.09", true );
+# For backward compatibility: announce the package version.
+
+DeclarePackage( "singular", "06.07.23", true );
 DeclarePackageDocumentation( "singular", "doc" );
 
 # Read the files...
 
-# Singular interface
 ReadPkg( "singular", "gap/singular.gd" );
 ReadPkg( "singular", "gap/singular.g" );
 
 
 
+#############################################################################
+#E

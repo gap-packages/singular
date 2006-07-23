@@ -7,7 +7,7 @@
 <TitlePage>
   <Title><Package>singular</Package></Title>
   <Subtitle>the &GAP; interface to <Package>Singular</Package></Subtitle>
-  <Version>Version 06.03.19</Version>
+  <Version>Version 06.07.23</Version>
   <Author>Marco Costantini
    <Email>costanti@science.unitn.it</Email>
    <Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
@@ -17,7 +17,7 @@
     <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
   </Author>
 
-  <Date>19 March 2006</Date>
+  <Date>23 July 2006</Date>
   <Copyright>&copyright; 2003, 2004, 2005, 2006 Marco Costantini and Willem A. 
 de Graaf
   </Copyright>
@@ -451,6 +451,30 @@ gap> SingularTempDirectory := Directory( "/tmp" );
 dir("/tmp/")
 </Log>
 
+On Windows, <Package>Singular</Package> version 3 may be not executed
+directly, but may be executed as <A>bash Singular</A>. In this case, the
+variables <A>sing&uscore;exec</A>,
+<A>sing&uscore;exec&uscore;options</A>, <A>SingularTempDirectory</A> 
+must reflect this, otherwise Windows complains that <A>cygwin1.dll</A> 
+is not found.
+The following works on my Windows machine.
+
+<Log>
+gap> LoadPackage("singular");
+true
+gap> SingularTempDirectory := Directory("c:/cygwin/bin");
+dir("c:/cygwin/bin/")
+gap> sing_exec := "c:/cygwin/bin/bash.exe";
+"c:/cygwin/bin/bash.exe"
+gap> sing_exec_options := [ "Singular", "-t" ];
+[ "Singular", "-t" ]
+gap> StartSingular();
+</Log>
+
+Another possibility is to run Gap from within the Cygwin shell.
+In this case, with a standard installation of Cygwin and
+<Package>Singular</Package>, no change is required,
+
 </Description>
 
 </ManSection> 
@@ -691,9 +715,9 @@ ring first, because in these cases the functions arguments contains
 information about a ring that will be used as a base-ring. This will be
 specified for each function in the corresponding section of this manual.
 
-(Unnecessary use of <A>SingularSetBaseRing</A> doesn't harm; forgetting to use 
-<A>SingularSetBaseRing</A> produces the problem described in the paragraph 
-<Ref Subsect="common"/>.)
+(Unnecessary use of <A>SingularSetBaseRing</A> doesn't harm; forgetting
+to use <A>SingularSetBaseRing</A> produces the problem described in the
+paragraph <Ref Subsect="common"/>.)
 The results of the computations may depend on the choice of the 
 base-ring: see an example at <Ref Func="FactorsUsingSingular"/>, 
 in which the factorization of <M> x^2 + y^2 </M> is calculated.
@@ -771,9 +795,11 @@ for <Package>Singular</Package>, and it is passed to
 <A>type&uscore;output</A> is the data type (given as a string) in
 <Package>Singular</Package> of the output. 
 The data types are the following (see the <Package>Singular</Package>
-documentation, chapter ``4. Data types''): "def", "ideal", "int", "intmat",
-"intvec", "link", "list", "map", "matrix", "module", "number", "poly",
-"proc", "qring", "resolution", "ring", "string", "vector".
+documentation, chapter ``4. Data types''): "bigint", "def", "ideal",
+"int", "intmat", "intvec", "link", "list", "map", "matrix", "module",
+"number", "poly", "proc", "qring", "resolution", "ring", "string",
+"vector" (some of them were not available in previous versions of
+<Package>Singular</Package>).
 The empty string "" can be used if no output is expected.
 If in doubt you can use "def" (see the <Package>Singular</Package>
 documentation, paragraph ``4.1 def'').
@@ -784,8 +810,8 @@ is given its output type.
 </List>
 
 Of course, the objects in the list <A>arguments</A> and the
-<A>type&uscore;output</A> must be appropriate for the function <A>singcom</A>:
-no check is done by the interface.
+<A>type&uscore;output</A> must be appropriate for the function
+<A>singcom</A>: no check is done by the interface.
 
 <P/>
 
@@ -833,8 +859,8 @@ Objects of other types are not supported, or are even not yet implemented in
 <P/>
 The conversion of objects from <Package>Singular</Package> to 
 &GAP; is currently implemented for the following types:
-"def", "ideal", "int", "intmat", "intvec", "list", "matrix", "module",
-"number", "poly", "proc" (experimental), "string", "vector".
+"bigint", "def", "ideal", "int", "intmat", "intvec", "list", "matrix",
+"module", "number", "poly", "proc" (experimental), "string", "vector".
 Objects of other types are returned as strings.
 
 <P/>
@@ -887,15 +913,14 @@ gap> I:= Ideal( R, [f,g] );;
 gap> SingularLibrary( "primdec.lib" );
 gap> SingularInterface( "primdecGTZ", [ I ], "def" );
 #I  Singular output of type "list"
-[ [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)>,
-      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)> ],
-  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)>,
-      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (1 generators)> ],
-  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)>,
-      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)> ],
-  [ &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>,
-      &lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (2 generators)> ]
- ]
+[ [ &lt;two-sided ideal in Rationals[x,y,z], (1 generators)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (1 generators)> ],
+  [ &lt;two-sided ideal in Rationals[x,y,z], (1 generators)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (1 generators)> ],
+  [ &lt;two-sided ideal in Rationals[x,y,z], (2 generators)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (2 generators)> ],
+  [ &lt;two-sided ideal in Rationals[x,y,z], (3 generators)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (2 generators)> ] ]
 </Example>
 
 In the next example are calculated the first syzygy module of an ideal,
@@ -987,7 +1012,7 @@ gap> R:= PolynomialRing( Rationals, ["x","y","z"] : old );;
 gap> x := R.1;; y := R.2;; z := R.3;;
 gap> r:= [ x*y*z -x^2*z, x^2*y*z-x*y^2*z-x*y*z^2, x*y-x*z-y*z ];;
 gap> I:= Ideal( R, r );
-&lt;two-sided ideal in PolynomialRing(..., [ x, y, z ]), (3 generators)>
+&lt;two-sided ideal in Rationals[x,y,z], (3 generators)>
 gap> GroebnerBasis( I );
 [ x*y-x*z-y*z, x^2*z-x*z^2-y*z^2, x*z^3+y*z^3, -x*z^3+y^2*z^2-y*z^3 ]
 </Example>
@@ -1167,8 +1192,7 @@ with <Ref Func="SingularSetBaseRing"/>.
 <Example>
 gap> m:=[[1,1,1],[0,1,1],[0,0,1]] * One( GF(3) );;
 gap> G:= Group( [m] );;
-gap> R:= PolynomialRing( GF(3), 3 );
-PolynomialRing(..., [ x_1, x_2, x_3 ])
+gap> R:= PolynomialRing( GF(3), 3 );;
 gap> GeneratorsOfInvariantRing( R, G );
 [ x_3, x_1*x_3+x_2^2+x_2*x_3, x_1^3+x_1^2*x_3-x_1*x_2^2-x_1*x_2*x_3 ]
 </Example>
@@ -1198,12 +1222,17 @@ but it is reported to be slower that on Linux.
 
 <P/>
 
-This package works also with the system <Package>Plural</Package>
-(see <URL>http://www.singular.uni-kl.de/plural/</URL>) in place of
-<Package>Singular</Package>, tested with version 2-1-2, although the
-non-commuting polynomials in the sense of <Package>Plural</Package> are
-not yet implemented in &GAP;. In order to use <Package>Plural</Package>,
-it suffices to set <Ref Var="sing_exec"/> pointing to it.
+There is an extension of <Package>Singular</Package>, named
+<Package>Plural</Package>, which deals with certain noncommutative
+polynomial rings; see the <Package>Singular</Package> documentation,
+section ``7. PLURAL''.
+
+Currently, &GAP; doesn't support these noncommutative polynomial rings.
+The user of the <Package>Singular</Package> may use the features of
+<Package>Plural</Package> by calling the <Package>Singular</Package>
+function <A>ncalgebra</A> via <A>SingularInterface</A>. In this case,
+extreme care is needed, because on the &GAP; side the polynomial will
+still be commutative.
 
 <P/>
 
@@ -1232,6 +1261,46 @@ In this case, for each function call, a new session of
 </Subsection>
 
 
+<Subsection>
+<Heading>How different versions of &GAP; display polynomial rings and polynomials</Heading>
+
+The way in which &GAP; displays polynomials has changed passing from
+version 4.3 to 4.4 and the way in which &GAP; displays polynomial rings
+has changed passing from version 4.4 to 4.5.
+
+
+<Log>
+gap> # GAP 4.3 or older
+gap> R := PolynomialRing( Rationals, [ "x" ] : new );
+PolynomialRing(..., [ x ])
+gap> x := IndeterminatesOfPolynomialRing( R )[1];;
+gap> x^2 + x;
+x+x^2
+</Log>
+
+
+<Log>
+gap> # GAP 4.4
+gap> R := PolynomialRing( Rationals, [ "x" ] : new );
+PolynomialRing(..., [ x ])
+gap> x := IndeterminatesOfPolynomialRing( R )[1];;
+gap> x^2 + x;
+x^2+x
+</Log>
+
+
+<Example>
+gap> # GAP 4.5 or newer
+gap> R := PolynomialRing( Rationals, [ "x" ] : new );
+Rationals[x]
+gap> x := IndeterminatesOfPolynomialRing( R )[1];;
+gap> x^2 + x;
+x^2+x
+</Example>
+
+The examples in this manual use the way of displaying of the newest &GAP;.
+
+</Subsection>
 
 
 <Subsection> <Heading>Test file</Heading>
@@ -1295,10 +1364,11 @@ polynomials, or their coefficients.
 
 <Subsection><Heading>Errors on the <Package>Singular</Package> side</Heading>
 
-Errors may occur on the <Package>Singular</Package> side, for instance using
-<Ref Func="SingularInterface"/> if the arguments supplied are not appropriate for the
-called function. In general, it is still an open problem to find a
-satisfactory way to handle in &GAP; the errors of this kind.
+Errors may occur on the <Package>Singular</Package> side, for instance
+using <Ref Func="SingularInterface"/> if the arguments supplied are not
+appropriate for the called function. In general, it is still an open
+problem to find a satisfactory way to handle in &GAP; the errors of this
+kind.
 
 <P/>
 
@@ -1338,6 +1408,11 @@ your problem will be fixed quickly increases if you read the text
 ``How to Report Bugs Effectively'',
 <URL>http://www.chiark.greenend.org.uk/~sgtatham/bugs.html</URL> , and
 send a bug report according to this text.
+
+If the report is about the manual, please cite also its revision:
+<P/>
+<Code>@(#)$Id: singular.xml,v 1.30 2006/07/23 20:05:30 gap Exp $</Code>.
+
 
 </Subsection>
 

@@ -4,7 +4,7 @@
 This section of &GAP;'s <Package>singular</Package> package and the
 corresponding code were written by David Joyner,
 <Email>wdj@usna.edu</Email>, (with help from Christoph Lossen and Marco
-Costantini). It has been tested with <Package>singular</Package> versrion 2.0.x.
+Costantini). It has been tested with <Package>Singular</Package> versrion 2.0.x.
 
 <P/>
 
@@ -65,6 +65,7 @@ of the AG code C, n is its length, and k is its dimension.
 gap> F:=GF(7);;
 gap> R2:= PolynomialRing( F, 2 );;
 gap> SetTermOrdering( R2, "lp" );; # --- the term ordering must be "lp"
+gap> SingularSetBaseRing(R2);
 gap> indet:= IndeterminatesOfPolynomialRing(R2);;
 gap> x:= indet[1];; y:= indet[2];;
 gap> f:=x^7-y^2-x;;

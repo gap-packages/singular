@@ -1,5 +1,16 @@
+#############################################################################
+##
+#W    singular.g           Package singular            Willem de Graaf
+#W                                                     Marco Costantini
+##
+#H    @(#)$Id: singular.g,v 1.56 2006/07/23 17:56:57 gap Exp $
+##
+#Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
+#Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
+##
+
 Revision.("singular/gap/singular.g") :=
-    "@(#)$Id: singular.g,v 1.52 2006/03/10 19:05:56 gap Exp $";
+    "@(#)$Id: singular.g,v 1.56 2006/07/23 17:56:57 gap Exp $";
 
 ##############################################################################
 ##############################################################################
@@ -125,10 +136,6 @@ max_int := 2147483647 );
 # system("version");
 # The interface will ask Singular for it.
 SingularVersion := 0; # not yet determined;
-
-# the following boolean is true iff the interface is using Plural
-# instead of Singular
-UsingPlural := false;
 
 # The Libraries loaded in Singular
 SingularLoadedLibraries := "";
@@ -595,8 +602,6 @@ StartSingular := function (  )
 #    SingularNr.Output:= SingularNr.Output + 1;
     Info(InfoSingular, 3, "output ", SingularNr.Output, ":\n", out);
 
-    UsingPlural := PositionSublist( out, "PLURAL" ) <> fail;
-
     # Now we check that Singular is working, and test the interface
     out := SingWriteAndReadUntilDone( "" );
 
@@ -606,12 +611,7 @@ StartSingular := function (  )
     SingularVersion := Int( Filtered( out, IsDigitChar ) );
     # SingularVersion := SingularInterface( "system", [ "version" ], "int" );
 
-    if UsingPlural then
-        Info( InfoSingular, 2, "Started Plural, version ", SingularVersion );
-    else
-        Info( InfoSingular, 2, "Started Singular, version ", 
-              SingularVersion );
-    fi;
+    Info( InfoSingular, 2, "Started Singular, version ", SingularVersion );
 
     # set the base ring in Singular according to the SingularBaseRing in Gap.
     SingularSetBaseRing( SingularBaseRing );
@@ -2094,6 +2094,19 @@ have a return type 'none', see \"3.5.1 General command syntax\".",
 	],
 
 
+  bigint := [ "Variables of type bigint represent the arbitrary long \
+integers. They can only be contructed from other types (int, number).",
+#	obj -> IsInt( obj ) and ( SingularVersion >= 3002 or
+#		# because it may be still unknown
+#		SingularVersion = 0 ),
+#	obj -> Concatenation( "bigint(", String( obj ), ")" ),
+ReturnFalse,
+,
+	Int
+	],
+	    
+
+
   package := [ "The data type package is used to group identifiers into \
 collections. Introduced in Singular 3.0.0.",
 	ReturnFalse, # makes no sense in Gap
@@ -2864,17 +2877,20 @@ end;
 
 
 SingularTest := function (  )
-    local  fn;
+    local  testfile, fn;
 
-    if CompareVersionNumbers( VERSION, "4.4" )  then
-        fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "test" );
+    if CompareVersionNumbers( VERSION, "4.5" )  then
+        testfile := "test";
+    elif CompareVersionNumbers( VERSION, "4.4" )  then
+        testfile := "test_4_4";
     else
-        fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "test_4_3" );
+        testfile := "test_4_3";
     fi;
 
+    fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), testfile );
+    
     return ReadTest( fn );
 end;
-
 
 
 
@@ -2885,4 +2901,7 @@ if SingularCommand = SingCommandUsingProcess  then
     SingularVersion := Int( SingularCommand( "", "system(\"version\");" ) );
 fi;
 
+
+#############################################################################
+#E
 
