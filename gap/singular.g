@@ -3,14 +3,14 @@
 #W    singular.g           Package singular            Willem de Graaf
 #W                                                     Marco Costantini
 ##
-#H    @(#)$Id: singular.g,v 1.56 2006/07/23 17:56:57 gap Exp $
+#H    @(#)$Id: singular.g,v 1.59 2011/09/10 16:35:13 alexk Exp $
 ##
 #Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
 #Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
 ##
 
 Revision.("singular/gap/singular.g") :=
-    "@(#)$Id: singular.g,v 1.56 2006/07/23 17:56:57 gap Exp $";
+    "@(#)$Id: singular.g,v 1.59 2011/09/10 16:35:13 alexk Exp $";
 
 ##############################################################################
 ##############################################################################
@@ -28,23 +28,24 @@ if not IsBound( Sing_Proc ) then
 # The full path to the Singular executable file
 
 # Here in this file must be added a line with the full path to the
-# Singular executable file on your system (without the '#'),
-# sing_exec := "";
-# in place of the following example;
+# Singular executable file on your system (without the '#'), e.g.
+# sing_exec := "/home/graaf/Singular/2-0-3/ix86-Linux/Singular";
+# or, if the executable is in the system $PATH and has a name which
+# is non-standard (e.g. singular in lowercase), just with its name
+# as below:
 
-sing_exec := "/home/graaf/Singular/2-0-3/ix86-Linux/Singular";
+sing_exec := "singular";
 
 # The directory separator is always '/', even under DOS/Windows or
 # MacOS, as in the following example:
 # sing_exec := "/usr/local/Singular/2-0-4/ix86-Win/Singular.exe";
 
-# If the Singular executable file is the the system $PATH, it is not
+# If the Singular executable file is the the system $PATH and has
+# the standard name "Singular" started in uppercase, then it is not
 # necessary adding this line, because the interface should be able to
-# find the executable file (provided that its name is "Singular").
-# You can get this path, from within Singular, with the command 
+# find the executable file itself. You can get this path, from within 
+# Singular, with the command 
 # system( "Singular" );
-
-
 
 # Singular command line options
 
@@ -2115,6 +2116,25 @@ collections. Introduced in Singular 3.0.0.",
 );
 
 
+# The SingularDataTypes record is traversed in ConvertGapObjToSingObj, and the
+# order of the entries is important. We can't guarantee that GAP will present 
+# the record entries in the order that we have given them (a change introduced 
+# in GAP 4.5). So we here list the order in which they should be tested
+
+SingularDataTypeTestOrder := [ "def", "ideal", "int", "intmat", "intvec", "link", 
+  "map", "matrix", "module", "number", "poly", "proc", "qring", "resolution", 
+  "ring", "string", "vector", "list", "?unknown type?", "none", "bigint", 
+  "package" ];
+
+# And check for sanity that this set is same as the names in the record
+if Set(SingularDataTypeTestOrder) <> Set(RecNames(SingularDataTypes)) then
+  Error( "Singular<->GAP datatypes database error!\n" );
+fi;
+
+
+
+
+
 
 ##############################################################################
 
@@ -2123,7 +2143,7 @@ collections. Introduced in Singular 3.0.0.",
 
 SingularType := function ( obj )
     local  i;
-    for i  in RecNames( SingularDataTypes )  do
+    for i  in SingularDataTypeTestOrder  do
         if SingularDataTypes.(i)[2]( obj )  then
             return i;
         fi;
@@ -2891,7 +2911,6 @@ SingularTest := function (  )
     
     return ReadTest( fn );
 end;
-
 
 
 
