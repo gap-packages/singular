@@ -4,14 +4,11 @@
 
 
 # The manual can be produced in GAP (when GAPDoc is loaded) with the
-# following command:
+# following commands:
 
 MakeGAPDocDoc( DirectoriesPackageLibrary( "singular", "doc" )[1], "singular", [], "singular", "../../.." );;
-
-# this command produces the 'manual.lab' file
-
-GAPDocManualLab( "singular" );
-
+CopyHTMLStyleFiles( "doc" );
+GAPDocManualLab( "singular" ); # this command produces the 'manual.lab' file
 
 # The source files are
 

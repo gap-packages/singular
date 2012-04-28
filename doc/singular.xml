@@ -7,7 +7,7 @@
 <TitlePage>
   <Title><Package>singular</Package></Title>
   <Subtitle>the &GAP; interface to <Package>Singular</Package></Subtitle>
-  <Version>Version 11.08.11</Version>
+  <Version>Version 12.04.28</Version>
   <Author>Marco Costantini
    <Email>costanti@science.unitn.it</Email>
    <Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
@@ -17,7 +17,7 @@
     <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
   </Author>
 
-  <Date>11 August 2011</Date>
+  <Date>28 April 2012</Date>
   <Copyright>&copyright; 2003, 2004, 2005, 2006 Marco Costantini and Willem A. 
 de Graaf
   </Copyright>
@@ -360,7 +360,7 @@ your &GAP; installation, it can be downloaded and unpacked in the
 <File>pkg/</File> directory of the &GAP; installation.  If you don't
 have write access to the <File>pkg/</File> directory in your main &GAP;
 installation you can use private directories as explained in the &GAP; 
-documentation <Ref Sect="GAP Root Directory" BookName="ref"/>. 
+documentation <Ref Sect="GAP Root Directories" BookName="ref"/>. 
 The package <Package>singular</Package> doesn't require compilation.
 
 </Subsection>
@@ -1411,7 +1411,7 @@ send a bug report according to this text.
 
 If the report is about the manual, please cite also its revision:
 <P/>
-<Code>@(#)$Id: singular.xml,v 1.33 2011/09/10 16:35:13 alexk Exp $</Code>.
+<Code>@(#)$Id: singular.xml,v 1.34 2012/04/27 22:42:10 alexk Exp $</Code>.
 
 
 </Subsection>

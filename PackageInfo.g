@@ -3,7 +3,7 @@
 #W    PackageInfo.g        Package singular            Willem de Graaf
 #W                                                     Marco Costantini
 ##
-#H    @(#)$Id: PackageInfo.g,v 1.22 2011/09/10 16:35:12 alexk Exp $
+#H    @(#)$Id: PackageInfo.g,v 1.23 2012/04/27 22:42:25 alexk Exp $
 ##
 #Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
 #Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
@@ -19,8 +19,8 @@ PackageWWWHome := "http://www.gap-system.org/HostedGapPackages/singular/",
 # on a new release, change the version/date twice here, in init.g and in 
 # doc/singular.xml
 
-Version := "11.08.11",
-Date := "11/08/2011",
+Version := "12.04.28",
+Date := "28/04/2012",
 
 ArchiveURL := Concatenation( ~.PackageWWWHome, "singular-", ~.Version ),
 ArchiveFormats := ".tar.gz",
@@ -78,10 +78,10 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4", # recommended >=4.2 under unix or >=4.4 under windows
+  GAP := ">=4.5", 
   NeededOtherPackages := [  ],
   # for reading online help, GapDoc is used
-  SuggestedOtherPackages := [ [ "GapDoc", ">= 0.99" ] ], 
+  SuggestedOtherPackages := [ [ "GapDoc", ">= 1.5.1" ] ], 
   ExternalConditions := [ ["Requires the computer algebra system Singular",
                            "http://www.singular.uni-kl.de/"] ]
 ),
