@@ -1,3 +1,5 @@
+dist: trusty
+
 language: c
 env:
   global:
@@ -5,20 +7,30 @@ env:
     - COVDIR=coverage
 
 addons:
-  apt_packages:
+  apt:
+    sources:
+    - sourceline: 'deb ftp://jim.mathematik.uni-kl.de/repo/ubuntu14 trusty main'
+      key_url: 'ftp://jim.mathematik.uni-kl.de/repo/extra/gpg'
+    packages:
+    - singular
     - libgmp-dev
     - libreadline-dev
-    - singular
+    - zlib1g-dev
 
 matrix:
   include:
     - env: CFLAGS="-O2"
     - env: CFLAGS="-O2" ABI=32
       addons:
-        apt_packages:
+        apt:
+          sources:
+          - sourceline: 'deb ftp://jim.mathematik.uni-kl.de/repo/ubuntu14 trusty main'
+            key_url: 'ftp://jim.mathematik.uni-kl.de/repo/extra/gpg'
+          packages:
           - singular
           - libgmp-dev:i386
           - libreadline-dev:i386
+          - zlib1g-dev:i386
           - gcc-multilib
           - g++-multilib
 
