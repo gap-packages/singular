@@ -372,7 +372,7 @@ package has been loaded, and before starting
 
 <Example>
 gap> LoadPackage( "singular" );
-The GAP interface to Singular, by Marco Costantini and Willem de Graaf
+A GAP interface to Singular, by Marco Costantini and Willem de Graaf
 true
 gap> sing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";;
 </Example>

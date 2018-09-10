@@ -7,7 +7,7 @@ gap> if not IsBound(LoadPackage) and IsBound(RequirePackage)  then
 >     LoadPackage := RequirePackage;
 > fi;
 gap> LoadPackage("singular");
-The GAP interface to Singular, by Marco Costantini and Willem de Graaf
+A GAP interface to Singular, by Marco Costantini and Willem de Graaf
 true
 gap> SetInfoLevel( InfoSingular, 1 );
 gap> StartSingular();

@@ -10,12 +10,10 @@
 
 SetPackageInfo( rec(
 PackageName := "singular",
-Subtitle := "The GAP interface to Singular",
+Subtitle := "A GAP interface to Singular",
+Version := "12.04.28dev",
 
-# on a new release, change the version/date twice here, in init.g and in 
-# doc/singular.xml
-
-Version := "12.04.28",
+##  Release date of the current version in dd/mm/yyyy format.
 Date := "28/04/2012",
 
 Persons := [
@@ -84,29 +82,21 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "The GAP interface to Singular",
+  LongTitle := "A GAP interface to Singular",
   Autoload  := true
 ),
 
 Dependencies := rec(
-  GAP := ">=4.5", 
+  GAP := ">=4.8",
   NeededOtherPackages := [  ],
-  # for reading online help, GapDoc is used
-  SuggestedOtherPackages := [ [ "GapDoc", ">= 1.5.1" ] ], 
+  SuggestedOtherPackages := [  ],
   ExternalConditions := [ ["Requires the computer algebra system Singular",
                            "https://www.singular.uni-kl.de/"] ]
 ),
 AvailabilityTest := ReturnTrue,
 Autoload := false,
-# the banner
-# BannerString := 
-# "The GAP interface to Singular, by Marco Costantini and Willem de Graaf\n",
 
 #TestFile := "tst/testall.g",
 Keywords := [ "Interface to Singular", "Groebner bases" ]
 
 ));
-
-
-#############################################################################
-#E
