@@ -24,10 +24,10 @@ Persons := [
   FirstNames := "Marco",
   IsAuthor := true,
   IsMaintainer := false,
-  Email := "costanti@science.unitn.it",
-  WWWHome := "http://www-math.science.unitn.it/~costanti/",
-  Place := "Trento",
-  Institution := "Department of Mathematics, University of Trento"
+  #Email := "costanti@science.unitn.it",
+  #WWWHome := "http://www-math.science.unitn.it/~costanti/",
+  #Place := "Trento",
+  #Institution := "Department of Mathematics, University of Trento"
   ),
 
   rec(
@@ -36,7 +36,7 @@ Persons := [
   IsAuthor := true,
   IsMaintainer := false,
   Email := "degraaf@science.unitn.it",
-  WWWHome := "http://www.science.unitn.it/~degraaf/",
+  WWWHome := "https://www.science.unitn.it/~degraaf/",
   PostalAddress := Concatenation( [
                      "Willem de Graaf\n",
                      "Dipartimento di Matematica\n",
@@ -94,7 +94,7 @@ Dependencies := rec(
   # for reading online help, GapDoc is used
   SuggestedOtherPackages := [ [ "GapDoc", ">= 1.5.1" ] ], 
   ExternalConditions := [ ["Requires the computer algebra system Singular",
-                           "http://www.singular.uni-kl.de/"] ]
+                           "https://www.singular.uni-kl.de/"] ]
 ),
 AvailabilityTest := ReturnTrue,
 Autoload := false,

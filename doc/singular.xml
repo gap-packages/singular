@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!DOCTYPE Book SYSTEM "http://www-math.science.unitn.it/~costanti/DTD/gapdoc.dtd">
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
 
 <Book Name="singular">
 
@@ -48,7 +48,7 @@ paragraph <Ref Subsect="platforms"/> for details.
 
 If you have used this package in the preparation of a paper please cite 
 it as described in 
-<URL>http://www.gap-system.org/Contacts/cite.html</URL>.
+<URL>https://www.gap-system.org/Contacts/cite.html</URL>.
 
 
 <P/>
@@ -139,7 +139,7 @@ vice versa.
 <P/>
 
 <Package>Singular</Package> is not included in this package, and can be
-obtained for free from <URL>http://www.singular.uni-kl.de</URL>. There,
+obtained for free from <URL>https://www.singular.uni-kl.de</URL>. There,
 one can find also its documentation, installing instructions, the source
 code if wanted, and support if needed.  <Package>Singular</Package> is
 available for several platforms.
@@ -220,7 +220,7 @@ and is developed by several people (<Q>The &GAP; Group</Q>).
 <P/>
 
 &GAP; is not included in this package, and can be obtained for free from
-<URL>http://www.gap-system.org/</URL>. There, one can find also its
+<URL>https://www.gap-system.org/</URL>. There, one can find also its
 documentation, installing instructions, the source code, and support if
 needed. The &GAP; system will run on any machine with an Unix-like or
 recent Windows or MacOS operating system and with a reasonable amount of
@@ -1389,7 +1389,7 @@ directly on the screen by <Package>Singular</Package>.
 Every report about this package is welcome, however the probability that
 your problem will be fixed quickly increases if you read the text
 ``How to Report Bugs Effectively'',
-<URL>http://www.chiark.greenend.org.uk/~sgtatham/bugs.html</URL> , and
+<URL>https://www.chiark.greenend.org.uk/~sgtatham/bugs.html</URL> , and
 send a bug report according to this text.
 
 </Subsection>

@@ -67,7 +67,7 @@ ordering) and Mora's algorithm (if the ordering is a tangent cone
 ordering) as special cases. Furthermore, it provides polynomial
 factorizations, resultant, characteristic set and gcd computations, syzygy
 and free-resolution computations, and many more related functionalities."
-See http://www.singular.uni-kl.de/ . Singular is not included in the
+See https://www.singular.uni-kl.de/ . Singular is not included in the
 package, but can be downloaded for free from that site.)
 
 The package is available in the Gap CVS repository in the directory
