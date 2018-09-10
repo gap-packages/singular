@@ -630,6 +630,7 @@ gap> SingularInterface( "string", "GAP_Done", "string" );
 #I  running SingularInterface( "string", "...", "string" )...
 #I  done SingularInterface.
 "\n return ( \"@\" ) \n\n;return();\n\n"
+gap> CloseSingular();
 gap> SetInfoLevel( InfoSingular, 1 );
 
 #
