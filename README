@@ -35,8 +35,6 @@ Installing `singular':
 gap> LoadPackage("singular");
 true
 
-   Use RequirePackage instead in GAP 4.x, 1 <= x <= 3.
-
 4) The documentation is in the `doc' subdirectory: it is more up-to-date 
    than this README file.
 
@@ -82,23 +80,11 @@ hang Gap, such as
 SingularLibrary("all");
 SingularInterface("execute", ["pause()"], "def" );
 
-This package is designed for using the Gap function
-"InputOutputLocalProcess" available on Unix machines, and was tested with
-Linux, Sun and Alpha, but should work partially also with "Process" on
-non-Unix machines (not yet tested, reports are welcome). Auto-detection
-is used. (Starting with Gap 4.4.2, this package is expected to work on 
-every operating system that supports both Gap and Singular.)
-
-This packages requires Gap 4.2 or newer: with Gap 4.1 "Process" is used
-instead of "InputOutputLocalProcess", as the latter was not yet there;
-so the same limitations of above apply. When this package is loaded with a
-Gap version older than 4.4, some harmles errors "Syntax error: warning: 
-unbound global variable in ..." are displayed.
-
 
 Hints, bug reports, patches, requests of other functionalities, and so on
-are welcomed. Add the output of SingularReportInformation(); to your
-report.
+are welcome, please submit them at
+<https://github.com/gap-packages/singular/issues>
+Please add the output of SingularReportInformation(); to your report.
 
 
 # load

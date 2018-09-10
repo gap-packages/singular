@@ -31,7 +31,7 @@ ZeroTab:=function( n )
 
    S:= [ ];
    for i in [1..n] do
-    S[i]:=MutableNullMat(n,n);
+    S[i]:=NullMat(n,n);
    od;
    return S;
 end;

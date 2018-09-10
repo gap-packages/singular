@@ -41,20 +41,6 @@ DeclareAttribute( "SingularIdentifier", IsObject, "mutable" );
 
 #############################################################################
 ##
-#A  GroebnerBasis( <x> )
-##
-##  This gives the mapping between the indeterminates in Gap and in Singular
-##
-
-if not CompareVersionNumbers( VERSION, "4.4" ) and 
-    # something else may have already defined GroebnerBasis ...
-    not IsBound( GroebnerBasis )  then
-    DeclareAttribute( "GroebnerBasis", IsMagma );
-fi;
-
-
-#############################################################################
-##
 #I InfoSingular
 ##
 ## The InfoClass for package singular

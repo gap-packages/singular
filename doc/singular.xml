@@ -472,9 +472,7 @@ In this case, with a standard installation of Cygwin and
 <Package>Singular</Package></Heading>
 
 The user must load the package <Package>singular</Package> with 
-<Ref Func="LoadPackage" BookName="ref"/> 
-(or with <Ref Func="RequirePackage" BookName="ref"/> if using
-&GAP; version 4.x, x &tlt; 4).
+<Ref Func="LoadPackage" BookName="ref"/>.
 
 <ManSection>
 <Func Name="StartSingular" Arg = ""/>
@@ -1292,8 +1290,8 @@ The following performs a test of the package functionality using a test file
 <Ref Sect="Test Files" BookName="ref"/>.
 
 <Log>
-gap> fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "test" );;
-gap> ReadTest( fn );
+gap> fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "testall.tst" );;
+gap> Test( fn );
 true
 </Log>
 </Subsection>

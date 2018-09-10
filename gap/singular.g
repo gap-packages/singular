@@ -194,79 +194,6 @@ end;
 
 
 
-# The following is the code for compatibility with older Gap versions
-
-
-if not CompareVersionNumbers( VERSION, "4.4.5" )  then
-
-  if not IsBound( PolynomialByExtRepNC  )  then
-      PolynomialByExtRepNC := PolynomialByExtRep;
-  fi;
-
-  if not CompareVersionNumbers( VERSION, "4.4" ) then 
-
-    if not IsBound( IsPolynomialRingIdeal )  then
-        DeclareSynonym( "IsPolynomialRingIdeal",
-         IsRing and IsRationalFunctionCollection and 
-         HasLeftActingRingOfIdeal and HasRightActingRingOfIdeal );
-    fi;
-
-    if not IsBound( IsMonomialOrdering )  then
-        IsMonomialOrdering := ReturnFalse;
-        MonomialComparisonFunction := ReturnFail;
-    fi;
-
-    if not IsBound(LoadPackage) and IsBound(RequirePackage)  then
-        LoadPackage := RequirePackage;
-    fi;
-    if not IsBound(ReadPackage) and IsBound(ReadPkg)  then
-        ReadPackage := ReadPkg;
-    fi;
-
-    if not CompareVersionNumbers( VERSION, "4.3" )  then
-
-        InstallOtherMethod( PositionSublist, "for an empty list", true,
-         [ IsEmpty, IsList ], 0, ReturnFail );
-
-        InstallOtherMethod( PositionSublist, "for an empty list", true,
-         [ IsEmpty, IsList, IsInt ], 0, ReturnFail );
-
-        if not IsBound( NormalizedWhitespace )  then
-            NormalizedWhitespace := x -> ReplacedString( x, "\n", " ");
-        fi;
-
-        if not IsBound( EvalString )  then
-            EvalString := function ( expr )
-                  local  tmp;
-                  tmp := Concatenation( "return ", expr, ";" );
-                  return ReadAsFunction( InputTextString( tmp ) )(  );
-              end;
-        fi;
-
-        JoinStringsWithSeparator := function ( arg )
-              local  str, sep, res, i;
-              str := List( arg[1], String );
-              if Length( str ) = 0  then
-                  return "";
-              fi;
-              if Length( arg ) > 1  then
-                  sep := arg[2];
-              else
-                  sep := ",";
-              fi;
-              res := ShallowCopy( str[1] );
-              for i  in [ 2 .. Length( str ) ]  do
-                  Append( res, sep );
-                  Append( res, str[i] );
-              od;
-              return res;
-          end;
-
-    fi;
-
-  fi;
-
-fi;
 
 # It would be possible to add also something like this for backward
 # compatibility:
@@ -966,12 +893,6 @@ SingCommandUsingProcess := function ( precommand, command )
 
     if command <> ""  then
 
-        if not CompareVersionNumbers( VERSION, "4.2" ) and 
-        # the output of "Process" contains an extra space at the end
-           Length( out ) > 0 and out{[ Length( out ) ]} = " "  then
-            out := out{[ 1 .. Length( out ) - 1 ]};
-        fi;
-
         return out;
     else
         return "";
@@ -980,34 +901,21 @@ SingCommandUsingProcess := function ( precommand, command )
 end;
 
 
-if ARCH_IS_UNIX(  ) and CompareVersionNumbers( VERSION, "4.2" ) or
-   CompareVersionNumbers( VERSION, "4.4.2" )
- then
-
-    # "InputOutputLocalProcess" is available
-
-    # writing to a i/o stream is slow in windows (but fast in unix)
-    if ARCH_IS_WINDOWS(  ) then 
-        # choose one
-        #SingularCommand := SingCommandInStreamOutStream; # slow with windows
-        SingularCommand := SingCommandInFileOutStream;
-        #SingularCommand := SingCommandInFileOutFile;
-        #SingularCommand := SingCommandInStreamOutFile; # slow with windows
-        #SingularCommand := SingCommandUsingProcess; # not recommended!
-    else
-        # choose one
-        SingularCommand := SingCommandInStreamOutStream; # slow with windows
-        #SingularCommand := SingCommandInFileOutStream;
-        #SingularCommand := SingCommandInFileOutFile;
-        #SingularCommand := SingCommandInStreamOutFile; # slow with windows
-        #SingularCommand := SingCommandUsingProcess; # not recommended!
-    fi;
-
+# writing to a i/o stream is slow in windows (but fast in unix)
+if ARCH_IS_WINDOWS(  ) then 
+    # choose one
+    #SingularCommand := SingCommandInStreamOutStream; # slow with windows
+    SingularCommand := SingCommandInFileOutStream;
+    #SingularCommand := SingCommandInFileOutFile;
+    #SingularCommand := SingCommandInStreamOutFile; # slow with windows
+    #SingularCommand := SingCommandUsingProcess; # not recommended!
 else
-
-    # "InputOutputLocalProcess" doesn't work yet, "Process" will be used
-    SingularCommand := SingCommandUsingProcess;
-
+    # choose one
+    SingularCommand := SingCommandInStreamOutStream; # slow with windows
+    #SingularCommand := SingCommandInFileOutStream;
+    #SingularCommand := SingCommandInFileOutFile;
+    #SingularCommand := SingCommandInStreamOutFile; # slow with windows
+    #SingularCommand := SingCommandUsingProcess; # not recommended!
 fi;
 
 
@@ -2813,12 +2721,6 @@ SingularReportInformation := function (  )
 
     string := "";
 
-    s := Concatenation( "Pkg_Revision := \"",
-                        Revision.("singular/gap/singular.g"), "\";\n" );
-    Print( s );
-    Append( string, s );
-  
-
   if IsBound( PackageInfo ) then
     s := Concatenation( "Pkg_Version := \"", 
                          PackageInfo("singular")![1].Version, "\";\n" );
@@ -2826,11 +2728,11 @@ SingularReportInformation := function (  )
     Append( string, s );
   fi;
 
-    s := Concatenation( "Gap_Version := \"", VERSION, "\";\n" );
+    s := Concatenation( "Gap_Version := \"", GAPInfo.Version, "\";\n" );
     Print( s );
     Append( string, s );
 
-    s := Concatenation( "Gap_Architecture := \"", GAP_ARCHITECTURE, 
+    s := Concatenation( "Gap_Architecture := \"", GAPInfo.Architecture, 
          "\";\n" );
     Print( s );
     Append( string, s );
@@ -2888,26 +2790,6 @@ end;
 SingularReloadFile := function (  )
     return ReadPackage( "singular", "gap/singular.g" );
 end;
-
-
-
-SingularTest := function (  )
-    local  testfile, fn;
-
-    if CompareVersionNumbers( VERSION, "4.5" )  then
-        testfile := "test";
-    elif CompareVersionNumbers( VERSION, "4.4" )  then
-        testfile := "test_4_4";
-    else
-        testfile := "test_4_3";
-    fi;
-
-    fn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), testfile );
-    
-    return ReadTest( fn );
-end;
-
-
 
 # If 'Process' is used, ask Singular to get SingularVersion.
 

@@ -528,15 +528,9 @@ true
 #
 # Check the conversion of various types of object
 #
-gap> if CompareVersionNumbers(VERSION, "4.4") then
->     x:=X(GF(5),"x" : new );
->     y:=X(GF(5),"y",[x] : new );
->     ring:=PolynomialRing(GF(5),[x,y]);
-> else
->     ring:=PolynomialRing(GF(5),2);
->     gen := GeneratorsOfLeftOperatorRingWithOne(ring);
->     x:=gen[1];;y:=gen[2];;
-> fi;
+gap> x:=X(GF(5),"x" : new );;
+gap> y:=X(GF(5),"y",[x] : new );;
+gap> ring:=PolynomialRing(GF(5),[x,y]);;
 gap> SingularSetBaseRing(ring);
 
 #
