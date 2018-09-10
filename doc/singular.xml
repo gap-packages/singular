@@ -206,8 +206,8 @@ links) and refinements led in 1997 to the release of
 <Package>Singular</Package> version 1.0 and in 1998 to the release of
 version 1.2 (much faster standard and Groebner bases computations based on
 Hilbert series and on improved implementations of the algorithms,
-libraries for primary decomposition, ring normalization, etc.)
-</Q>.
+libraries for primary decomposition, ring normalization, etc.).
+</Q>
 
 </Subsection>
 
