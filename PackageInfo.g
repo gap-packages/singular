@@ -50,7 +50,15 @@ Persons := [
                      "Italy" ] ),
   Place := "Trento",
   Institution := "Department of Mathematics, University of Trento"
-  )
+  ),
+
+  rec(
+    LastName      := "GAP Team",
+    FirstNames    := "The",
+    IsAuthor      := false,
+    IsMaintainer  := true,
+    Email         := "support@gap-system.org",
+  ),
 ],
 
 Status := "deposited",
