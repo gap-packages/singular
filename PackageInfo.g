@@ -45,7 +45,7 @@ Persons := [
   PostalAddress := Concatenation( [
                      "Willem de Graaf\n",
                      "Dipartimento di Matematica\n",
-                     "Universit‡ degli Studi di Trento\n",
+                     "Universit√† degli Studi di Trento\n",
                      "I-38050 Povo (Trento)\n",
                      "Italy" ] ),
   Place := "Trento",

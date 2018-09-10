@@ -4,24 +4,7 @@
 
 <Book Name="singular">
 
-<TitlePage>
-  <Title><Package>singular</Package></Title>
-  <Subtitle>the &GAP; interface to <Package>Singular</Package></Subtitle>
-  <Version>Version 12.04.28</Version>
-  <Author>Marco Costantini
-   <Email>costanti@science.unitn.it</Email>
-   <Homepage>http://www-math.science.unitn.it/~costanti/</Homepage>
-  </Author>
-  <Author>Willem A. de Graaf
-    <Email>degraaf@science.unitn.it</Email>
-    <Homepage>http://www.science.unitn.it/~degraaf/</Homepage>
-  </Author>
-
-  <Date>28 April 2012</Date>
-  <Copyright>&copyright; 2003, 2004, 2005, 2006 Marco Costantini and Willem A. 
-de Graaf
-  </Copyright>
-</TitlePage>
+<#Include SYSTEM "title.xml">
 
 <TableOfContents/>
 
