@@ -1,0 +1,1103 @@
+  
+  [1X1 [33X[0;0Y[5Xsingular[105X[101X[1X: the [5XGAP[105X[101X[1X interface to [5XSingular[105X[101X[1X[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThis  is  the  manual  of  the  [5XGAP[105X  package  ``[5Xsingular[105X''  that provides an
+  interface  from  the  [5XGAP[105X  computer  algebra system to the [5XSingular[105X computer
+  algebra system.[133X
+  
+  [33X[0;0YThis package allows the [5XGAP[105X user to access functions of [5XSingular[105X from within
+  [5XGAP[105X, and to apply these functions to the [5XGAP[105X objects. With this package, the
+  user  keeps working with [5XGAP[105X and, if he needs a function of [5XSingular[105X that is
+  not  present  in  [5XGAP[105X,  he  can use this function via the interface; see the
+  function [2XSingularInterface[102X ([14X1.3-8[114X).[133X
+  
+  [33X[0;0YThis package provides also a function that computes Groebner bases of ideals
+  in  polynomial rings of [5XGAP[105X. This function uses the [5XSingular[105X implementation,
+  which is very fast; see the function [2XGroebnerBasis[102X ([14X1.5-1[114X).[133X
+  
+  [33X[0;0YThe  interface  is  expected to work with every version of [5XGAP[105X 4, every (not
+  very  old) version of [5XSingular[105X, and on every platform, on which both [5XGAP[105X and
+  [5XSingular[105X run; see paragraph [14X1.7-1[114X for details.[133X
+  
+  [33X[0;0YIf  you  have used this package in the preparation of a paper please cite it
+  as described in [7Xhttps://www.gap-system.org/Contacts/cite.html[107X.[133X
+  
+  [33X[0;0YIf  [5XGAP[105X,  [5XSingular[105X,  and  the [5XGAP[105X package [5Xsingular[105X are already installed and
+  working  on  his computer, the user of this interface needs to read only the
+  subsection  [2Xsing_exec[102X  ([14X1.2-4[114X), the section [14X1.3[114X, and in case of problems the
+  subsection [14X1.7-4[114X.[133X
+  
+  
+  [1X1.1-1 [33X[0;0YPackage evolution[133X[101X
+  
+  [33X[0;0YThe  work for the package [5Xsingular[105X has been started by Willem de Graaf, that
+  planned  this  package  as  an  interface  to  the function of [5XSingular[105X that
+  calculates  the  Groebner  bases. To this purpose, Willem de Graaf wrote the
+  code  for  the  conversion of rings and ideals from [5XGAP[105X to [5XSingular[105X, and the
+  code for the conversion of numbers and polynomials in both directions.[133X
+  
+  [33X[0;0YMarco  Costantini  has widened the aim of the package, in order to make it a
+  general  interface  to each possible function of [5XSingular[105X: with the function
+  [2XSingularInterface[102X ([14X1.3-8[114X) it is possible to use from within [5XGAP[105X any function
+  of [5XSingular[105X, including user-defined ones and future implementations. To this
+  purpose,  Marco  Costantini  has  generalized  the  previous  code  for  the
+  conversion  of objects in the new more general context, has written the code
+  for  the  conversion  of the various other types of objects, and has written
+  the code for the low-level communication between [5XGAP[105X and [5XSingular[105X.[133X
+  
+  [33X[0;0YDavid  Joyner  has  developed  the  code  for  the algebraic-geometric codes
+  functions, and has written the corresponding section [14X1.6[114X of this manual.[133X
+  
+  [33X[0;0YGema M. Diaz has helped with some testing and reports.[133X
+  
+  
+  [1X1.1-2 [33X[0;0YThe system [5XSingular[105X[101X[1X[133X[101X
+  
+  [33X[0;0Y[5XSingular[105X  is [21XA Computer Algebra System for Polynomial Computations[121X developed
+  by  G.-M.  Greuel,  G.  Pfister, and H. Sch\"onemann, at Centre for Computer
+  Algebra,  University  of  Kaiserslautern.  The  authors  of  the [5XGAP[105X package
+  [5Xsingular[105X  are  not  involved  in the development of the system [5XSingular[105X, and
+  vice versa.[133X
+  
+  [33X[0;0Y[5XSingular[105X  is not included in this package, and can be obtained for free from
+  [7Xhttps://www.singular.uni-kl.de[107X.  There, one can find also its documentation,
+  installing  instructions,  the source code if wanted, and support if needed.
+  [5XSingular[105X is available for several platforms.[133X
+  
+  [33X[0;0YA   description  of  [5XSingular[105X,  copied  from  its  manual  (paragraph  ``2.1
+  Background''), version 2-0-5, is the following:[133X
+  
+  [33X[0;0Y[21X  [5XSingular[105X  is  a  Computer  Algebra system for polynomial computations with
+  emphasis  on  the  special needs of commutative algebra, algebraic geometry,
+  and singularity theory. [5XSingular[105X's main computational objects are ideals and
+  modules  over  a  large  variety  of baserings. The baserings are polynomial
+  rings  or  localizations  thereof  over  a  field  (e.g., finite fields, the
+  rationals,  floats,  algebraic  extensions,  transcendental  extensions)  or
+  quotient  rings  with  respect  to  an  ideal.  [5XSingular[105X features one of the
+  fastest and most general implementations of various algorithms for computing
+  Groebner  resp.  standard  bases.  The  implementation includes Buchberger's
+  algorithm  (if the ordering is a well ordering) and Mora's algorithm (if the
+  ordering  is  a  tangent  cone  ordering)  as special cases. Furthermore, it
+  provides  polynomial  factorizations,  resultant, characteristic set and gcd
+  computations, syzygy and free-resolution computations, and many more related
+  functionalities.  Based  on  an  easy-to-use  interactive shell and a C-like
+  programming  language,  [5XSingular[105X's  internal  functionality is augmented and
+  user-extendible by libraries written in the [5XSingular[105X programming language. A
+  general  and efficient implementation of communication links allows [5XSingular[105X
+  to   make   its   functionality  available  to  other  programs.  [5XSingular[105X's
+  development  started  in  1984 with an implementation of Mora's Tangent Cone
+  algorithm  in  Modula-2 on an Atari computer (K.P. Neuendorf, G. Pfister, H.
+  Schönemann; Humboldt-Universität zu Berlin). The need for a new system arose
+  from  the  investigation  of  mathematical  problems coming from singularity
+  theory  which none of the existing systems was able to compute. In the early
+  1990s  [5XSingular[105X's  ``home-town'' moved to Kaiserslautern, a general standard
+  basis  algorithm  was  implemented  in  C,  and [5XSingular[105X was ported to Unix,
+  MS-DOS,  Windows  NT,  and  MacOS.  Continuous  extensions  (like polynomial
+  factorization,  gcd  computations, links) and refinements led in 1997 to the
+  release  of  [5XSingular[105X  version 1.0 and in 1998 to the release of version 1.2
+  (much  faster  standard  and  Groebner  bases  computations based on Hilbert
+  series  and  on  improved  implementations  of the algorithms, libraries for
+  primary decomposition, ring normalization, etc.). [121X[133X
+  
+  
+  [1X1.1-3 [33X[0;0YThe system [5XGAP[105X[101X[1X[133X[101X
+  
+  [33X[0;0Y[5XGAP[105X  stands  for  [21XGroups,  Algorithms,  and Programming[121X, and is developed by
+  several people ([21XThe [5XGAP[105X Group[121X).[133X
+  
+  [33X[0;0Y[5XGAP[105X  is  not  included  in  this  package, and can be obtained for free from
+  [7Xhttps://www.gap-system.org/[107X.  There,  one  can  find also its documentation,
+  installing  instructions,  the  source  code, and support if needed. The [5XGAP[105X
+  system  will run on any machine with an Unix-like or recent Windows or MacOS
+  operating system and with a reasonable amount of ram and disk space.[133X
+  
+  [33X[0;0YA  description  of [5XGAP[105X, copied from its web site, is the following: [21X[5XGAP[105X is a
+  system  for  computational  discrete  algebra,  with  particular emphasis on
+  Computational  Group  Theory. [5XGAP[105X provides a programming language, a library
+  of  thousands  of functions implementing algebraic algorithms written in the
+  [5XGAP[105X  language  as well as large data libraries of algebraic objects. See the
+  web  site the overview and the description of the mathematical capabilities.
+  [5XGAP[105X  is  used  in  research  and  teaching  for  studying  groups  and their
+  representations,  rings,  vector spaces, algebras, combinatorial structures,
+  and more. The system, including source, is distributed freely. You can study
+  and easily modify or extend it for your special use.[121X[133X
+  
+  
+  [1X1.2 [33X[0;0YInstallation[133X[101X
+  
+  [33X[0;0YIn order to use this interface one must have both [5XGAP[105X version 4 and [5XSingular[105X
+  installed.[133X
+  
+  
+  [1X1.2-1 [33X[0;0YInstalling the system [5XSingular[105X[101X[1X[133X[101X
+  
+  [33X[0;0YFollow the [5XSingular[105X installing instructions.[133X
+  
+  [33X[0;0YHowever, for a Unix system, one needs to download two files:[133X
+  
+  [30X    [33X[0;6Y[11XSingular-<version>-share.tar.gz[111X,     that     contains    architecture
+        independent data like documentation and libraries;[133X
+  
+  [30X    [33X[0;6Y[11XSingular-<version>-<uname>.tar.gz[111X,    that    contains    architecture
+        dependent   executables,  like  the  [5XSingular[105X  program  (precompiled).
+        <uname>  is  a  description  of the processor and operating system for
+        which [5XSingular[105X is compiled.[133X
+  
+  [33X[0;0Y[5XSingular[105X specific subdirectories will be created in such a way that multiple
+  versions and multiple architecture dependent files of [5XSingular[105X can peaceably
+  coexist under the same [11X/usr/local/[111X tree.[133X
+  
+  [33X[0;0YBefore  trying  the  interface,  make  sure  that  [5XSingular[105X is installed and
+  working as stand-alone program.[133X
+  
+  
+  [1X1.2-2 [33X[0;0YInstalling the system [5XGAP[105X[101X[1X[133X[101X
+  
+  [33X[0;0YFollow the [5XGAP[105X installing instructions.[133X
+  
+  [33X[0;0YHowever, the basic steps of a [5XGAP[105X installation are:[133X
+  
+  [30X    [33X[0;6YChoose your preferred archive format and download the archives.[133X
+  
+  [30X    [33X[0;6YUnpack the archives.[133X
+  
+  [30X    [33X[0;6YOn Unix: Compile [5XGAP[105X. (Compiled executables for Windows and Mac are in
+        the archives.)[133X
+  
+  [30X    [33X[0;6YOn   Unix:   Some   packages   need   further  installation  for  full
+        functionality (which is not available on Windows or Mac).[133X
+  
+  [30X    [33X[0;6YAdjust some links/scripts/icons ..., depending on your system, to make
+        the new version of [5XGAP[105X available to the users of your machine.[133X
+  
+  [30X    [33X[0;6YOptional: Run a few tests.[133X
+  
+  [30X    [33X[0;6YOptional, but appreciated: Give some feedback on your installation.[133X
+  
+  [33X[0;0YThere   is  also  an  experimental  Linux  binary  distribution  via  remote
+  synchronization  with  a reference installation, which includes all packages
+  and  some  optimizations.  Furthermore,  the  Debian  GNU/Linux distribution
+  contains  .deb-packages  with  the  core  part  of  [5XGAP[105X  and some of the [5XGAP[105X
+  packages.[133X
+  
+  
+  [1X1.2-3 [33X[0;0YInstalling the package [5Xsingular[105X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  package  [5Xsingular[105X  is installed and loaded as a normal [5XGAP[105X package: see
+  the [5XGAP[105X documentation [14XGAP Packages???[114X.[133X
+  
+  [33X[0;0YStarting  with  version  4.4  of  [5XGAP[105X,  the  package [5Xsingular[105X is distributed
+  together  with  [5XGAP[105X.  Hence,  if  [5XGAP[105X  is  already  installed  with  all the
+  distributed  packages, then also the package [5Xsingular[105X is installed. However,
+  if  the package [5Xsingular[105X is not included in your [5XGAP[105X installation, it can be
+  downloaded  and  unpacked  in the [11Xpkg/[111X directory of the [5XGAP[105X installation. If
+  you  don't  have  write  access  to  the  [11Xpkg/[111X  directory  in  your main [5XGAP[105X
+  installation  you  can  use  private  directories  as  explained  in the [5XGAP[105X
+  documentation  [14X'Reference:  GAP  Root  Directories'[114X.  The  package  [5Xsingular[105X
+  doesn't require compilation.[133X
+  
+  [1X1.2-4 sing_exec[101X
+  
+  [33X[1;0Y[29X[2Xsing_exec[102X[32X global variable[133X
+  [33X[1;0Y[29X[2Xsing_exec_options[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XSingularTempDirectory[102X[32X global variable[133X
+  
+  [33X[0;0YIn  order  to  use the interface, [5XGAP[105X has to be told where to find [5XSingular[105X.
+  This can be done in three ways. First, if the [5XSingular[105X executable file is in
+  the  search  path,  then  [5XGAP[105X  will  find it. Second, it is possible to edit
+  (before   loading   the  package)  one  of  the  first  lines  of  the  file
+  [11Xsingular/gap/singular.g[111X  (that  comes  with  this  package).  Third,  it  is
+  possible  to  give  the path of the [5XSingular[105X executable file directly during
+  each  [5XGAP[105X session assigning it to the variable [3Xsing_exec[103X (after this package
+  has been loaded, and before starting [5XSingular[105X), as in the example below.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "singular" );[127X[104X
+    [4X[28XA GAP interface to Singular, by Marco Costantini and Willem de Graaf[128X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xsing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";;[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  directory separator is always '[11X/[111X', even under DOS/Windows or MacOS. The
+  value  of  [3Xsing_exec[103X  must  refer  to  the  text-only  version  of  [5XSingular[105X
+  ([3XSingular[103X),  and  not  to the Emacs version ([3XESingular[103X), nor to the terminal
+  window version ([3XTSingular[103X).[133X
+  
+  [33X[0;0YIn  a  similar way, it is possible to supply [5XSingular[105X with some command line
+  options (or files to read containing user defined functions), assigning them
+  to  the  variable  [3Xsing_exec_options[103X.  This  can  be done by editing (before
+  loading    the   package)   one   of   the   first   lines   of   the   file
+  [11Xsingular/gap/singular.g[111X  (that  comes with this package), or directly during
+  each  [5XGAP[105X  session  (after this package has been loaded, and before starting
+  [5XSingular[105X), as in the example below.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAdd( sing_exec_options, "--no-rc" );[127X[104X
+    [4X[25Xgap>[125X [27XAdd( sing_exec_options, "/full_path/my_file" );[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  variable [3Xsing_exec_options[103X is initialized to [3X[ "-t" ][103X; the user can add
+  further options, but must keep [3X"-t"[103X, which is required. The possible options
+  are  described in the [5XSingular[105X documentation, paragraph ``3.1.6 Command line
+  options''.[133X
+  
+  [33X[0;0Y[5XSingular[105X  is  not executed in the current directory, but in a user-specified
+  one,  or  in  a  temporary  one.  It  is  possible  to supply this directory
+  assigning  it  to  the  variable  [3XSingularTempDirectory[103X. This can be done by
+  editing  (before  loading  the  package)  one of the first lines of the file
+  [11Xsingular/gap/singular.g[111X  (that  comes with this package), or directly during
+  each  [5XGAP[105X  session  (after this package has been loaded, and before starting
+  [5XSingular[105X),  as  in  the  example  below.  If  [3XSingularTempDirectory[103X  is  not
+  assigned,  [5XGAP[105X  will  create  and  use  a temporary directory, which will be
+  removed when [5XGAP[105X quits.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSingularTempDirectory := Directory( "/tmp" );[127X[104X
+    [4X[28Xdir("/tmp/")[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YOn  Windows,  [5XSingular[105X  version  3  may be not executed directly, but may be
+  executed   as   [3Xbash  Singular[103X.  In  this  case,  the  variables  [3Xsing_exec[103X,
+  [3Xsing_exec_options[103X,   [3XSingularTempDirectory[103X   must  reflect  this,  otherwise
+  Windows  complains  that [3Xcygwin1.dll[103X is not found. The following works on my
+  Windows machine.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("singular");[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XSingularTempDirectory := Directory("c:/cygwin/bin");[127X[104X
+    [4X[28Xdir("c:/cygwin/bin/")[128X[104X
+    [4X[25Xgap>[125X [27Xsing_exec := "c:/cygwin/bin/bash.exe";[127X[104X
+    [4X[28X"c:/cygwin/bin/bash.exe"[128X[104X
+    [4X[25Xgap>[125X [27Xsing_exec_options := [ "Singular", "-t" ];[127X[104X
+    [4X[28X[ "Singular", "-t" ][128X[104X
+    [4X[25Xgap>[125X [27XStartSingular();[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAnother  possibility  is  to  run  Gap from within the Cygwin shell. In this
+  case,  with  a  standard  installation  of Cygwin and [5XSingular[105X, no change is
+  required,[133X
+  
+  
+  [1X1.3 [33X[0;0YInteraction with [5XSingular[105X[101X[1X[133X[101X
+  
+  [33X[0;0YThe  user  must  load  the  package  [5Xsingular[105X  with  [2XLoadPackage[102X ([14XReference:
+  LoadPackage[114X).[133X
+  
+  [1X1.3-1 StartSingular[101X
+  
+  [33X[1;0Y[29X[2XStartSingular[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XCloseSingular[102X(  ) [32X function[133X
+  
+  [33X[0;0YAfter   the   package   [5Xsingular[105X   has  been  loaded,  [5XSingular[105X  is  started
+  automatically  when  one  of  the  functions  of  the  interface  is called.
+  Alternatively, one can start [5XSingular[105X with the command [3XStartSingular[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XStartSingular();[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YSee  [14X1.7-1[114X  for  technical  details.  Explicit  use  of [3XStartSingular[103X is not
+  necessary.  If  [3XStartSingular[103X  is called when a previous [5XSingular[105X session is
+  running, than session will be closed, and a new session will be started.[133X
+  
+  [33X[0;0YIf  at  some  point  [5XSingular[105X is no longer needed, then it can be closed (in
+  order to save system resources) with the command [3XCloseSingular[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XCloseSingular();[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHowever,  when  [5XGAP[105X  exits, it is expected to close Singular, and remove any
+  temporary directory, except in the case of abnormal [5XGAP[105X termination.[133X
+  
+  [1X1.3-2 SingularHelp[101X
+  
+  [33X[1;0Y[29X[2XSingularHelp[102X( [3Xtopic[103X ) [32X function[133X
+  
+  [33X[0;0YHere  [3Xtopic[103X  is  a  string  containing  the  name  of a [5XSingular[105X topic. This
+  function provides help on that topic using the [5XSingular[105X help system: see the
+  [5XSingular[105X  documentation,  paragraphs  ``3.1.3  The  online help system'' and
+  ``5.1.43  help''. If [3Xtopic[103X is the empty string "", then the title/index page
+  of the manual is displayed.[133X
+  
+  [33X[0;0YThis  function  can be used to display the [5XSingular[105X documentation referenced
+  in this manual; [3Xtopic[103X must be given without the leading numbers.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSingularHelp( "" ); # a Mozilla window appears[127X[104X
+    [4X[28X#I  // ** Displaying help in browser 'mozilla'.[128X[104X
+    [4X[28X// ** Use 'system("--browser", <browser>);' to change browser,[128X[104X
+    [4X[28X// ** where <browser> can be: "mozilla", "xinfo", "info", "builtin", "dummy", \[128X[104X
+    [4X[28X"emacs".[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe   [5XSingular[105X   function   [3Xsystem[103X   can   be   accessed  via  the  function
+  [2XSingularInterface[102X  ([14X1.3-8[114X).  Some only-text browsers may be not supported by
+  the interface.[133X
+  
+  
+  [1X1.3-3 [33X[0;0YRings and orderings[133X[101X
+  
+  [33X[0;0YAll  non-trivial  algorithms  in  [5XSingular[105X require the prior definition of a
+  (polynomial)  ring,  that  will  be called the ``base-ring''. Any polynomial
+  (respectively vector) in [5XSingular[105X is ordered with respect to a term ordering
+  (or,  monomial  ordering),  that  has  to  be  specified  together  with the
+  declaration  of  a  ring. See the documentation of [5XSingular[105X, paragraph ``3.3
+  Rings and orderings'', for further information.[133X
+  
+  [33X[0;0YAfter  defining  in  [5XGAP[105X a ring, a term ordering can be assigned to it using
+  the  function  [2XSetTermOrdering[102X  ([14X1.3-5[114X),  and  [13Xafter[113X  the  term  ordering is
+  assigned,  the  interface  and  [5XSingular[105X can be told to use this ring as the
+  base-ring, with the function [2XSingularSetBaseRing[102X ([14X1.3-6[114X).[133X
+  
+  
+  [1X1.3-4 [33X[0;0YSupported coefficients fields[133X[101X
+  
+  [33X[0;0YLet  [3Xp[103X  be  a  prime,  [3Xpol[103X an irreducible polynomial, and [3Xarg[103X an appropriate
+  argument for the given function. The coefficient fields of the base-ring may
+  be of the following form:[133X
+  
+  [30X    [33X[0;6Y[3XRationals[103X,[133X
+  
+  [30X    [33X[0;6Y[3XCyclotomicField( arg )[103X,[133X
+  
+  [30X    [33X[0;6Y[3XAlgebraicExtension( Rationals, pol )[103X,[133X
+  
+  [30X    [33X[0;6Y[3XGaloisField( arg )[103X (both prime and non-prime),[133X
+  
+  [30X    [33X[0;6Y[3XAlgebraicExtension( GaloisField( p ), pol )[103X.[133X
+  
+  [33X[0;0YFor some example see those for the function [2XSetTermOrdering[102X ([14X1.3-5[114X).[133X
+  
+  [33X[0;0YLet  us  remember  that  [3XCyclotomicField[103X  and [3XGaloisField[103X can be abbreviated
+  respectively  to  [3XCF[103X  and  [3XGF[103X;  these  forms  are  used also when [5XGAP[105X prints
+  cyclotomic  or Galois fields. See the [5XGAP[105X documentation about the functions:
+  [2XCyclotomicField[102X  ([14XReference:  CyclotomicField for (subfield and) conductor[114X),
+  [2XGaloisField[102X  ([14XReference:  GaloisField  for  field  size[114X), [2XAlgebraicExtension[102X
+  ([14XReference:  AlgebraicExtension[114X),  and  the  chapters:  [14X'Reference: Rational
+  Numbers'[114X,  [14X'Reference:  Abelian  Number Fields'[114X, [14X'Reference: Finite Fields'[114X,
+  [14X'Reference: Algebraic extensions of fields'[114X.[133X
+  
+  [1X1.3-5 SetTermOrdering[101X
+  
+  [33X[1;0Y[29X[2XSetTermOrdering[102X( [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTermOrdering[102X( [3XR[103X ) [32X attribute[133X
+  
+  [33X[0;0YLet  [3XR[103X  be  a  polynomial ring. The value of [3XTermOrdering( R )[103X describes the
+  term  ordering  of [3XR[103X, and can be a string, a list, or a monomial ordering of
+  [5XGAP[105X.  (The  term  orderings  of [5XSingular[105X are explained in its documentation,
+  paragraphs   ``3.3.3   Term   orderings''   and   ``B.2.1   Introduction  to
+  orderings''.)[133X
+  
+  [33X[0;0YIf  this  value  is  a string, for instance [3X"lp"[103X (lexicographical ordering),
+  [3X"dp"[103X   (degree   reverse   lexicographical   ordering),   or   [3X"Dp"[103X  (degree
+  lexicographical  ordering),  this  value  will be passed to [5XSingular[105X without
+  being interpreted or parsed by the interface.[133X
+  
+  [33X[0;0YIf  this  value  is a list, it must be of the form [3X[ str_1, d_1, str_2, d_2,
+  ...  ][103X,  where each [3Xstr_i[103X is a [5XSingular[105X ordering given as a string. Each [3Xd_i[103X
+  must  be  a  number,  and  specifies  the  number  of  variables having that
+  ordering; however, if [3Xstr_i[103X is a weighted order, like [3X"wp"[103X (weighted reverse
+  lexicographical  ordering) or [3X"Wp"[103X (weighted lexicographical ordering), then
+  the corresponding [3Xd_i[103X must be a list of positive integers that specifies the
+  weight  of  each  variable.  The  sum  of the [3Xd_i[103X's (if numbers) or of their
+  lengths (if lists) must be equal to the number of variables of the ring [3XR[103X.[133X
+  
+  [33X[0;0YThis  value  can also be a monomial ordering of [5XGAP[105X: currently supported are
+  [3XMonomialLexOrdering[103X,   [3XMonomialGrevlexOrdering[103X,   and  [3XMonomialGrlexOrdering[103X
+  [14X'Reference: Monomial Orderings'[114X.[133X
+  
+  [33X[0;0Y[3XTermOrdering[103X   is   a  mutable  attribute,  see  the  [5XGAP[105X  documentation  of
+  [2XDeclareAttribute[102X  ([14XReference: DeclareAttribute[114X); if it is changed on the [5XGAP[105X
+  side,  it  is  necessary  thereafter to send again the ring to [5XSingular[105X with
+  [2XSingularSetBaseRing[102X ([14X1.3-6[114X).[133X
+  
+  [33X[0;0Y[3XSetTermOrdering[103X  can  be  used to set the term ordering of a ring. It is not
+  mandatory  to  assign  a term ordering: if no term ordering is set, then the
+  default  [3X"dp"[103X  will  be  used.  If  it is set, the term ordering must be set
+  [13Xbefore[113X  the  ring  is  sent  to  [5XSingular[105X  with [2XSingularSetBaseRing[102X ([14X1.3-6[114X),
+  otherwise,  [5XSingular[105X  will  ignore  that  term  ordering,  and  will use the
+  previous value if any, or the default [3X"dp"[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR1:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R1, "lp" );[127X[104X
+    [4X[25Xgap>[125X [27XR2:= PolynomialRing( GaloisField(9), 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R2, [ "wp", [1,1,2] ] );[127X[104X
+    [4X[25Xgap>[125X [27XR3:= PolynomialRing( CyclotomicField(25), ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R3, MonomialLexOrdering() );[127X[104X
+    [4X[25Xgap>[125X [27Xx:=Indeterminate(Rationals);;[127X[104X
+    [4X[25Xgap>[125X [27XF:=AlgebraicExtension(Rationals, x^5+4*x+1);;[127X[104X
+    [4X[25Xgap>[125X [27XR4:= PolynomialRing( F, 6 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R4, [ "dp", 1, "wp", [1,1,2], "lp", 2 ] );[127X[104X
+  [4X[32X[104X
+  
+  [1X1.3-6 SingularSetBaseRing[101X
+  
+  [33X[1;0Y[29X[2XSingularSetBaseRing[102X( [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSingularBaseRing[102X[32X global variable[133X
+  
+  [33X[0;0YHere  [3XR[103X  is  a  polynomial  ring.  [3XSingularSetBaseRing[103X sets the base-ring in
+  [5XSingular[105X  equal  to  [3XR[103X.  This  ring will be also kept in [5XGAP[105X in the variable
+  [3XSingularBaseRing[103X.  After this assignment, all the functions of the interface
+  will  work  with this ring. However, for some functions (those having rings,
+  ideals,  or  modules as arguments) it is not necessary to explicitly set the
+  base  ring  first,  because  in these cases the functions arguments contains
+  information  about  a  ring  that  will be used as a base-ring. This will be
+  specified  for  each  function  in the corresponding section of this manual.
+  (Unnecessary  use  of  [3XSingularSetBaseRing[103X  doesn't  harm; forgetting to use
+  [3XSingularSetBaseRing[103X  produces the problem described in the paragraph [14X1.7-4[114X.)
+  The  results  of the computations may depend on the choice of the base-ring:
+  see  an  example at [2XFactorsUsingSingular[102X ([14X1.5-6[114X), in which the factorization
+  of [22Xx^2 + y^2[122X is calculated.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  value of [3XSingularBaseRing[103X when the package is loaded is [3XPolynomialRing(
+  GF( 32003 ), 3 )[103X, in order to match the default base-ring of [5XSingular[105X.[133X
+  
+  [1X1.3-7 SingularLibrary[101X
+  
+  [33X[1;0Y[29X[2XSingularLibrary[102X( [3Xstring[103X ) [32X function[133X
+  
+  [33X[0;0YIn  [5XSingular[105X  some functionality is provided by separate libraries that must
+  be  explicitly  loaded  in order to be used (see the [5XSingular[105X documentation,
+  chapter  ``D.  SINGULAR  libraries''),  see the example in [2XSingularInterface[102X
+  ([14X1.3-8[114X).[133X
+  
+  [33X[0;0YThe  argument  [3Xstring[103X is a string containing the name of a [5XSingular[105X library.
+  This function makes sure that this library is loaded into [5XSingular[105X.[133X
+  
+  [33X[0;0YThe functions provided by the library [3Xring.lib[103X could be not yet supported by
+  the interface.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSingularLibrary( "general.lib" );[127X[104X
+  [4X[32X[104X
+  
+  [1X1.3-8 SingularInterface[101X
+  
+  [33X[1;0Y[29X[2XSingularInterface[102X( [3Xsingcom[103X, [3Xarguments[103X, [3Xtype_output[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  [3XSingularInterface[103X provides the general interface that enables
+  to  apply  the  [5XSingular[105X functions to the [5XGAP[105X objects. Its arguments are the
+  following:[133X
+  
+  [30X    [33X[0;6Y[3Xsingcom[103X is a [5XSingular[105X command or function (given as a string).[133X
+  
+  [30X    [33X[0;6Y[3Xarguments[103X  is  a list of [5XGAP[105X objects, [22XO_1, O_2, ..., O_n[122X, that will be
+        used as arguments of [3Xsingcom[103X (it may be the empty list). [3Xarguments[103X may
+        also  be  a string: in this case it is assumed that it contains one or
+        more   [5XSingular[105X  identifiers,  or  a  [5XSingular[105X  valid  expression,  or
+        something  else  meaningful for [5XSingular[105X, and it is passed to [5XSingular[105X
+        without parsing or checking on the [5XGAP[105X side.[133X
+  
+  [30X    [33X[0;6Y[3Xtype_output[103X  is  the  data type (given as a string) in [5XSingular[105X of the
+        output.   The   data   types  are  the  following  (see  the  [5XSingular[105X
+        documentation,  chapter  ``4. Data types''): "bigint", "def", "ideal",
+        "int",  "intmat", "intvec", "link", "list", "map", "matrix", "module",
+        "number",  "poly",  "proc",  "qring",  "resolution", "ring", "string",
+        "vector"  (some  of  them  were  not available in previous versions of
+        [5XSingular[105X).  The  empty string "" can be used if no output is expected.
+        If  in  doubt  you  can  use  "def"  (see  the [5XSingular[105X documentation,
+        paragraph ``4.1 def''). Usually, in the documentation of each [5XSingular[105X
+        function is given its output type.[133X
+  
+  [33X[0;0YOf  course,  the  objects  in the list [3Xarguments[103X and the [3Xtype_output[103X must be
+  appropriate for the function [3Xsingcom[103X: no check is done by the interface.[133X
+  
+  [33X[0;0YThe function [3XSingularInterface[103X does the following:[133X
+  
+  [31X1[131X   [33X[0;6Yconverts  each  object  [22XO_1,  O_2,  ...,  O_n[122X  in  [3Xarguments[103X  into the
+        corresponding object [22XP_1, P_2, ..., P_n[122X, of [5XSingular[105X,[133X
+  
+  [31X2[131X   [33X[0;6Ysends  to  [5XSingular[105X  the command to calculate [22Xsingcom ( P_1, P_2, ...,
+        P_n )[122X,[133X
+  
+  [31X3[131X   [33X[0;6Ygets the output (of type [3Xtype_output[103X) from [5XSingular[105X,[133X
+  
+  [31X4[131X   [33X[0;6Yconverts  it  to  the  corresponding Gap object, and returns it to the
+        user.[133X
+  
+  [33X[0;0YThe     function     [3XSingularInterface[103X     is     oriented    towards    the
+  kind-of-objects/data-types, and not to the functions of [5XSingular[105X, because in
+  this  way  it  is  much  more general. The user can use ``all'' the existing
+  functions  of  [5XSingular[105X  and  the  interface  is not bounded to the state of
+  implementation of [5XSingular[105X: future functions and user-defined functions will
+  be automatically supported.[133X
+  
+  [33X[0;0YThe  conversion  of  objects from Gap to [5XSingular[105X and from it back to Gap is
+  done  using  some  `ad  hoc' functions. Currently, the conversion of objects
+  from [5XGAP[105X to [5XSingular[105X is implemented for the following types: "ideal", "int",
+  "intmat",  "intvec",  "list",  "matrix", "module", "number", "poly", "ring",
+  "string",  "vector".  Objects  of other types are not supported, or are even
+  not yet implemented in [5XGAP[105X.[133X
+  
+  [33X[0;0YThe  conversion of objects from [5XSingular[105X to [5XGAP[105X is currently implemented for
+  the  following  types:  "bigint", "def", "ideal", "int", "intmat", "intvec",
+  "list",   "matrix",   "module",  "number",  "poly",  "proc"  (experimental),
+  "string", "vector". Objects of other types are returned as strings.[133X
+  
+  [33X[0;0YBefore passing polynomials (or numbers, vectors, matrices, or lists of them)
+  to [5XSingular[105X, it is necessary to have sent the base-ring to [5XSingular[105X with the
+  function [2XSingularSetBaseRing[102X ([14X1.3-6[114X), in order to ensure that [5XSingular[105X knows
+  about them. This is not necessary if in the input there is a ring, an ideal,
+  or  a  module  (before  the  polynomials),  because  these  objects  contain
+  information  about  the  ring to be used as base-ring. All the input must be
+  relative to at most one ring; furthermore, at most one object of type "ring"
+  can be in the input.[133X
+  
+  [33X[0;0YAs SingularInterface is a rather general function, it is not guaranteed that
+  it  always  works,  and  some  functions are not supported. For instance, in
+  [5XSingular[105X  there  is  the  function  [3Xpause[103X  that  waits  until a keystroke is
+  pressed;  but  the  interface  instead  waits for the [5XSingular[105X prompt before
+  sending it any new keystroke, and so calling [3Xpause[103X would hang the interface.
+  However,  the  unsupported  functions like [3Xpause[103X are only a few, and are not
+  mathematically  useful.  SingularInterface  tries  to  block  calls to known
+  unsupported functions.[133X
+  
+  [33X[0;0YSome  [5XSingular[105X  functions  may  return more than one value, see the [5XSingular[105X
+  documentation,  paragraph  ``6.2.7  Return type of procedures''. In order to
+  use  one of these functions via [3XSingularInterface[103X, the type [3Xtype_output[103X must
+  be  "list".  The output in [5XGAP[105X will be a list containing the values returned
+  by the [5XSingular[105X function.[133X
+  
+  [33X[0;0YIn  the  next example we compute the primary decomposition of an ideal. Note
+  that for that we need to load the [5XSingular[105X library [3Xprimdec.lib[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xi:= IndeterminatesOfPolynomialRing(R);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= i[1];; y:= i[2];; z:= i[3];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:= (x*y-z)*(x*y*z+y^2*z+x^2*z);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);;[127X[104X
+    [4X[25Xgap>[125X [27XI:= Ideal( R, [f,g] );;[127X[104X
+    [4X[25Xgap>[125X [27XSingularLibrary( "primdec.lib" );[127X[104X
+    [4X[25Xgap>[125X [27XSingularInterface( "primdecGTZ", [ I ], "def" );[127X[104X
+    [4X[28X#I  Singular output of type "list"[128X[104X
+    [4X[28X[ [ <two-sided ideal in Rationals[x,y,z], (1 generators)>,[128X[104X
+    [4X[28X      <two-sided ideal in Rationals[x,y,z], (1 generators)> ],[128X[104X
+    [4X[28X  [ <two-sided ideal in Rationals[x,y,z], (1 generators)>,[128X[104X
+    [4X[28X      <two-sided ideal in Rationals[x,y,z], (1 generators)> ],[128X[104X
+    [4X[28X  [ <two-sided ideal in Rationals[x,y,z], (2 generators)>,[128X[104X
+    [4X[28X      <two-sided ideal in Rationals[x,y,z], (2 generators)> ],[128X[104X
+    [4X[28X  [ <two-sided ideal in Rationals[x,y,z], (3 generators)>,[128X[104X
+    [4X[28X      <two-sided ideal in Rationals[x,y,z], (2 generators)> ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the next example are calculated the first syzygy module of an ideal, and
+  the  resultant of two polynomials with respect a variable. Note that in this
+  case  it  is  not  necessary  to  set the base-ring with [2XSingularSetBaseRing[102X
+  ([14X1.3-6[114X),  in  the  first case because the input [3XI[103X is of type "ideal", and in
+  the  second  case  because the base-ring was already sent to [5XSingular[105X in the
+  former case.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xi:= IndeterminatesOfPolynomialRing( R );;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= i[1];; y:= i[2];; z:= i[3];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:= 3*(x+2)^3+y;;[127X[104X
+    [4X[25Xgap>[125X [27Xg:= x+y+z;;[127X[104X
+    [4X[25Xgap>[125X [27XI:= Ideal( R, [f,g] );;[127X[104X
+    [4X[25Xgap>[125X [27XM := SingularInterface( "syz", [ I ], "module" );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfLeftOperatorAdditiveGroup( M );[127X[104X
+    [4X[28X[ [ -x-y-z, 3*x^3+18*x^2+36*x+y+24 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSingularInterface( "resultant", [ f, g, z ], "poly");[127X[104X
+    [4X[28X3*x^3+18*x^2+36*x+y+24[128X[104X
+  [4X[32X[104X
+  
+  [1X1.3-9 SingularType[101X
+  
+  [33X[1;0Y[29X[2XSingularType[102X( [3Xobj[103X ) [32X function[133X
+  
+  [33X[0;0Yto be written[133X
+  
+  
+  [1X1.4 [33X[0;0YInteraction with [5XSingular[105X[101X[1X at low level[133X[101X
+  
+  [1X1.4-1 SingularCommand[101X
+  
+  [33X[1;0Y[29X[2XSingularCommand[102X( [3Xprecommand[103X, [3Xcommand[103X ) [32X function[133X
+  
+  [33X[0;0Yto be written[133X
+  
+  [1X1.4-2 GapInterface[101X
+  
+  [33X[1;0Y[29X[2XGapInterface[102X( [3Xfunc[103X, [3Xarg[103X, [3Xout[103X ) [32X function[133X
+  
+  [33X[0;0Yto be written[133X
+  
+  
+  [1X1.5 [33X[0;0YOther mathematical functions of the package[133X[101X
+  
+  [1X1.5-1 GroebnerBasis[101X
+  
+  [33X[1;0Y[29X[2XGroebnerBasis[102X( [3XI[103X ) [32X operation[133X
+  
+  [33X[0;0YHere  [3XI[103X  is an ideal of a polynomial ring. This function computes a Groebner
+  basis  of  [3XI[103X  (that  will  be  returned  as a list of polynomials). For this
+  function  it  is [13Xnot[113X necessary to set the base-ring with [2XSingularSetBaseRing[102X
+  ([14X1.3-6[114X).[133X
+  
+  [33X[0;0YAs term ordering, [5XSingular[105X will use the value of [2XTermOrdering[102X ([14X1.3-5[114X) of the
+  polynomial  ring  containing  [3XI[103X.  Again,  if this value is not set, then the
+  degree reverse lexicographical ordering ([3X"dp"[103X) will be used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xx := R.1;; y := R.2;; z := R.3;;[127X[104X
+    [4X[25Xgap>[125X [27Xr:= [ x*y*z -x^2*z, x^2*y*z-x*y^2*z-x*y*z^2, x*y-x*z-y*z ];;[127X[104X
+    [4X[25Xgap>[125X [27XI:= Ideal( R, r );[127X[104X
+    [4X[28X<two-sided ideal in Rationals[x,y,z], (3 generators)>[128X[104X
+    [4X[25Xgap>[125X [27XGroebnerBasis( I );[127X[104X
+    [4X[28X[ x*y-x*z-y*z, x^2*z-x*z^2-y*z^2, x*z^3+y*z^3, -x*z^3+y^2*z^2-y*z^3 ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-2 SINGULARGBASIS[101X
+  
+  [33X[1;0Y[29X[2XSINGULARGBASIS[102X[32X global variable[133X
+  
+  [33X[0;0YThis  variable  is a record containing the component [3XGroebnerBasis[103X. When the
+  variable  SINGULARGBASIS is assigned to the [5XGAP[105X global variable [3XGBASIS[103X, then
+  the  computations  of  Groebner  bases via [5XGAP[105X's internal function for that,
+  [2XGroebnerBasis[102X ([14XReference: GroebnerBasis[114X), are done by [5XSingular[105X.[133X
+  
+  [33X[0;0Y[5XSingular[105X  claims  that  it  [21Xfeatures  one  of  the  fastest and most general
+  implementations  of  various  algorithms  for  computing Groebner bases[121X. The
+  [5XGAP[105X's  internal  function  claims  to  be  [21Xa  na{\"\i}ve  implementation  of
+  Buchberger's  algorithm  (which  is  mainly intended as a teaching tool): it
+  might not be sufficient for serious problems.[121X[133X
+  
+  [33X[0;0Y(Note in the following example that the Groebner bases calculated by the [5XGAP[105X
+  internal  function are in general not reduced; for reduced bases see the [5XGAP[105X
+  function [2XReducedGroebnerBasis[102X ([14XReference: ReducedGroebnerBasis[114X).)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, 3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xi:= IndeterminatesOfPolynomialRing( R );;[127X[104X
+    [4X[25Xgap>[125X [27Xpols:= [i[1]+i[2]+i[3], i[1]*i[2]+i[1]*i[3]+i[2]*i[3], i[1]*i[2]*i[3]];;[127X[104X
+    [4X[25Xgap>[125X [27Xo:= MonomialLexOrdering();;[127X[104X
+    [4X[25Xgap>[125X [27XGBASIS:= GAPGBASIS;;[127X[104X
+    [4X[25Xgap>[125X [27XGroebnerBasis( pols, o ); # This is the internal GAP method.[127X[104X
+    [4X[28X[ x+y+z, x*y+x*z+y*z, x*y*z, -y^2-y*z-z^2, z^3 ][128X[104X
+    [4X[25Xgap>[125X [27XGBASIS:= SINGULARGBASIS;;[127X[104X
+    [4X[25Xgap>[125X [27XGroebnerBasis( pols, o ); # This uses Singular via the interface.[127X[104X
+    [4X[28X[ z^3, y^2+y*z+z^2, x+y+z ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-3 HasTrivialGroebnerBasis[101X
+  
+  [33X[1;0Y[29X[2XHasTrivialGroebnerBasis[102X( [3XI[103X ) [32X function[133X
+  
+  [33X[0;0YThe  function  [3XHasTrivialGroebnerBasis[103X returns [3Xtrue[103X if the Groebner basis of
+  the  ideal [3XI[103X is trivial, false otherwise. This function can be used if it is
+  not  necessary  to  know  the Groebner basis of an ideal, but it suffices to
+  know only whether it is trivial or not.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx:= Indeterminate( Rationals, "x" : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xy:= Indeterminate( Rationals, "y", [ x ] : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xz:= Indeterminate( Rationals, "z", [ x, y ] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, [ x, y, z] );;[127X[104X
+    [4X[25Xgap>[125X [27Xf:= (x*y-z)*(x*y*z+y^2*z+x^2*z);;[127X[104X
+    [4X[25Xgap>[125X [27Xg:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);;[127X[104X
+    [4X[25Xgap>[125X [27XI:= Ideal( R, [f,g] );;[127X[104X
+    [4X[25Xgap>[125X [27XHasTrivialGroebnerBasis( I );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-4 GcdUsingSingular[101X
+  
+  [33X[1;0Y[29X[2XGcdUsingSingular[102X( [3Xpol_1[103X, [3Xpol_2[103X, [3X...[103X, [3Xpol_n[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGcdUsingSingular[102X( [[3Xpol_1[103X, [3Xpol_2[103X, [3X...[103X, [3Xpol_n[103X] ) [32X function[133X
+  
+  [33X[0;0YThe  arguments  of  this  function  are  (possibly multivariate) polynomials
+  separated  by  commas, or it is a list of polynomials. This function returns
+  the  greatest  common  divisor of these polynomials. For this function it is
+  [13Xnecessary[113X   for  the  polynomials  to  lie  in  the  base-ring,  as  set  by
+  [2XSingularSetBaseRing[102X ([14X1.3-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+    [4X[25Xgap>[125X [27Xi:= IndeterminatesOfPolynomialRing(R);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= i[1];; y:= i[2];; z:= i[3];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:= (x*y-z)*(x*y*z+y^2*z+x^2*z);[127X[104X
+    [4X[28Xx^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2[128X[104X
+    [4X[25Xgap>[125X [27Xg:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);[127X[104X
+    [4X[28Xx^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3[128X[104X
+    [4X[25Xgap>[125X [27XGcdUsingSingular( f, g );[127X[104X
+    [4X[28X-x*y*z+z^2[128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-5 FactorsUsingSingularNC[101X
+  
+  [33X[1;0Y[29X[2XFactorsUsingSingularNC[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YHere  [3Xf[103X  is  a (possibly multivariate) polynomial. This function returns the
+  factorization of [3Xf[103X into irreducible factors. The first element in the output
+  is  a constant coefficient, and the others may be monic (with respect to the
+  term ordering) polynomials, as returned by [5XSingular[105X. For this function it is
+  [13Xnecessary[113X  that  [3Xf[103X  lies  in  the  base-ring,  as set by [2XSingularSetBaseRing[102X
+  ([14X1.3-6[114X).[133X
+  
+  [33X[0;0YThe  function  does not check that the product of these factors gives [3Xf[103X (for
+  that  use  [2XFactorsUsingSingular[102X  ([14X1.5-6[114X)): [5XSingular[105X version 2-0-3 contains a
+  bug  so  that  the  [5XSingular[105X  function  [3Xfactorize[103X  may  give  wrong  results
+  (therefore [5XSingular[105X version at least 2-0-4 is recommended).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y","z"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+    [4X[25Xgap>[125X [27Xi:= IndeterminatesOfPolynomialRing( R );;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= i[1];; y:= i[2];; z:= i[3];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:= (x*y-z)*(3*x*y*z+4*y^2*z+5*x^2*z);[127X[104X
+    [4X[28X5*x^3*y*z+3*x^2*y^2*z+4*x*y^3*z-5*x^2*z^2-3*x*y*z^2-4*y^2*z^2[128X[104X
+    [4X[25Xgap>[125X [27XFactorsUsingSingularNC( f );[127X[104X
+    [4X[28X[ 1, -5*x^2-3*x*y-4*y^2, -x*y+z, z ][128X[104X
+    [4X[25Xgap>[125X [27Xf:= (x*y-z)*(5/3*x*y*z+4*y^2*z+6*x^2*z);[127X[104X
+    [4X[28X6*x^3*y*z+5/3*x^2*y^2*z+4*x*y^3*z-6*x^2*z^2-5/3*x*y*z^2-4*y^2*z^2[128X[104X
+    [4X[25Xgap>[125X [27XFactorsUsingSingularNC( f );[127X[104X
+    [4X[28X[ 1/3, -18*x^2-5*x*y-12*y^2, -x*y+z, z ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-6 FactorsUsingSingular[101X
+  
+  [33X[1;0Y[29X[2XFactorsUsingSingular[102X( [3Xf[103X ) [32X function[133X
+  
+  [33X[0;0YThis does the same as [2XFactorsUsingSingularNC[102X ([14X1.5-5[114X), except that on the [5XGAP[105X
+  level  it  is checked that the product of these factors gives [3Xf[103X. Again it is
+  [13Xnecessary[113X  that  [3Xf[103X  lies  in  the  base-ring,  as set by [2XSingularSetBaseRing[102X
+  ([14X1.3-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( Rationals, ["x","y"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+    [4X[25Xgap>[125X [27Xx := R.1;; y := R.2;;[127X[104X
+    [4X[25Xgap>[125X [27XFactorsUsingSingular( x^2 + y^2 );[127X[104X
+    [4X[28X[ 1, x^2+y^2 ][128X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( GaussianRationals, ["x","y"] : old);;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+    [4X[25Xgap>[125X [27Xx := R.1;; y := R.2;;[127X[104X
+    [4X[25Xgap>[125X [27XFactorsUsingSingular( x^2 + y^2 );[127X[104X
+    [4X[28X[ 1, x+E(4)*y, x-E(4)*y ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.5-7 GeneratorsOfInvariantRing[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsOfInvariantRing[102X( [3XR[103X, [3XG[103X ) [32X function[133X
+  
+  [33X[0;0YHere  [3XR[103X is a polynomial ring, and [3XG[103X a finite group, which is either a matrix
+  group  or  a permutation group. If [3XG[103X is a matrix group, then its degree must
+  be  less  than  or  equal  to  the  number of indeterminates of [3XR[103X. If [3XG[103X is a
+  permutation  group,  then its maximal moved point must be less than or equal
+  to  the  number  of  indeterminates  of  [3XR[103X. This function computes a list of
+  generators  of  the  invariant  ring of [3XG[103X, corresponding to its action on [3XR[103X.
+  This action is taken to be from the left.[133X
+  
+  [33X[0;0YFor   this   function  it  is  [13Xnot[113X  necessary  to  set  the  base-ring  with
+  [2XSingularSetBaseRing[102X ([14X1.3-6[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xm:=[[1,1,1],[0,1,1],[0,0,1]] * One( GF(3) );;[127X[104X
+    [4X[25Xgap>[125X [27XG:= Group( [m] );;[127X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( GF(3), 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfInvariantRing( R, G );[127X[104X
+    [4X[28X[ x_3, x_1*x_3+x_2^2+x_2*x_3, x_1^3+x_1^2*x_3-x_1*x_2^2-x_1*x_2*x_3 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.6 [33X[0;0YAlgebraic-geometric codes functions[133X[101X
+  
+  [33X[0;0YThis  section  of  [5XGAP[105X's  [5Xsingular[105X  package  and the corresponding code were
+  written  by  David  Joyner,  [7Xmailto:wdj@usna.edu[107X,  (with help from Christoph
+  Lossen  and  Marco  Costantini).  It  has been tested with [5XSingular[105X versrion
+  2.0.x.[133X
+  
+  [33X[0;0YTo  start  off,  several new [5XSingular[105X commands must be loaded. The following
+  command loads the necessary [5XSingular[105X and [5XGAP[105X commands, the packages [5Xsingular[105X
+  and [5XGUAVA[105X (if not already loaded), and (re)starts [5XSingular[105X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XReadPackage("singular", "contrib/agcode.g");;[127X[104X
+  [4X[32X[104X
+  
+  [1X1.6-1 AllPointsOnCurve[101X
+  
+  [33X[1;0Y[29X[2XAllPointsOnCurve[102X( [3Xf[103X, [3XF[103X ) [32X function[133X
+  
+  [33X[0;0YLet  [22XF[122X  be  a  finite and prime field. The function [3XAllPointsOnCurve( f, F )[103X
+  computes  a  list  of  generators  of  maximal ideals representing rationals
+  points on a curve [22XX[122X defined by [22Xf(x,y)=0[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(7);;[127X[104X
+    [4X[25Xgap>[125X [27XR2:= PolynomialRing( F, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R2, "lp" );; # --- the term ordering must be "lp"[127X[104X
+    [4X[25Xgap>[125X [27Xindet:= IndeterminatesOfPolynomialRing(R2);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= indet[1];; y:= indet[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=x^7-y^2-x;;[127X[104X
+    [4X[25Xgap>[125X [27XAllPointsOnCurve(f,F);[127X[104X
+    [4X[28X[ [ x_1 ], [ x_1-Z(7)^0 ], [ x_1+Z(7)^4 ], [ x_1+Z(7)^5 ], [ x_1+Z(7)^0 ], [128X[104X
+    [4X[28X  [ x_1+Z(7) ], [ x_1+Z(7)^2 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X1.6-2 AGCode[101X
+  
+  [33X[1;0Y[29X[2XAGCode[102X( [3Xf[103X, [3XG[103X, [3XD[103X ) [32X function[133X
+  
+  [33X[0;0YLet f be a polynomial in x,y over F=GF(p) representing plane curve [22XX[122X defined
+  by  [22Xf(x,y)=0[122X,  where p is a prime (prime powers are not yet supported by the
+  underlying  [5XSingular[105X function). Let G, D be disjoint rational divisors on [22XX[122X,
+  where  D  is  a  sum  of distinct points, [22Xsupp(D)=P_1, ..., P_n[122X. The AG code
+  associated to f, G, D is the F defined to be the image of the evaluation map
+  [22Xf  ↦  (f(P_1),...,f(P_n))[122X.  The  function  [3XAGCode[103X  computes a list of length
+  three,  [G,  n, k], where G is a generator matrix of the AG code C, n is its
+  length, and k is its dimension.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XF:=GF(7);;[127X[104X
+    [4X[25Xgap>[125X [27XR2:= PolynomialRing( F, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetTermOrdering( R2, "lp" );; # --- the term ordering must be "lp"[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing(R2);[127X[104X
+    [4X[25Xgap>[125X [27Xindet:= IndeterminatesOfPolynomialRing(R2);;[127X[104X
+    [4X[25Xgap>[125X [27Xx:= indet[1];; y:= indet[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xf:=x^7-y^2-x;;[127X[104X
+    [4X[25Xgap>[125X [27XG:=[2,2,0,0,0,0,0]; D:=[4..8];[127X[104X
+    [4X[28X[ 2, 2, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[ 4 .. 8 ][128X[104X
+    [4X[25Xgap>[125X [27Xagc:=AGCode(f,G,D);[127X[104X
+    [4X[28X[ [ [ Z(7)^3, Z(7), 0*Z(7), Z(7)^4, Z(7)^5 ],[128X[104X
+    [4X[28X      [ 0*Z(7), Z(7)^4, Z(7)^0, Z(7)^5, Z(7)^3 ],[128X[104X
+    [4X[28X      [ 0*Z(7), 0*Z(7), Z(7)^3, Z(7), Z(7)^2 ] ], 5, 3 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  generator  matrix  can  be fed into the [5XGUAVA[105X command [2XGeneratorMatCode[102X
+  ([14XGUAVA:  GeneratorMatCode[114X) to create a linear code in [5XGAP[105X, which in turn can
+  be  fed  into  the [5XGUAVA[105X command [2XMinimumDistance[102X ([14XGUAVA: MinimumDistance[114X) to
+  compute the minimum distance of the code.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xag_mat:=agc[1];;[127X[104X
+    [4X[25Xgap>[125X [27XC := GeneratorMatCode( ag_mat, GF(7) );[127X[104X
+    [4X[28Xa linear [5,3,1..3]2 code defined by generator matrix over GF(7)[128X[104X
+    [4X[25Xgap>[125X [27XMinimumDistance(C);[127X[104X
+    [4X[28X3[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.7 [33X[0;0YTroubleshooting and technical stuff[133X[101X
+  
+  
+  [1X1.7-1 [33X[0;0YSupported platforms and underlying [5XGAP[105X[101X[1X functions[133X[101X
+  
+  [33X[0;0YThis package has been developed mainly on a Linux platform, with [5XGAP[105X version
+  4.4,  and  [5XSingular[105X version 2-0-4. A reasonable work has been done to ensure
+  backward  compatibility  with  previous versions of [5XGAP[105X 4, but some features
+  may  be  missing. This package has been tested also with some other versions
+  of  Singular,  including 2-0-3, 2-0-5, and 2-0-6, and on other Unix systems.
+  It  has been tested also on Windows, but it is reported to be slower that on
+  Linux.[133X
+  
+  [33X[0;0YThere  is  an  extension of [5XSingular[105X, named [5XPlural[105X, which deals with certain
+  noncommutative  polynomial  rings;  see  the [5XSingular[105X documentation, section
+  ``7.   PLURAL''.   Currently,   [5XGAP[105X  doesn't  support  these  noncommutative
+  polynomial rings. The user of the [5XSingular[105X may use the features of [5XPlural[105X by
+  calling the [5XSingular[105X function [3Xncalgebra[103X via [3XSingularInterface[103X. In this case,
+  extreme care is needed, because on the [5XGAP[105X side the polynomial will still be
+  commutative.[133X
+  
+  [33X[0;0YFor  the  low-level communication with [5XSingular[105X, the interface relies on the
+  [5XGAP[105X  function  [2XInputOutputLocalProcess[102X ([14XReference: InputOutputLocalProcess[114X),
+  and  this  function  is  available  only  in  [5XGAP[105X  4.2  (or newer) on a Unix
+  environment  or in [5XGAP[105X 4.4 (or newer) on Windows; auto-detection is used. In
+  this case, [5XGAP[105X interacts with a unique continuous session of [5XSingular[105X.[133X
+  
+  [33X[0;0YIn  the case that the [5XGAP[105X function [3XInputOutputLocalProcess[103X is not available,
+  then  the  singular  interface will use the [5XGAP[105X function [2XProcess[102X ([14XReference:
+  Process[114X).  In  this  case  only a limited subset of the functionality of the
+  interface   are   available:   for   example   [2XStartSingular[102X   ([14X1.3-1[114X)   and
+  [2XGeneratorsOfInvariantRing[102X  ([14X1.5-7[114X)  are  not  available,  but  [2XGroebnerBasis[102X
+  ([14X1.5-1[114X)  is;  [2XSingularInterface[102X  ([14X1.3-8[114X)  supports  less data types. In this
+  case,  for  each  function  call,  a  new session of [5XSingular[105X is started and
+  quitted.[133X
+  
+  
+  [1X1.7-2 [33X[0;0YHow different versions of [5XGAP[105X[101X[1X display polynomial rings and polynomials[133X[101X
+  
+  [33X[0;0YThe  way  in which [5XGAP[105X displays polynomials has changed passing from version
+  4.3  to  4.4  and the way in which [5XGAP[105X displays polynomial rings has changed
+  passing from version 4.4 to 4.5.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# GAP 4.3 or older[127X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing( Rationals, [ "x" ] : new );[127X[104X
+    [4X[28XPolynomialRing(..., [ x ])[128X[104X
+    [4X[25Xgap>[125X [27Xx := IndeterminatesOfPolynomialRing( R )[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xx^2 + x;[127X[104X
+    [4X[28Xx+x^2[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# GAP 4.4[127X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing( Rationals, [ "x" ] : new );[127X[104X
+    [4X[28XPolynomialRing(..., [ x ])[128X[104X
+    [4X[25Xgap>[125X [27Xx := IndeterminatesOfPolynomialRing( R )[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xx^2 + x;[127X[104X
+    [4X[28Xx^2+x[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X# GAP 4.5 or newer[127X[104X
+    [4X[25Xgap>[125X [27XR := PolynomialRing( Rationals, [ "x" ] : new );[127X[104X
+    [4X[28XRationals[x][128X[104X
+    [4X[25Xgap>[125X [27Xx := IndeterminatesOfPolynomialRing( R )[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xx^2 + x;[127X[104X
+    [4X[28Xx^2+x[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe examples in this manual use the way of displaying of the newest [5XGAP[105X.[133X
+  
+  
+  [1X1.7-3 [33X[0;0YTest file[133X[101X
+  
+  [33X[0;0YThe following performs a test of the package functionality using a test file
+  [14X'Reference: Test Files'[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xfn := Filename( DirectoriesPackageLibrary( "singular", "tst" ), "testall.tst" );;[127X[104X
+    [4X[25Xgap>[125X [27XTest( fn );[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X1.7-4 [33X[0;0YCommon problems[133X[101X
+  
+  [33X[0;0YA common error is forgetting to use [2XSingularSetBaseRing[102X ([14X1.3-6[114X). In the next
+  example, [3XSingularInterface[103X works only after having used [3XSingularSetBaseRing[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xa:=Indeterminate( Rationals );;[127X[104X
+    [4X[25Xgap>[125X [27XF:=AlgebraicExtension( Rationals, a^5+4*a+1 );;[127X[104X
+    [4X[25Xgap>[125X [27XR:=PolynomialRing( F, ["x","y"] : old );;[127X[104X
+    [4X[25Xgap>[125X [27Xx := R.1;; y := R.2;;[127X[104X
+    [4X[25Xgap>[125X [27XSingularInterface( "lead", [x^3*y+x*y+y^2], "poly" );[127X[104X
+    [4X[28XError, sorry: Singular, or the interface to Singular, or the current[128X[104X
+    [4X[28XSingularBaseRing, do not support the object x^3*y+x*y+y^2.[128X[104X
+    [4X[28XDid you remember to use 'SingularSetBaseRing' ?[128X[104X
+    [4X[28X[...][128X[104X
+    [4X[26Xbrk>[126X [27Xquit;[127X[104X
+    [4X[25Xgap>[125X [27XSingularSetBaseRing( R );[127X[104X
+    [4X[25Xgap>[125X [27XSingularInterface( "lead", [x^3*y+x*y+y^2], "poly" );[127X[104X
+    [4X[28Xx^3*y[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YA  corresponding  problem  would  happen  if  the  user  works directly with
+  [5XSingular[105X and forgets to define the base-ring at first.[133X
+  
+  [33X[0;0YAs  explained  in the [5XGAP[105X documentation [14X'Reference: Polynomials and Rational
+  Functions'[114X,  given  a  ring  [3XR[103X,  [5XGAP[105X  does  not  consider [3XR[103X as a subset of a
+  polynomial  ring  over  [3XR[103X: for example the zero of [3XR[103X ([22X0[122X) and the zero of the
+  polynomial  ring  ([22X0x^0[122X)  are  different objects. [5XGAP[105X prints these different
+  objects  in the same way, and this fact may be misleading. This is a feature
+  of [5XGAP[105X independent from the package [5Xsingular[105X, but it is important to keep it
+  in  mind,  as most of the objects used by [5XSingular[105X are polynomials, or their
+  coefficients.[133X
+  
+  
+  [1X1.7-5 [33X[0;0YErrors on the [5XSingular[105X[101X[1X side[133X[101X
+  
+  [33X[0;0YErrors  may occur on the [5XSingular[105X side, for instance using [2XSingularInterface[102X
+  ([14X1.3-8[114X)  if  the  arguments  supplied  are  not  appropriate  for the called
+  function. In general, it is still an open problem to find a satisfactory way
+  to handle in [5XGAP[105X the errors of this kind.[133X
+  
+  [33X[0;0YAt  the  moment,  when  an  error on the [5XSingular[105X side happens, [5XSingular[105X may
+  print an error message on the so-called ``standard error''; this message may
+  appear  on  the  screen,  but  it  is  not  logged by the [5XGAP[105X function [2XLogTo[102X
+  ([14XReference:  LogTo[114X).  The interface prints [3XNo output from Singular[103X, and then
+  the  trivial  object  (of  the  type  specified  as  the  third  argument of
+  [3XSingularInterface[103X) may be returned.[133X
+  
+  
+  [1X1.7-6 [33X[0;0YSending a report[133X[101X
+  
+  [33X[0;0YAs every software, also this package may contain bugs. If you find a bug, or
+  a  missing  feature,  or  some  other  problem,  or if you have comments and
+  suggestions,  or  if you need some help, you may do so via our issue tracker
+  at  [7Xhttps://github.com/gap-packages/singular/issues[107X.  Please  include in the
+  report  the  code  that  causes  the  problem,  so that we can replicate the
+  problem.[133X
+  
+  [33X[0;0YIf  appropriate,  you can set [2XInfoSingular[102X ([14X1.7-8[114X) to [3X3[103X, to see what happens
+  between  [5XGAP[105X  and  [5XSingular[105X  (but  this may give a lot of output). Note that
+  [2XLogTo[102X  ([14XReference:  LogTo[114X)  does  not  log  messages written directly on the
+  screen by [5XSingular[105X.[133X
+  
+  [33X[0;0YEvery  report  about  this  package is welcome, however the probability that
+  your  problem  will be fixed quickly increases if you read the text ``How to
+  Report                          Bugs                          Effectively'',
+  [7Xhttps://www.chiark.greenend.org.uk/~sgtatham/bugs.html[107X  ,  and  send  a  bug
+  report according to this text.[133X
+  
+  [1X1.7-7 SingularReportInformation[101X
+  
+  [33X[1;0Y[29X[2XSingularReportInformation[102X(  ) [32X function[133X
+  
+  [33X[0;0YThe function [3XSingularReportInformation[103X collects a description of the system,
+  which should be included in any bug report.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSingularReportInformation();[127X[104X
+    [4X[28XPkg_Version := "4.04.15";[128X[104X
+    [4X[28XGap_Version := "4.dev";[128X[104X
+    [4X[28XGap_Architecture := "i686-pc-linux-gnu-gcc";[128X[104X
+    [4X[28XGap_BytesPerVariable := 4;[128X[104X
+    [4X[28Xuname := "Linux 2.4.20 i686";[128X[104X
+    [4X[28XSingular_Version: := 2004;[128X[104X
+    [4X[28XSingular_Name: := "/usr/local/Singular/2-0-4/ix86-Linux/Singular";[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X"Pkg_Version := \"4.04.15\";\nGap_Version := \"4.dev\";\nGap_Architecture := \[128X[104X
+    [4X[28X\"i686-pc-linux-gnu-gcc\";\nGap_BytesPerVariable := 4;\nuname := \"Linux 2.4.2\[128X[104X
+    [4X[28X0 i686\";\nSingular_Version: := 2004;\nSingular_Name: := \"/usr/local/Singular\[128X[104X
+    [4X[28X/2-0-4/ix86-Linux/Singular\";\n"[128X[104X
+  [4X[32X[104X
+  
+  [1X1.7-8 InfoSingular[101X
+  
+  [33X[1;0Y[29X[2XInfoSingular[102X[32X info class[133X
+  
+  [33X[0;0YThis is the info class [14X'Reference: Info Functions'[114X used by the interface. It
+  can be set to levels 0, 1, 2, and 3. At level 0 no information is printed on
+  the  screen.  At  level 1 (default) the interface prints a message about the
+  [3Xtype_output[103X,  when  "def"  is  used in [3XSingularInterface[103X, see the example at
+  [2XSingularInterface[102X  ([14X1.3-8[114X). At level 2, information on the activities of the
+  interface  is printed (e.g., messages when a [5XSingular[105X session, or a Groebner
+  basis  calculation,  is  started or terminated). At level 3 all strings that
+  [5XGAP[105X  sends  to  [5XSingular[105X  are  printed, as well as all strings that [5XSingular[105X
+  sends back.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoSingular, 2 );[127X[104X
+    [4X[25Xgap>[125X [27XG:= SymmetricGroup( 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XR:= PolynomialRing( GF(2), 3 );;[127X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfInvariantRing( R, G );[127X[104X
+    [4X[28X#I  running SingularInterface( "invariant_ring", [ "matrix", "matrix"[128X[104X
+    [4X[28X ], "list" )...[128X[104X
+    [4X[28X#I  done SingularInterface.[128X[104X
+    [4X[28X[ x_1+x_2+x_3, x_1*x_2+x_1*x_3+x_2*x_3, x_1*x_2*x_3 ][128X[104X
+    [4X[25Xgap>[125X [27XI:= Ideal( R, last );;[127X[104X
+    [4X[25Xgap>[125X [27XGroebnerBasis( I );[127X[104X
+    [4X[28X#I  running GroebnerBasis...[128X[104X
+    [4X[28X#I  done GroebnerBasis.[128X[104X
+    [4X[28X[ x_1+x_2+x_3, x_2^2+x_2*x_3+x_3^2, x_3^3 ][128X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoSingular, 1 );[127X[104X
+  [4X[32X[104X
+  

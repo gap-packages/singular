@@ -1,1 +1,87 @@
-Placeholder
+  
+  
+                                   [1X singular [101X
+  
+  
+                         [1X A [5XGAP[105X interface to Singular [101X
+  
+  
+                                  12.04.28dev
+  
+  
+                                 28 April 2012
+  
+  
+                                Marco Costantini
+  
+                                Willem de Graaf
+  
+                                  The GAP Team
+  
+  
+  
+  Willem de Graaf
+      Email:    [7Xmailto:degraaf@science.unitn.it[107X
+      Homepage: [7Xhttps://www.science.unitn.it/~degraaf/[107X
+      Address:  [33X[0;14YWillem de Graaf[133X
+                [33X[0;14YDipartimento di Matematica[133X
+                [33X[0;14YUniversitÃ  degli Studi di Trento[133X
+                [33X[0;14YI-38050 Povo (Trento)[133X
+                [33X[0;14YItaly[133X
+  
+  
+  The GAP Team
+      Email:    [7Xmailto:support@gap-system.org[107X
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (singular)[101X
+  
+  1 [33X[0;0Y[5Xsingular[105X: the [5XGAP[105X interface to [5XSingular[105X[133X
+    1.1 [33X[0;0YIntroduction[133X
+      1.1-1 [33X[0;0YPackage evolution[133X
+      1.1-2 [33X[0;0YThe system [5XSingular[105X[133X
+      1.1-3 [33X[0;0YThe system [5XGAP[105X[133X
+    1.2 [33X[0;0YInstallation[133X
+      1.2-1 [33X[0;0YInstalling the system [5XSingular[105X[133X
+      1.2-2 [33X[0;0YInstalling the system [5XGAP[105X[133X
+      1.2-3 [33X[0;0YInstalling the package [5Xsingular[105X[133X
+      1.2-4 sing_exec
+    1.3 [33X[0;0YInteraction with [5XSingular[105X[133X
+      1.3-1 StartSingular
+      1.3-2 SingularHelp
+      1.3-3 [33X[0;0YRings and orderings[133X
+      1.3-4 [33X[0;0YSupported coefficients fields[133X
+      1.3-5 SetTermOrdering
+      1.3-6 SingularSetBaseRing
+      1.3-7 SingularLibrary
+      1.3-8 SingularInterface
+      1.3-9 SingularType
+    1.4 [33X[0;0YInteraction with [5XSingular[105X at low level[133X
+      1.4-1 SingularCommand
+      1.4-2 GapInterface
+    1.5 [33X[0;0YOther mathematical functions of the package[133X
+      1.5-1 GroebnerBasis
+      1.5-2 SINGULARGBASIS
+      1.5-3 HasTrivialGroebnerBasis
+      1.5-4 GcdUsingSingular
+      1.5-5 FactorsUsingSingularNC
+      1.5-6 FactorsUsingSingular
+      1.5-7 GeneratorsOfInvariantRing
+    1.6 [33X[0;0YAlgebraic-geometric codes functions[133X
+      1.6-1 AllPointsOnCurve
+      1.6-2 AGCode
+    1.7 [33X[0;0YTroubleshooting and technical stuff[133X
+      1.7-1 [33X[0;0YSupported platforms and underlying [5XGAP[105X functions[133X
+      1.7-2 [33X[0;0YHow different versions of [5XGAP[105X display polynomial rings and
+      polynomials[133X
+      1.7-3 [33X[0;0YTest file[133X
+      1.7-4 [33X[0;0YCommon problems[133X
+      1.7-5 [33X[0;0YErrors on the [5XSingular[105X side[133X
+      1.7-6 [33X[0;0YSending a report[133X
+      1.7-7 SingularReportInformation
+      1.7-8 InfoSingular
+  
+  
+  [32X

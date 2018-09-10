@@ -1,102 +1,102 @@
 #############################################################################
-##  
-##  Demo PackageInfo.g for the GitHubPagesForGAP
+##
+#W    PackageInfo.g        Package singular            Willem de Graaf
+#W                                                     Marco Costantini
+##
+#Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
+#Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
 ##
 
+
 SetPackageInfo( rec(
+PackageName := "singular",
+Subtitle := "A GAP interface to Singular",
+Version := "12.04.28dev",
 
-PackageName := "GitHubPagesForGAP",
-
-Subtitle := "A GitHub Pages generator for GAP packages",
-Version := "0.2",
-Date := "04/02/2017", # dd/mm/yyyy format
+##  Release date of the current version in dd/mm/yyyy format.
+Date := "28/04/2012",
 
 Persons := [
   rec(
-    LastName      := "Horn",
-    FirstNames    := "Max",
-    IsAuthor      := true,
-    IsMaintainer  := true,
-    Email         := "max.horn@math.uni-giessen.de",
-    WWWHome       := "http://www.quendi.de/math",
-    PostalAddress := Concatenation(
-                       "AG Algebra\n",
-                       "Mathematisches Institut\n",
-                       "Justus-Liebig-Universität Gießen\n",
-                       "Arndtstraße 2\n",
-                       "35392 Gießen\n",
-                       "Germany" ),
-    Place         := "Gießen",
-    Institution   := "Justus-Liebig-Universität Gießen"
+  LastName := "Costantini",
+  FirstNames := "Marco",
+  IsAuthor := true,
+  IsMaintainer := false,
+  #Email := "costanti@science.unitn.it",
+  #WWWHome := "http://www-math.science.unitn.it/~costanti/",
+  #Place := "Trento",
+  #Institution := "Department of Mathematics, University of Trento"
   ),
 
   rec(
-    LastName      := "Thor",
-    FirstNames    := "A. U.",
-    IsAuthor      := true,
-    IsMaintainer  := false,
-    #Email         := "author@example.com",
+  LastName := "de Graaf",
+  FirstNames := "Willem",
+  IsAuthor := true,
+  IsMaintainer := false,
+  Email := "degraaf@science.unitn.it",
+  WWWHome := "https://www.science.unitn.it/~degraaf/",
+  PostalAddress := Concatenation( [
+                     "Willem de Graaf\n",
+                     "Dipartimento di Matematica\n",
+                     "Università degli Studi di Trento\n",
+                     "I-38050 Povo (Trento)\n",
+                     "Italy" ] ),
+  Place := "Trento",
+  Institution := "Department of Mathematics, University of Trento"
   ),
 
   rec(
-    LastName      := "Itor",
-    FirstNames    := "Jan",
+    LastName      := "GAP Team",
+    FirstNames    := "The",
     IsAuthor      := false,
     IsMaintainer  := true,
-    #Email         := "janitor@example.com",
+    Email         := "support@gap-system.org",
   ),
 ],
 
-Status := "other",
+Status := "deposited",
+#CommunicatedBy := "",
+#AcceptDate := "",
 
-# The following are not strictly necessary in your own PackageInfo.g
-# (in the sense that update.g only looks at the usual fields
-# like PackageWWWHome, ArchiveURL etc.). But they are convenient
-# if you use exactly the scheme for your package website that we propose.
-GithubUser := "gap-system",
-GithubRepository := ~.PackageName,
-GithubWWW := Concatenation("https://github.com/", ~.GithubUser, "/", ~.GithubRepository),
+PackageWWWHome  := "https://gap-packages.github.io/singular/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/singular",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/singular-", ~.Version ),
+ArchiveFormats := ".tar.gz",
 
-PackageWWWHome := Concatenation("https://", ~.GithubUser, ".github.io/", ~.GithubRepository, "/"),
-README_URL     := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-# The following assumes you are using the Github releases system. If not, adjust
-# it accordingly.
-ArchiveURL     := Concatenation(~.GithubWWW,
-                    "/releases/download/v", ~.Version, "/",
-                    ~.GithubRepository, "-", ~.Version),
-
-ArchiveFormats := ".tar.gz .tar.bz2",
-
-AbstractHTML := 
-  "This is a pseudo package that contains no actual\
-  <span class=\"pkgname\">GAP</span> code. Instead, it is a template for other\
-  GAP packages that allows to quickly setup GitHub Pages.",
+AbstractHTML :=
+  "The <span class=\"pkgname\">singular</span> package provides an interface \
+   from <span class=\"pkgname\">GAP</span> to the computer algebra system \
+   <span class=\"pkgname\">Singular</span>.",
 
 PackageDoc := rec(
-  BookName  := "GitHubPagesForGAP",
+  BookName  := "singular",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "A GitHub Pages generator for GAP packages",
+  LongTitle := "A GAP interface to Singular",
+  Autoload  := true
 ),
 
-# The following dependencies are fake and for testing / demo purposes
 Dependencies := rec(
-  GAP := ">=4.8.1",
-  NeededOtherPackages := [
-    ["GAPDoc", ">= 1.2"],
-    ["IO", ">= 4.1"],
-  ],
-  SuggestedOtherPackages := [["orb", ">= 4.2"]],
-  ExternalConditions := []
+  GAP := ">=4.8",
+  NeededOtherPackages := [  ],
+  SuggestedOtherPackages := [  ],
+  ExternalConditions := [ ["Requires the computer algebra system Singular",
+                           "https://www.singular.uni-kl.de/"] ]
 ),
-
 AvailabilityTest := ReturnTrue,
+Autoload := false,
 
-Keywords := ["GitHub Pages", "GAP"]
+TestFile := "tst/testall.g",
+Keywords := [ "Interface to Singular", "Groebner bases" ]
 
 ));
-
-

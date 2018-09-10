@@ -1,0 +1,34 @@
+  
+  
+  [1XIndex[101X
+  
+  [2XAGCode[102X 1.6-2 
+  [2XAllPointsOnCurve[102X 1.6-1 
+  [2XCloseSingular[102X 1.3-1 
+  [2XFactorsUsingSingular[102X 1.5-6 
+  [2XFactorsUsingSingularNC[102X 1.5-5 
+  [2XGapInterface[102X 1.4-2 
+  [2XGcdUsingSingular[102X, for a list of polynomials 1.5-4 
+      for polynomials 1.5-4 
+  [2XGeneratorsOfInvariantRing[102X 1.5-7 
+  [2XGroebnerBasis[102X 1.5-1 
+  [2XHasTrivialGroebnerBasis[102X 1.5-3 
+  [2XInfoSingular[102X 1.7-8 
+  [2XSetTermOrdering[102X 1.3-5 
+  [2Xsing_exec[102X 1.2-4 
+  [2Xsing_exec_options[102X 1.2-4 
+  [2XSingularBaseRing[102X 1.3-6 
+  [2XSingularCommand[102X 1.4-1 
+  [2XSINGULARGBASIS[102X 1.5-2 
+  [2XSingularHelp[102X 1.3-2 
+  [2XSingularInterface[102X 1.3-8 
+  [2XSingularLibrary[102X 1.3-7 
+  [2XSingularReportInformation[102X 1.7-7 
+  [2XSingularSetBaseRing[102X 1.3-6 
+  [2XSingularTempDirectory[102X 1.2-4 
+  [2XSingularType[102X 1.3-9 
+  [2XStartSingular[102X 1.3-1 
+  [2XTermOrdering[102X 1.3-5 
+  
+  
+  -------------------------------------------------------
