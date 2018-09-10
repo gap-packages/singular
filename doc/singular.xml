@@ -1371,8 +1371,8 @@ object (of the type specified as the third argument of
 As every software, also this package may contain bugs. 
 If you find a bug, or a missing feature, or some other problem, or if 
 you have comments and suggestions, or if you 
-need some help, write an e-mail to both the authors. Please use an e-mail 
-subject that begins with ``<A>singular package: </A>''.
+need some help, you may do so via our issue tracker at
+<URL>https://github.com/gap-packages/singular/issues</URL>.
 Please include in the report the code that causes the problem, so that we 
 can replicate the problem.
 
@@ -1391,9 +1391,6 @@ your problem will be fixed quickly increases if you read the text
 ``How to Report Bugs Effectively'',
 <URL>http://www.chiark.greenend.org.uk/~sgtatham/bugs.html</URL> , and
 send a bug report according to this text.
-
-If the report is about the manual, please cite also its revision:
-<P/>
 
 </Subsection>
 

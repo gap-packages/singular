@@ -1,10 +1,10 @@
             singular: the GAP interface to Singular
-   ( http://www.gap-system.org/HostedGapPackages/singular/ )
+   ( https://gap-packages.github.io/singular/ )
    
 ===========================================================================
 
 This is the README file for the package `singular'; a GAP interface
-to the computer algebra system Singular (http://www.singular.uni-kl.de/).
+to the computer algebra system Singular (https://www.singular.uni-kl.de/).
 
 ===========================================================================
 

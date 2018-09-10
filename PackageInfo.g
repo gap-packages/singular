@@ -12,16 +12,11 @@ SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "The GAP interface to Singular",
 
-PackageWWWHome := "http://www.gap-system.org/HostedGapPackages/singular/",
-
 # on a new release, change the version/date twice here, in init.g and in 
 # doc/singular.xml
 
 Version := "12.04.28",
 Date := "28/04/2012",
-
-ArchiveURL := Concatenation( ~.PackageWWWHome, "singular-", ~.Version ),
-ArchiveFormats := ".tar.gz",
 
 Persons := [
   rec(
@@ -65,8 +60,18 @@ Status := "deposited",
 #CommunicatedBy := "",
 #AcceptDate := "",
 
-README_URL := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+PackageWWWHome  := "https://gap-packages.github.io/singular/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec(
+    Type := "git",
+    URL := "https://github.com/gap-packages/singular",
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL,
+                                 "/releases/download/v", ~.Version,
+                                 "/singular-", ~.Version ),
+ArchiveFormats := ".tar.gz",
 
 AbstractHTML :=
   "The <span class=\"pkgname\">singular</span> package provides an interface \
