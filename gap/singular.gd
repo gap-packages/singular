@@ -3,14 +3,9 @@
 #W    singular.gd          Package singular            Willem de Graaf
 #W                                                     Marco Costantini
 ##
-#H    @(#)$Id: singular.gd,v 1.5 2006/07/23 17:56:57 gap Exp $
-##
 #Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
 #Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
 ##
-
-Revision.("singular/gap/singular.gd") :=
-    "@(#)$Id: singular.gd,v 1.5 2006/07/23 17:56:57 gap Exp $";
 
 
 ############################################################################# 

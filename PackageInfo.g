@@ -3,8 +3,6 @@
 #W    PackageInfo.g        Package singular            Willem de Graaf
 #W                                                     Marco Costantini
 ##
-#H    @(#)$Id: PackageInfo.g,v 1.23 2012/04/27 22:42:25 alexk Exp $
-##
 #Y    Copyright (C) 2003 Willem de Graaf and Marco Costantini
 #Y    Copyright (C) 2004, 2005, 2006 Marco Costantini
 ##

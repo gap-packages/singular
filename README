@@ -1,5 +1,3 @@
-@(#)$Id: README,v 1.19 2012/04/27 22:42:25 alexk Exp $
-
             singular: the GAP interface to Singular
    ( http://www.gap-system.org/HostedGapPackages/singular/ )
    
