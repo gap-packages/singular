@@ -96,7 +96,7 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 Autoload := false,
 
-#TestFile := "tst/testall.g",
+TestFile := "tst/testall.g",
 Keywords := [ "Interface to Singular", "Groebner bases" ]
 
 ));
