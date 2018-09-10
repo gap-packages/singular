@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
 
@@ -187,7 +187,7 @@ to make its functionality available to other programs.
 
 <Package>Singular</Package>'s development started in 1984 with an
 implementation of Mora's Tangent Cone algorithm in Modula-2 on an Atari
-computer (K.P. Neuendorf, G. Pfister, H. Schönemann; Humboldt-Universität
+computer (K.P. Neuendorf, G. Pfister, H. SchÃ¶nemann; Humboldt-UniversitÃ¤t
 zu Berlin). The need for a new system arose from the investigation of
 mathematical problems coming from singularity theory which none of the
 existing systems was able to compute.
