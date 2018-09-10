@@ -11,10 +11,8 @@
 SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "A GAP interface to Singular",
-Version := "12.04.28dev",
-
-##  Release date of the current version in dd/mm/yyyy format.
-Date := "28/04/2012",
+Version := "2018.09.10",
+Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 
 Persons := [
   rec(
@@ -59,7 +57,7 @@ Status := "deposited",
 #AcceptDate := "",
 
 PackageWWWHome  := "https://gap-packages.github.io/singular/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 SourceRepository := rec(
     Type := "git",

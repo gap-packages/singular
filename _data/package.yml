@@ -1,6 +1,6 @@
 name: singular
-version: 12.04.28dev
-date: 2012-04-28
+version: 2018.09.10
+date: 2018-09-10
 description: |
     A GAP interface to Singular
 
@@ -16,12 +16,12 @@ maintainers:
 GAP: ">=4.8"
 
 www: https://gap-packages.github.io/singular/
-readme: README.md
+readme: README
 packageinfo: https://gap-packages.github.io/singular/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/singular/releases/download/v12.04.28dev/singular-12.04.28dev.tar.gz
+      url: https://github.com/gap-packages/singular/releases/download/v2018.09.10/singular-2018.09.10.tar.gz
 
 abstract: |
     The <span class="pkgname">singular</span> package provides an interface    from <span class="pkgname">GAP</span> to the computer algebra system    <span class="pkgname">Singular</span>.
@@ -33,24 +33,27 @@ keywords: |
     Interface to Singular, Groebner bases.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>CGT12</span>]   <b class='BibAuthor'>Costantini, M., de Graaf, W. and GAP Team, T.</b>,
+    [<span class='BibKey'>CGT18</span>]   <b class='BibAuthor'>Costantini, M., de Graaf, W. and GAP Team, T.</b>,
      <i class='BibTitle'>singular, A GAP interface to Singular,
-             Version 12.04.28dev</i>
-     (<span class='BibYear'>2012</span>)<br />
+             Version 2018.09.10</i>
+     (<span class='BibYear'>2018</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/singular/">https://gap-packages.github.io/singular/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ singular12.04.28dev,
+    @misc{ singular2018.09.10,
       author =           {Costantini, M. and de Graaf, W. and GAP Team, T.},
-      title =            {{singular}, A GAP interface to Singular, {V}ersion 12.04.28dev},
-      month =            {Apr},
-      year =             {2012},
+      title =            {{singular},  A  GAP  interface  to Singular, {V}ersion
+                          2018.09.10},
+      month =            {Sep},
+      year =             {2018},
       note =             {GAP package},
-      howpublished =     {\href {https://gap-packages.github.io/singular/} {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{singular/}}},
+      howpublished =     {\href       {https://gap-packages.github.io/singular/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{singular/}}},
       keywords =         {Interface to Singular; Groebner bases},
-      printedkey =       {CGT12}
+      printedkey =       {CGT18}
     }
 
