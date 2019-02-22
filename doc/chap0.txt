@@ -6,26 +6,26 @@
                          [1X A [5XGAP[105X interface to Singular [101X
   
   
-                                   2018.09.10
+                                   2019.02.22
   
   
-                               10 September 2018
+                                22 February 2019
   
   
                                 Marco Costantini
   
-                                Willem de Graaf
+                            Willem Adriaan de Graaf
   
                                   The GAP Team
   
   
   
-  Willem de Graaf
+  Willem Adriaan de Graaf
       Email:    [7Xmailto:degraaf@science.unitn.it[107X
       Homepage: [7Xhttps://www.science.unitn.it/~degraaf/[107X
       Address:  [33X[0;14YWillem de Graaf[133X
                 [33X[0;14YDipartimento di Matematica[133X
-                [33X[0;14YUniversitÃ  degli Studi di Trento[133X
+                [33X[0;14YUniversità degli Studi di Trento[133X
                 [33X[0;14YI-38050 Povo (Trento)[133X
                 [33X[0;14YItaly[133X
   

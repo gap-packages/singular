@@ -11,8 +11,9 @@
 SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "A GAP interface to Singular",
-Version := "2018.09.10",
+Version := "2019.02.22",
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
@@ -28,7 +29,7 @@ Persons := [
 
   rec(
   LastName := "de Graaf",
-  FirstNames := "Willem",
+  FirstNames := "Willem Adriaan",
   IsAuthor := true,
   IsMaintainer := false,
   Email := "degraaf@science.unitn.it",
