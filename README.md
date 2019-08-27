@@ -1,12 +1,9 @@
-            singular: a GAP interface to Singular
-   ( https://gap-packages.github.io/singular/ )
+# singular: a GAP interface to Singular
+
+<https://gap-packages.github.io/singular/>
    
-===========================================================================
-
-This is the README file for the package `singular'; a GAP interface
-to the computer algebra system Singular (https://www.singular.uni-kl.de/).
-
-===========================================================================
+This is the README file for the package `singular`; a GAP interface
+to the computer algebra system Singular <https://www.singular.uni-kl.de/>.
 
 The package has no maintainer at the moment. To make a version of the 
 Singular package working under GAP 4.5, in 2011 a bug in the interface was
@@ -15,32 +12,31 @@ prepared in 2012 by Alexander Konovalov. Currently we do not plan any
 further development of this package. The rest of this file belongs to the 
 README of the package from its previous release on 2006/07/23.
 
-===========================================================================
+------------------------------------------------------------------------------
 
-Installing `singular':
+Installing `singular`:
 
-1) unpack `singular.tar.gz' in the `pkg' subdirectory of the GAP root
+1. unpack `singular.tar.gz` in the `pkg` subdirectory of the GAP root
    directory.
 
-2) If the Singular executable is in your search path, then it is ok: GAP
-   will find it. If not, edit the file `pkg/singular/gap/singular.g': at
+2. If the Singular executable is in your search path, then it is ok: GAP
+   will find it. If not, edit the file `pkg/singular/gap/singular.g`: at
    the beginning of this file, the full path to the Singular executable
    on your system must be added. For instance:
    sing_exec:="/usr/local/bin/Singular";
    Alteratively, one can give this path inside a GAP session, with the
    same command.
 
-3) It should work. From within GAP things are started with
+3. It should work. From within GAP things are started with
 
-gap> LoadPackage("singular");
-true
+        gap> LoadPackage("singular");
+        true
 
-4) The documentation is in the `doc' subdirectory: it is more up-to-date 
+4. The documentation is in the `doc` subdirectory: it is more up-to-date 
    than this README file.
 
 
-
-===========================================================================
+------------------------------------------------------------------------------
 
 
 Preliminary announcement of August 2003 (and preliminary documentation):
@@ -86,7 +82,7 @@ are welcome, please submit them at
 <https://github.com/gap-packages/singular/issues>
 Please add the output of SingularReportInformation(); to your report.
 
-
+```
 # load
 
 LoadPackage("singular");
@@ -183,13 +179,13 @@ CloseSingular();
 
 Int( SingularCommand( "", "timer" ) );
 Int( SingularCommand( "", "rtimer" ) );
-
+```
 
 
 Greetings,
 Marco Costantini
 
-===========================================================================
+------------------------------------------------------------------------------
 
 Addendum
 
@@ -211,6 +207,7 @@ GAP_...	all the names of the Singular variables defined by the interface
 
 ** Type conversions:
 
+```
 type    Gap -> Singular                 Singular -> Gap
         * := sets basering              U := only on Unix or with Gap >=4.4.2
 
@@ -232,4 +229,4 @@ resolution
 ring    *ParseGapRingToSingRing         (planned)
 string  done                            x->x;
 vector  ParseGapVectorToSingVector      (U) done
-
+```
