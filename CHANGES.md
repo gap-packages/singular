@@ -1,6 +1,6 @@
 This file describes changes in the GAP package `singular`.
 
-- 2019-10-01
+- 2019.10.01
 
   - fix test suite to pass in GAP 4.11, as well as in older GAP versions
   - janitorial changes
