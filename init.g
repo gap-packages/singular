@@ -10,5 +10,9 @@
 ReadPackage( "singular", "gap/singular.gd" );
 ReadPackage( "singular", "gap/singular.g" );
 
-#############################################################################
-#E
+
+# The following implication was added in GAP 4.11, and results in row modules
+# over polynomial rings to be printed more nicely; in order to get tests that
+# behave the same in GAP 4.11 as in older GAP versions, we replicate this
+# implication here. This does nothing in GAP >= 4.11.
+InstallTrueMethod( IsFreeLeftModule, IsRowModule );
