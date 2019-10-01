@@ -547,7 +547,7 @@ gap> map:=AlgebraGeneralMappingByImages(ring,ring,[x,y],[x+y,x-y]);
 gap> matrix:=[[x+y, x*y],[x+y+x*y,x^2+y^2]];
 [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ]
 gap> module:=LeftModuleByGenerators( ring, [[x+y+x*y,x-y], [x+x^2+x^3,y+x^2+y^3]]);
-<additive magma>
+<free left module over PolynomialRing( GF(5), ["x", "y"] ), with 2 generators>
 gap> number:=Z(5)^3;
 Z(5)^3
 gap> poly:=x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y;
@@ -564,9 +564,11 @@ gap> list1 := [ ideal, int, intmat, intvec, map, matrix, module, number,
 > poly, proc, ring, string, vector];
 [ <two-sided ideal in GF(5)[x,y], (2 generators)>, 123456, 
   [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], [ x, y ] -> [ x+y, x-y ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, function(  ) ... end, 
-  GF(5)[x,y], "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
+  <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
+    2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
+  function(  ) ... end, GF(5)[x,y], "ciao", 
+  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
 gap> List( list1, SingularType);
 [ "ideal", "int", "intmat", "intvec", "map", "matrix", "module", "number", 
   "poly", "proc", "ring", "string", "vector" ]
@@ -576,9 +578,10 @@ gap> list2 := [ ideal, int, intmat, intvec, matrix, module, number,
 > poly, string, vector];
 [ <two-sided ideal in GF(5)[x,y], (2 generators)>, 123456, 
   [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
+  <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
+    2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
+  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
 gap> list3 := SingularInterface( "id_func", [list2], "def" );
 #I  running SingularInterface( "id_func", [ "list" ], "def" )...
 #I  done SingularInterface.
@@ -589,9 +592,10 @@ gap> list3 := SingularInterface( "id_func", [list2], "def" );
 #I  done SingularInterface.
 [ <two-sided ideal in GF(5)[x,y], (2 generators)>, 123456, 
   [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
-  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], <additive magma>, Z(5)^3, 
-  x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
+  <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
+    2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
+  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
 
 #
 gap> for i in [2,3,4,5,7,8,9,10] do
