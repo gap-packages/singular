@@ -329,7 +329,8 @@ the core part of &GAP; and some of the &GAP; packages.
 
 The package <Package>singular</Package> is installed and loaded as a
 normal &GAP; package: see the &GAP; documentation
-<Ref Chap="GAP Packages" BookName="ref"/>.
+<Ref Sect="Installing a GAP Package" BookName="ref"/> and
+<Ref Sect="Loading a GAP Package" BookName="ref"/>.
 
 <P/>
 
