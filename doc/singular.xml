@@ -894,10 +894,10 @@ gap> I:= Ideal( R, [f,g] );;
 gap> SingularLibrary( "primdec.lib" );
 gap> SingularInterface( "primdecGTZ", [ I ], "def" );
 #I  Singular output of type "list"
-[ [ &lt;two-sided ideal in Rationals[x,y,z], (1 generators)>,
-      &lt;two-sided ideal in Rationals[x,y,z], (1 generators)> ],
-  [ &lt;two-sided ideal in Rationals[x,y,z], (1 generators)>,
-      &lt;two-sided ideal in Rationals[x,y,z], (1 generators)> ],
+[ [ &lt;two-sided ideal in Rationals[x,y,z], (1 generator)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (1 generator)> ],
+  [ &lt;two-sided ideal in Rationals[x,y,z], (1 generator)>,
+      &lt;two-sided ideal in Rationals[x,y,z], (1 generator)> ],
   [ &lt;two-sided ideal in Rationals[x,y,z], (2 generators)>,
       &lt;two-sided ideal in Rationals[x,y,z], (2 generators)> ],
   [ &lt;two-sided ideal in Rationals[x,y,z], (3 generators)>,
