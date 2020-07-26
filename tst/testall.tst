@@ -196,18 +196,12 @@ x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
 gap> I:= Ideal( R, [f,g] );
 <two-sided ideal in Rationals[x,y,z], (2 generators)>
 gap> SingularLibrary("primdec.lib");
-gap> pd:=SingularInterface("primdecGTZ", [ I ], "def" );
+gap> pd:=SingularInterface("primdecGTZ", [ I ], "def" );;
 #I  running SingularInterface( "primdecGTZ", [ "ideal" ], "def" )...
 #I  done SingularInterface.
 #I  Singular output of type "list"
-[ [ <two-sided ideal in Rationals[x,y,z], (1 generators)>, 
-      <two-sided ideal in Rationals[x,y,z], (1 generators)> ], 
-  [ <two-sided ideal in Rationals[x,y,z], (1 generators)>, 
-      <two-sided ideal in Rationals[x,y,z], (1 generators)> ], 
-  [ <two-sided ideal in Rationals[x,y,z], (2 generators)>, 
-      <two-sided ideal in Rationals[x,y,z], (2 generators)> ], 
-  [ <two-sided ideal in Rationals[x,y,z], (3 generators)>, 
-      <two-sided ideal in Rationals[x,y,z], (2 generators)> ] ]
+gap> Length(pd);
+4
 gap> List(pd,x->List(x,GeneratorsOfTwoSidedIdeal));
 [ [ [ x*y-z ], [ x*y-z ] ], [ [ z ], [ z ] ], 
   [ [ y^2+y*z+z^2, x+y+z ], [ y^2+y*z+z^2, x+y+z ] ], 
