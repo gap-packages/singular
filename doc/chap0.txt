@@ -6,10 +6,10 @@
                          [1X A [5XGAP[105X interface to Singular [101X
   
   
-                                   2019.10.01
+                                   2020.12.18
   
   
-                                 1 October 2019
+                                18 December 2020
   
   
                                 Marco Costantini
