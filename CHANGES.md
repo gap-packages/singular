@@ -1,5 +1,9 @@
 This file describes changes in the GAP package `singular`.
 
+- 2020.12.18
+  - Fix broken reference in the manual to GAP Packages chapter
+  - janitorial changes
+
 - 2019.10.01
 
   - fix test suite to pass in GAP 4.11, as well as in older GAP versions
