@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gap-packages/singular.svg)](https://travis-ci.org/gap-packages/singular)
+[![Build Status](https://travis-ci.com/gap-packages/singular.svg)](https://travis-ci.com/gap-packages/singular)
 [![Code Coverage](https://codecov.io/github/gap-packages/singular/coverage.svg)](https://codecov.io/gh/gap-packages/singular)
 
 # singular: a GAP interface to Singular
