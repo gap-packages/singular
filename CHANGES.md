@@ -1,5 +1,8 @@
 This file describes changes in the GAP package `singular`.
 
+- 2022.09.23
+  - janitorial changes
+
 - 2020.12.18
   - Fix broken reference in the manual to GAP Packages chapter
   - janitorial changes
