@@ -11,7 +11,7 @@
 SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "A GAP interface to Singular",
-Version := "2020.12.18",
+Version := "2022.09.23",
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -78,7 +78,7 @@ AbstractHTML :=
 PackageDoc := rec(
   BookName  := "singular",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A GAP interface to Singular",

@@ -202,9 +202,9 @@
   
   [1X1.2-4 sing_exec[101X
   
-  [33X[1;0Y[29X[2Xsing_exec[102X[32X global variable[133X
-  [33X[1;0Y[29X[2Xsing_exec_options[102X[32X global variable[133X
-  [33X[1;0Y[29X[2XSingularTempDirectory[102X[32X global variable[133X
+  [33X[1;0Y[29X[2Xsing_exec[102X [32X global variable[133X
+  [33X[1;0Y[29X[2Xsing_exec_options[102X [32X global variable[133X
+  [33X[1;0Y[29X[2XSingularTempDirectory[102X [32X global variable[133X
   
   [33X[0;0YIn  order  to  use the interface, [5XGAP[105X has to be told where to find [5XSingular[105X.
   This can be done in three ways. First, if the [5XSingular[105X executable file is in
@@ -440,7 +440,7 @@
   [1X1.3-6 SingularSetBaseRing[101X
   
   [33X[1;0Y[29X[2XSingularSetBaseRing[102X( [3XR[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XSingularBaseRing[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XSingularBaseRing[102X [32X global variable[133X
   
   [33X[0;0YHere  [3XR[103X  is  a  polynomial  ring.  [3XSingularSetBaseRing[103X sets the base-ring in
   [5XSingular[105X  equal  to  [3XR[103X.  This  ring will be also kept in [5XGAP[105X in the variable
@@ -663,7 +663,7 @@
   
   [1X1.5-2 SINGULARGBASIS[101X
   
-  [33X[1;0Y[29X[2XSINGULARGBASIS[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XSINGULARGBASIS[102X [32X global variable[133X
   
   [33X[0;0YThis  variable  is a record containing the component [3XGroebnerBasis[103X. When the
   variable  SINGULARGBASIS is assigned to the [5XGAP[105X global variable [3XGBASIS[103X, then
@@ -1073,7 +1073,7 @@
   
   [1X1.7-8 InfoSingular[101X
   
-  [33X[1;0Y[29X[2XInfoSingular[102X[32X info class[133X
+  [33X[1;0Y[29X[2XInfoSingular[102X [32X info class[133X
   
   [33X[0;0YThis is the info class [14X'Reference: Info Functions'[114X used by the interface. It
   can be set to levels 0, 1, 2, and 3. At level 0 no information is printed on
