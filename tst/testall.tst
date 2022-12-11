@@ -156,15 +156,18 @@ x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
 gap> g:= (x*y-z)*(x*y*z^2+x*y^2*z+x^2*y*z);
 x^3*y^2*z+x^2*y^3*z+x^2*y^2*z^2-x^2*y*z^2-x*y^2*z^2-x*y*z^3
 gap> SingularSetBaseRing( R );
-gap> GcdUsingSingular( f, g );
--x*y*z+z^2
+gap> gcd:=GcdUsingSingular( f, g );;
+gap> gcd^2=(-x*y*z+z^2)^2;
+true
 gap> f:= (x*y-z)*(x*y*z+y^2*z+x^2*z);
 x^3*y*z+x^2*y^2*z+x*y^3*z-x^2*z^2-x*y*z^2-y^2*z^2
 gap> SingularSetBaseRing( R );
-gap> FactorsUsingSingularNC( f );
+gap> fnc:=FactorsUsingSingularNC( f );;
 #I  running SingularInterface( "factorize", [ "poly" ], "list" )...
 #I  done SingularInterface.
-[ -1, x^2+x*y+y^2, -x*y+z, z ]
+gap> one:= function( x, y ) return 1; end;;
+gap> SumX(fnc, [ x-x-1, x^2+x*y+y^2, -x*y+z, z ], \=, one);
+4
 gap> m:=[[1,1,1],[0,1,1],[0,0,1]]*One(GF(3));
 [ [ Z(3)^0, Z(3)^0, Z(3)^0 ], [ 0*Z(3), Z(3)^0, Z(3)^0 ], 
   [ 0*Z(3), 0*Z(3), Z(3)^0 ] ]
@@ -202,10 +205,12 @@ gap> pd:=SingularInterface("primdecGTZ", [ I ], "def" );;
 #I  Singular output of type "list"
 gap> Length(pd);
 4
-gap> List(pd,x->List(x,GeneratorsOfTwoSidedIdeal));
-[ [ [ x*y-z ], [ x*y-z ] ], [ [ z ], [ z ] ], 
-  [ [ y^2+y*z+z^2, x+y+z ], [ y^2+y*z+z^2, x+y+z ] ], 
-  [ [ y^3, x*y, x^2+y^2 ], [ y, x ] ] ]
+gap> i1 := [ [ x*y-z ], [ x*y-z ] ];;
+gap> i2 := [ [ z ], [ z ] ];;
+gap> i3 := [ [ y^2+y*z+z^2, x+y+z ], [ y^2+y*z+z^2, x+y+z ] ];;
+gap> i4 := [ [ y^3, x*y, x^2+y^2 ], [ y, x ] ];;
+gap> SumX(List(pd,x->List(x,GeneratorsOfTwoSidedIdeal)), [ i1, i2, i3, i4 ], \=, one);
+4
 
 #
 # ParseSingProcToGapFunction
