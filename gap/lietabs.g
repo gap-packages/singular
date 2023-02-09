@@ -1,4 +1,4 @@
-LieTables:=function(field, dimension, parameters)
+BindGlobal( "LieTables", function(field, dimension, parameters)
 
 local T, dim,
     SetEntrySCTable1, ZeroTab,            # local functions
@@ -2863,5 +2863,4 @@ if dimension=5 then return [ dim, stringtabs5, [a1,a2,a3] ]; fi;
 if dimension=6 then return [ dim, stringtabs6, [a1] ]; fi;
 if dimension=7 then return [ dim, stringtabs7, [a1] ]; fi;
 
-end;
-
+end );

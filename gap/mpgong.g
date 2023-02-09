@@ -5,7 +5,7 @@ fi;
 
 SNLA_NAMES:=[];
 
-LieAlgebrasOfMPGong_sList := function(campo)
+BindGlobal( "LieAlgebrasOfMPGong_sList", function(campo)
     local  e, s, char, z, lambda, tables, t, i, j, l;
 
     char := Characteristic( campo );
@@ -2085,4 +2085,4 @@ for i in [1..Length(l)] do
   SetSnLa_Name(l[i], SNLA_NAMES[i]);
 od;
   return l;
-end;
+end );

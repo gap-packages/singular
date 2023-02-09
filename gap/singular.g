@@ -171,7 +171,7 @@ fi;
 # module refers to the current session of Singular or it is the old
 # SingularIdentifier of a previous SingularBaseRing
 
-HasCurrentRingSingularIdentifier := function ( obj )
+BindGlobal( "HasCurrentRingSingularIdentifier", function ( obj )
 
     local  s, t;
 
@@ -190,7 +190,7 @@ HasCurrentRingSingularIdentifier := function ( obj )
         return false;
     fi;
 
-end;
+end );
 
 
 
@@ -225,7 +225,7 @@ end;
 
 
 
-CheckSingularExecutableAndTempDir := function (  )
+BindGlobal( "CheckSingularExecutableAndTempDir", function (  )
     local i, IsExec;
 
     # check the Singular executable file, and if needed try to
@@ -320,13 +320,13 @@ system.\n" );
 
     SingularExecutableAndTempDirAreOk := true;
 
-end;
+end );
 
 
 
 # A function for closing (killing) Singular
 
-CloseSingular := function (  )
+BindGlobal( "CloseSingular", function (  )
     if IsStream( Sing_Proc )  then
         if not IsClosedStream( Sing_Proc )  then
             # WriteLine( Sing_Proc, ";quit;" );
@@ -337,7 +337,7 @@ CloseSingular := function (  )
     fi;
     # after closing Singular, the names become out of date.
     SingularNamesThisRing := ShallowCopy( SingularNames );
-end;
+end );
 
 
 # Kill Singular when Gap terminates
@@ -357,7 +357,7 @@ InstallAtExit( CloseSingular );
 # (The char before "> ", ". " or "@\n> " depends on the operating
 # system, and on the sing_exec_options "-t".)
 
-SingWriteAndReadUntilDone := function ( string )
+BindGlobal( "SingWriteAndReadUntilDone", function ( string )
 
     local read_blocking, read_non_blocking, read, out, OUT, s, i;
 
@@ -454,12 +454,12 @@ SingWriteAndReadUntilDone := function ( string )
     Info( InfoSingular, 3, "output ", SingularNr.Output, ": ", out );
 
     return OUT;
-end;
+end );
 
 
 
 
-StartSingular := function (  )
+BindGlobal( "StartSingular", function (  )
 
     local  file_in, out, s;
 
@@ -540,7 +540,7 @@ StartSingular := function (  )
     SingularSetBaseRing( SingularBaseRing );
 
 
-end;
+end );
 
 
 
@@ -558,38 +558,38 @@ end;
 # Singular) without the '\' at the end of the lines: the '\' confuses
 # Singular
 
-AppendStringToFile := function ( file, s )
+BindGlobal( "AppendStringToFile", function ( file, s )
     local  otf;
     otf := OutputTextFile( file, true );
     SetPrintFormattingStatus( otf, false );
     AppendTo( otf, s );
     CloseStream( otf );
-end;
+end );
 
 
 # This function could replace use of NormalizedWhitespace, or could be
 # put inside ReadStringFromFile .
-RemovedNewline := function ( string )
+BindGlobal( "RemovedNewline", function ( string )
     if Length( string ) > 0 and string[Length( string )] = '\n'  then
         Unbind( string[Length( string )] );
     fi;
     return ReplacedString( string, "\n", " " );
-end;
+end );
 
 
 # This function reads a file (written by Singular), and returns it as a
 # string to Gap, without the "\n", that confuse Gap.
-ReadStringFromFile := function ( file )
+BindGlobal( "ReadStringFromFile", function ( file )
     local  itf, r;
     itf := InputTextFile( file );
     r := ReadAll( itf );
     CloseStream( itf );
     return RemovedNewline( r );
-end;
+end );
 
 
 
-WithoutEndingSemicolon := function ( string )
+BindGlobal( "WithoutEndingSemicolon", function ( string )
     local  i;
     i := Length( string );
     while i > 0  do
@@ -602,12 +602,12 @@ WithoutEndingSemicolon := function ( string )
         fi;
     od;
     return string;
-end;
+end );
 
 
 
 # This function is under construction... maybe it is not needed.
-EscapeCharsInString := function ( string )
+BindGlobal( "EscapeCharsInString", function ( string )
     string := ReplacedString( string, "\\", "\\\\" );
     string := ReplacedString( string, "\n", "\\\n" );
     string := ReplacedString( string, "\"", "\\\"" );
@@ -616,7 +616,7 @@ EscapeCharsInString := function ( string )
     string := ReplacedString( string, "\r", "\\\r" );
     string := ReplacedString( string, "\c", "\\\c" );
     return string;
-end;
+end );
 
 
 
@@ -629,7 +629,7 @@ end;
 # only to the way of sending the mathematical data, all these functions
 # use the stream for low-level communications.
 
-SingCommandInStreamOutStream := function ( precommand, command )
+BindGlobal( "SingCommandInStreamOutStream", function ( precommand, command )
 
     local  singcom, out, pos1, pos2;
 
@@ -665,11 +665,11 @@ SingCommandInStreamOutStream := function ( precommand, command )
     # return the output, without the ''' and the "\n", 
     return out{[ pos1 + 2 .. pos2 - 1 ]};
 
-end;
+end );
 
 
 
-SingCommandInFileOutStream := function ( precommand, command )
+BindGlobal( "SingCommandInFileOutStream", function ( precommand, command )
 
     local file_in, out, pos1, pos2;
 
@@ -716,11 +716,11 @@ SingCommandInFileOutStream := function ( precommand, command )
     fi;
 
     return out;
-end;
+end );
 
 
 
-SingCommandInFileOutFile := function ( precommand, command )
+BindGlobal( "SingCommandInFileOutFile", function ( precommand, command )
 
     local file_in, file_out, string_in, out;
 
@@ -776,11 +776,11 @@ SingCommandInFileOutFile := function ( precommand, command )
         return "";
     fi;
 
-end;
+end );
 
 
 
-SingCommandInStreamOutFile := function ( precommand, command )
+BindGlobal( "SingCommandInStreamOutFile", function ( precommand, command )
 
     local file_out, out, singcom;
 
@@ -828,14 +828,14 @@ SingCommandInStreamOutFile := function ( precommand, command )
         return "";
     fi;
 
-end;
+end );
 
 
 
 # The following function doesn't use InputOutputLocalProcess,
 # so it can be used under Windows with Gap version < 4.4.2
 
-SingCommandUsingProcess := function ( precommand, command )
+BindGlobal( "SingCommandUsingProcess", function ( precommand, command )
 
     local  _in, out, _out, opt, file_in, file_out;
 
@@ -898,7 +898,7 @@ SingCommandUsingProcess := function ( precommand, command )
         return "";
     fi;
 
-end;
+end );
 
 
 # writing to a i/o stream is slow in windows (but fast in unix)
@@ -939,14 +939,14 @@ fi;
 # This function tells whether a Gap object corresponds to a Singular
 # object of type "int"
 
-IsSingularInt := function ( n )
+BindGlobal( "IsSingularInt", function ( n )
     if IsInt( n )  then
         return - SingularLimitations.max_int <= n and
                n <= SingularLimitations.max_int;
     else
         return false;
     fi;
-end;
+end );
 
 
 # This function tells whether a Gap object corresponds to a Singular
@@ -960,7 +960,7 @@ IsSingularPoly := p -> IsRationalFunction( p ) and IsPolynomial( p )
 ##############################################################################
 
 
-ParseGapNumberToSingNumber := function ( n )
+BindGlobal( "ParseGapNumberToSingNumber", function ( n )
 
     local  eroo, str, i;
 
@@ -1023,11 +1023,11 @@ ParseGapNumberToSingNumber := function ( n )
 
     fi;
 
-end;
+end );
 
 
 
-ParseGapPolyToSingPoly:= function ( pol )
+BindGlobal( "ParseGapPolyToSingPoly", function ( pol )
 
     # pol is a GAP polynomial, we parse it into a string representing
     # a Singular polynomial.
@@ -1083,11 +1083,11 @@ ParseGapPolyToSingPoly:= function ( pol )
 
     Append( str, ")" );
     return str;
-end;
+end );
 
 
 
-ParseGapIdealToSingIdeal := function ( I )
+BindGlobal( "ParseGapIdealToSingIdeal", function ( I )
 
     local  str, pols, k;
 
@@ -1108,11 +1108,11 @@ ParseGapIdealToSingIdeal := function ( I )
     od;
 
     return str;
-end;
+end );
 
 
 
-ParseGapIntmatToSingIntmat := function ( mat )
+BindGlobal( "ParseGapIntmatToSingIntmat", function ( mat )
     local  str, dim, i, j;
     dim := DimensionsMat( mat );
     str := "intmat (intvec(";
@@ -1134,11 +1134,11 @@ ParseGapIntmatToSingIntmat := function ( mat )
     Append( str, String( dim[2] ) );
     Append( str, ")" );
     return str;
-end;
+end );
 
 
 
-ParseGapIntvecToSingIntvec := function ( vec )
+BindGlobal( "ParseGapIntvecToSingIntvec", function ( vec )
     local  str, dim, i;
     dim := Length( vec );
     str := "intvec(";
@@ -1153,12 +1153,12 @@ ParseGapIntvecToSingIntvec := function ( vec )
     od;
     Append( str, ")" );
     return str;
-end;
+end );
 
 
 
 
-ParseGapModuleToSingModule := function ( M )
+BindGlobal( "ParseGapModuleToSingModule", function ( M )
 
     local  str, l_pols, k, k2;
 
@@ -1185,12 +1185,12 @@ ParseGapModuleToSingModule := function ( M )
     od;
 
     return str;
-end;
+end );
 
 
 
 
-ParseGapOrderingToSingOrdering := function( tor )
+BindGlobal( "ParseGapOrderingToSingOrdering", function( tor )
 
     # A TermOrdering of a ring R is either a string ( "lp", "dp", "Dp" ),
     # meaning that the corresponding term ordering in Singular is
@@ -1250,12 +1250,12 @@ ParseGapOrderingToSingOrdering := function( tor )
     fi;
 
     return to;
-end;
+end );
 
 
 
-
-ParseGapRingToSingRing := function ( R )
+Unbind(ParseGapRingToSingRing);
+BindGlobal( "ParseGapRingToSingRing", function ( R )
 
     local F, str, ipr, mcf, varnums, f, ef, i;
 
@@ -1406,12 +1406,12 @@ ParseGapRingToSingRing := function ( R )
     Append( str, "\n" );
     return str;
 
-end;
+end );
 
 
 
 
-ParseGapVectorToSingVector := function ( vec )
+BindGlobal( "ParseGapVectorToSingVector", function ( vec )
     local  str, dim, i;
     dim := Length( vec );
     str := "[";
@@ -1426,10 +1426,10 @@ ParseGapVectorToSingVector := function ( vec )
     od;
     Append( str, "]" );
     return str;
-end;
+end );
 
 
-ParseGapListToSingList := function ( list )
+BindGlobal( "ParseGapListToSingList", function ( list )
     local  str, dim, i;
     dim := Length( list );
     str := "list( ";
@@ -1444,7 +1444,7 @@ ParseGapListToSingList := function ( list )
     od;
     Append( str, " )" );
     return str;
-end;
+end );
 
 
 
@@ -1458,7 +1458,7 @@ end;
 
 
 
-ParseSingNumberToGapNumber:= function ( str )
+BindGlobal( "ParseSingNumberToGapNumber", function ( str )
 
     local   F,  len,  k,  coef,  cf,  exp,  res;
 
@@ -1558,11 +1558,11 @@ ParseSingNumberToGapNumber:= function ( str )
     od;
 
     return res;
-end;
+end );
 
 
 
-ParseSingPolyToGapPoly:= function ( str )
+BindGlobal( "ParseSingPolyToGapPoly", function ( str )
     
     # Here `str' is a string representing a polynomial in Singular
     # format, and we parse it into a GAP polynomial. So a substring of
@@ -1674,11 +1674,11 @@ ParseSingPolyToGapPoly:= function ( str )
 
     return PolynomialByExtRepNC( fam, erep );
 
-end;
+end );
 
 
 
-ParseSingProcToGapFunction := function ( string )
+BindGlobal( "ParseSingProcToGapFunction", function ( string )
 
     local length, k, parameters, done, pos, pos2, precommand, func;
 
@@ -1765,12 +1765,12 @@ ParseSingProcToGapFunction := function ( string )
 
     return EvalString( func );
 
-end;
+end );
 
 
 
 # this function is under construction!
-ParseSingRingToGapRing := function ( string )
+BindGlobal( "ParseSingRingToGapRing", function ( string )
     local p1, p2, char, variables, coeff, to, R;
     p1 := Position( string, '(' );
     p2 := Position( string, ')', p1 );
@@ -1797,7 +1797,7 @@ ParseSingRingToGapRing := function ( string )
     Print( "The conversion of rings from Singular to Gap is under \
 construction!\n" );
     return R;
-end;
+end );
 
 
 
@@ -2043,8 +2043,8 @@ fi;
 
 
 # This function determines the Singular type of a Gap object
-
-SingularType := function ( obj )
+Unbind(SingularType);
+BindGlobal( "SingularType", function ( obj )
     local  i;
     for i  in SingularDataTypeTestOrder  do
         if SingularDataTypes.(i)[2]( obj )  then
@@ -2052,15 +2052,15 @@ SingularType := function ( obj )
         fi;
     od;
     return fail;
-end;
+end );
 
 
 
 ##############################################################################
 
 
-
-ConvertGapObjToSingObj := function ( obj )
+Unbind(ConvertGapObjToSingObj);
+BindGlobal( "ConvertGapObjToSingObj", function ( obj )
 
     local type;
 
@@ -2091,7 +2091,7 @@ ConvertGapObjToSingObj := function ( obj )
         return fail;
     fi;
 
-end;
+end );
 
 
 
@@ -2258,7 +2258,7 @@ ConvertSingObjToGapObj := function ( obj, type_output, singname )
     fi;
 
 end;
-
+MakeReadOnlyGlobal("ConvertSingObjToGapObj");
 
 
 
@@ -2272,7 +2272,7 @@ end;
 
 # Function that displays the help of Singular
 
-SingularHelp := function ( topic )
+BindGlobal( "SingularHelp", function ( topic )
     local  browser, precommand, out;
 
     browser := SingularInterface( "system", [ "--browser" ], "string" );
@@ -2287,23 +2287,23 @@ SingularHelp := function ( topic )
     out := SingularCommand( "", Concatenation( "help ", topic, ";" ) );
     Info( InfoSingular, 1, out );
 
-end;
+end );
 
 
 
 
-SingularSetBaseRing := function ( R )
+BindGlobal( "SingularSetBaseRing", function ( R )
     SingularBaseRing := R;
     SingCommandInStreamOutStream( ParseGapRingToSingRing( R ), "" );
     # after setting the base-ring, the names become out of date.
     SingularNamesThisRing := ShallowCopy( SingularNames );
-end;
+end );
 
 
 
 # Function that loads a Singular library
 
-SingularLibrary := function ( lib )
+BindGlobal( "SingularLibrary", function ( lib )
     if Length( lib ) > 0 and PositionSublist( lib, ".lib" ) = fail  then
         Append( lib, ".lib" );
     fi;
@@ -2313,11 +2313,11 @@ SingularLibrary := function ( lib )
     if PositionSublist( SingularLoadedLibraries, lib ) = fail  then
         Append( SingularLoadedLibraries, lib );
     fi;
-end;
+end );
 
 
 
-SingularInterface := function ( singcom, arguments, type_output )
+BindGlobal( "SingularInterface", function ( singcom, arguments, type_output )
 
     local precommand, length, out, i, unsupported, info;
 
@@ -2425,11 +2425,11 @@ SingularInterface := function ( singcom, arguments, type_output )
                                    Concatenation( "GAP_", type_output ) );
 
 
-end;
+end );
 
 
 
-GapInterface := function ( func, arg, out )
+BindGlobal( "GapInterface", function ( func, arg, out )
 
     local  i, length, sing_obj, gap_obj, gap_arg, type_output;
 
@@ -2459,7 +2459,7 @@ GapInterface := function ( func, arg, out )
     SingularCommand( Concatenation(
        type_output, " ", out, " = ", sing_obj, ";" ), "" );
 
-end;
+end );
 
 
 
@@ -2509,7 +2509,7 @@ end );
 
 
 
-HasTrivialGroebnerBasis:= function ( I )
+BindGlobal( "HasTrivialGroebnerBasis", function ( I )
 
     local input, out;
 
@@ -2539,7 +2539,7 @@ HasTrivialGroebnerBasis:= function ( I )
         Error( "in the Singular interface, please report\n" );
     fi;
 
-end;
+end );
 
 
 
@@ -2586,7 +2586,7 @@ SINGULARGBASIS := rec(
 
 
 # to be improved ?
-GcdUsingSingular := function ( arg )
+BindGlobal( "GcdUsingSingular", function ( arg )
 
     local  i;
 
@@ -2614,11 +2614,11 @@ GcdUsingSingular := function ( arg )
 
     return ParseSingPolyToGapPoly( SingularCommand( "", 
                                        "string( GAP_gcd )" ) );
-end;
+end );
 
 
 
-FactorsUsingSingularNC := function ( poly )
+BindGlobal( "FactorsUsingSingularNC", function ( poly )
 
     local list, g, ind, res, i;
 
@@ -2634,12 +2634,12 @@ FactorsUsingSingularNC := function ( poly )
 
     return res;
 
-end;
+end );
 
 
 
 
-FactorsUsingSingular := function ( poly )
+BindGlobal( "FactorsUsingSingular", function ( poly )
 
     local res;
 
@@ -2661,11 +2661,11 @@ FactorsUsingSingular := function ( poly )
  
     return res;
 
-end;
+end );
 
 
 
-GeneratorsOfInvariantRing:= function( R, G )
+BindGlobal( "GeneratorsOfInvariantRing", function( R, G )
 
     local   g,  n,  F;
 
@@ -2695,7 +2695,7 @@ GeneratorsOfInvariantRing:= function( R, G )
 
     g:= g*One(R);
     return SingularInterface( "invariant_ring", g, "list" )[1][1];
-end;
+end );
 
 
 
@@ -2715,7 +2715,7 @@ end;
 # This functions collects all the information that is useful for a
 # report about the Singular Interface
 
-SingularReportInformation := function (  )
+BindGlobal( "SingularReportInformation", function (  )
 
     local  string, s, uname, _in, _out;
 
@@ -2781,15 +2781,15 @@ SingularReportInformation := function (  )
     Print( "\n" );
 
     return string;
-end;
+end );
 
 
 
 # the next functions are for developing/debugging.
 
-SingularReloadFile := function (  )
+BindGlobal( "SingularReloadFile", function (  )
     return ReadPackage( "singular", "gap/singular.g" );
-end;
+end );
 
 # If 'Process' is used, ask Singular to get SingularVersion.
 
