@@ -136,11 +136,11 @@ SingularVersion := 0; # not yet determined;
 # The Libraries loaded in Singular
 SingularLoadedLibraries := "";
 
-SingularType := function (  ) end; # it will be defined later...
-ParseGapRingToSingRing := function (  ) end; # it will be defined later...
-ConvertGapObjToSingObj := function (  ) end; # it will be defined later...
-SingularInterface := function (  ) end; # it will be defined later...
-SingularSetBaseRing := function (  ) end; # it will be defined later...
+SingularType := fail; # it will be defined later...
+ParseGapRingToSingRing := fail; # it will be defined later...
+ConvertGapObjToSingObj := fail; # it will be defined later...
+SingularInterface := fail; # it will be defined later...
+SingularSetBaseRing := fail; # it will be defined later...
 
 # The Base Ring in Singular; the provided default should match the
 # default of Singular.
@@ -2291,7 +2291,7 @@ end );
 
 
 
-
+Unbind(SingularSetBaseRing);
 BindGlobal( "SingularSetBaseRing", function ( R )
     SingularBaseRing := R;
     SingCommandInStreamOutStream( ParseGapRingToSingRing( R ), "" );
@@ -2317,6 +2317,7 @@ end );
 
 
 
+Unbind(SingularInterface);
 BindGlobal( "SingularInterface", function ( singcom, arguments, type_output )
 
     local precommand, length, out, i, unsupported, info;
