@@ -1,5 +1,9 @@
 This file describes changes in the GAP package `singular`.
 
+- 2023.02.09
+  - Avoid errors 'fgets() failed with errno 5' when quitting GAP
+  - janitorial changes
+
 - 2022.09.23
   - janitorial changes
 
