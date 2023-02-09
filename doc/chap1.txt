@@ -819,7 +819,7 @@
   
   [33X[0;0YThis  section  of  [5XGAP[105X's  [5Xsingular[105X  package  and the corresponding code were
   written  by  David  Joyner,  [7Xmailto:wdj@usna.edu[107X,  (with help from Christoph
-  Lossen  and  Marco  Costantini).  It  has been tested with [5XSingular[105X versrion
+  Lossen  and  Marco  Costantini).  It  has  been tested with [5XSingular[105X version
   2.0.x.[133X
   
   [33X[0;0YTo  start  off,  several new [5XSingular[105X commands must be loaded. The following
@@ -927,8 +927,7 @@
   interface   are   available:   for   example   [2XStartSingular[102X   ([14X1.3-1[114X)   and
   [2XGeneratorsOfInvariantRing[102X  ([14X1.5-7[114X)  are  not  available,  but  [2XGroebnerBasis[102X
   ([14X1.5-1[114X)  is;  [2XSingularInterface[102X  ([14X1.3-8[114X)  supports  less data types. In this
-  case,  for  each  function  call,  a  new session of [5XSingular[105X is started and
-  quitted.[133X
+  case, for each function call, a new session of [5XSingular[105X is started and quit.[133X
   
   
   [1X1.7-2 [33X[0;0YHow different versions of [5XGAP[105X[101X[1X display polynomial rings and polynomials[133X[101X

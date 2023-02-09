@@ -1,6 +1,6 @@
 name: singular
-version: 2022.09.23
-date: 2022-09-23
+version: 2023.02.09
+date: 2023-02-09
 description: |
     A GAP interface to Singular
 
@@ -21,7 +21,7 @@ packageinfo: https://gap-packages.github.io/singular/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/singular/releases/download/v2022.09.23/singular-2022.09.23.tar.gz
+      url: https://github.com/gap-packages/singular/releases/download/v2023.02.09/singular-2023.02.09.tar.gz
 
 abstract: |
     The <span class="pkgname">singular</span> package provides an interface    from <span class="pkgname">GAP</span> to the computer algebra system    <span class="pkgname">Singular</span>.
@@ -33,27 +33,27 @@ keywords: |
     Interface to Singular, Groebner bases.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>CGT22</span>]   <b class='BibAuthor'>Costantini, M., de Graaf, W. A. and GAP Team, T.</b>,
+    [<span class='BibKey'>CGT23</span>]   <b class='BibAuthor'>Costantini, M., de Graaf, W. A. and GAP Team, T.</b>,
      <i class='BibTitle'>singular, A GAP interface to Singular,
-             Version 2022.09.23</i>
-     (<span class='BibYear'>2022</span>)<br />
+             Version 2023.02.09</i>
+     (<span class='BibYear'>2023</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/singular/">https://gap-packages.github.io/singular/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ singular2022.09.23,
+    @misc{ singular2023.02.09,
       author =           {Costantini, M. and de Graaf, W. A. and GAP Team, T.},
       title =            {{singular},  A  GAP  interface  to Singular, {V}ersion
-                          2022.09.23},
-      month =            {Sep},
-      year =             {2022},
+                          2023.02.09},
+      month =            {Feb},
+      year =             {2023},
       note =             {GAP package},
       howpublished =     {\href       {https://gap-packages.github.io/singular/}
                           {\texttt{https://gap-packages.github.io/}\discretionary
                           {}{}{}\texttt{singular/}}},
       keywords =         {Interface to Singular; Groebner bases},
-      printedkey =       {CGT22}
+      printedkey =       {CGT23}
     }
 

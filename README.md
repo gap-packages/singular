@@ -26,7 +26,9 @@ Installing `singular`:
    will find it. If not, edit the file `pkg/singular/gap/singular.g`: at
    the beginning of this file, the full path to the Singular executable
    on your system must be added. For instance:
-   sing_exec:="/usr/local/bin/Singular";
+
+        sing_exec:="/usr/local/bin/Singular";
+
    Alteratively, one can give this path inside a GAP session, with the
    same command.
 
@@ -67,17 +69,13 @@ and free-resolution computations, and many more related functionalities."
 See https://www.singular.uni-kl.de/ . Singular is not included in the
 package, but can be downloaded for free from that site.)
 
-The package is available in the Gap CVS repository in the directory
-4.0/pkg/singular.
-
-Now (August 2003) all the warnings about the stuff in the CVS repository
-apply. Further, this package can hang the Gap session (you will have to
+This package can hang the Gap session (you will have to
 type <ctrl>-C twice, and you will lose the content of the session, if it
 was not saved with SaveWorkspace). This should not happen during normal
 use (please report if it happens to you), but only with code designed to
 hang Gap, such as
-SingularLibrary("all");
-SingularInterface("execute", ["pause()"], "def" );
+    SingularLibrary("all");
+    SingularInterface("execute", ["pause()"], "def" );
 
 
 Hints, bug reports, patches, requests of other functionalities, and so on
