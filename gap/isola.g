@@ -1,4 +1,4 @@
-LieIsomorphism := function(L1,L2,S,varlist)
+BindGlobal( "LieIsomorphism", function(L1,L2,S,varlist)
 
     local   cst,  filt,  n,  F,  ser1,  ser2,  cen1,  cen2,  dser1,  
             dser2,  H1,  cart1,  H2,  cart2,  lev1,  lev2,  nrad1,  
@@ -455,11 +455,11 @@ fi;
     
     return [R,I,weights];
     
-end;
+end );
 
 
 
-LieIsomorphismCharP := function(L1,L2,S,varlist)
+BindGlobal( "LieIsomorphismCharP", function(L1,L2,S,varlist)
 
 
     local   cst,  filt,  n,  F,  ser1,  ser2,  cen1,  cen2,  dser1,  dser2, 
@@ -830,10 +830,10 @@ fi;
     
     return [R,I,weights];
     
-end;
+end );
 
 
-LookUp:= function( L )
+BindGlobal( "LookUp", function( L )
 
     local F,i,K,file,n,lst,slist,look,ff,dd,pb,G,
           lie_tables, varlist,
@@ -926,11 +926,11 @@ LookUp:= function( L )
         fi;
         return fail;
     fi;
-end;
+end );
 
 
 
-Compare := function ( L, n )
+BindGlobal( "Compare", function ( L, n )
 # This function compares the Lie algebra L with the n-th element of the 
 # data of the Lie algebras, and return the ideal in which the Groebner
 # basis can be calculated.
@@ -945,11 +945,11 @@ Compare := function ( L, n )
         pb := LieIsomorphismCharP( K, L, s[2][n], s[3] );
     fi;
     return pb;
-end;
+end );
 
 
 
-AreIsomorphic:=function( K, L )
+BindGlobal( "AreIsomorphic", function( K, L )
     
     # Test whether the Lie algebras K, L are isomorphic.
     
@@ -970,11 +970,11 @@ AreIsomorphic:=function( K, L )
     fi;
     
     
-end;
+end );
 
 
 
-AreSimilar:=function( K, L )
+BindGlobal( "AreSimilar", function( K, L )
 
     # Test whether the Lie algebras K, L are similar.
 
@@ -995,5 +995,5 @@ AreSimilar:=function( K, L )
     fi;
 
 
-end;
+end );
 
