@@ -1999,7 +1999,7 @@ have a return type 'none', see \"3.5.1 General command syntax\".",
 
 
   bigint := [ "Variables of type bigint represent the arbitrary long \
-integers. They can only be contructed from other types (int, number).",
+integers. They can only be constructed from other types (int, number).",
 #	obj -> IsInt( obj ) and ( SingularVersion >= 3002 or
 #		# because it may be still unknown
 #		SingularVersion = 0 ),

@@ -1776,7 +1776,7 @@ Add(tables, t);
 ## Real Field
 
 ## Each of the algebras in the list of Section 4.1 can be interpreted as a
-## Lie algebra over R. In the case of infinte families, we have to
+## Lie algebra over R. In the case of infinite families, we have to
 ## restrict the parameter lambda to take real values. The exceptional
 ## algebra which occurs in the case char = 3 should be omitted. In
 ## addition to these algebras, we have the following 24 extra

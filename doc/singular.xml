@@ -1238,7 +1238,7 @@ are not available, but <Ref Func="GroebnerBasis"/> is; <Ref
 Func="SingularInterface"/> supports less data types.
 
 In this case, for each function call, a new session of
-<Package>Singular</Package> is started and quitted.
+<Package>Singular</Package> is started and quit.
 
 </Subsection>
 
