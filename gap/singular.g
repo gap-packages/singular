@@ -329,7 +329,7 @@ end;
 CloseSingular := function (  )
     if IsStream( Sing_Proc )  then
         if not IsClosedStream( Sing_Proc )  then
-            # WriteLine( Sing_Proc, ";quit;" );
+            WriteLine( Sing_Proc, ";quit;" );
             CloseStream( Sing_Proc );
         else
             Info( InfoSingular, 2, "Singular already closed." );
