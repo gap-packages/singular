@@ -29,7 +29,9 @@ if not IsBound( Sing_Proc ) then
 # is non-standard (e.g. singular in lowercase), just with its name
 # as below:
 
+if not IsBound( sing_exec ) then
 sing_exec := "singular";
+fi;
 
 # The directory separator is always '/', even under DOS/Windows or
 # MacOS, as in the following example:
@@ -52,7 +54,9 @@ sing_exec := "singular";
 # defined functions, as in the following example:
 # sing_exec_options := [ "-t", "/full_path/my_file" ];
 
+if not IsBound( sing_exec_options ) then
 sing_exec_options := [ "-t" ];
+fi;
 
 
 
@@ -64,7 +68,9 @@ sing_exec_options := [ "-t" ];
 # SingularTempDirectory := DirectoryCurrent(  );
 # If you don't specify it, the interface will set up a temporary one.
 
+if not IsBound( SingularTempDirectory ) then
 SingularTempDirectory := "";
+fi;
 
 
 
