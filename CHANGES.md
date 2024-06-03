@@ -1,5 +1,9 @@
 This file describes changes in the GAP package `singular`.
 
+- 2024.06.03
+  - Do not overwrite variables `sing_exec`, `sing_exec_options`,
+    `SingularTempDirectory` when the package gets loaded
+
 - 2023.02.09
   - Avoid errors 'fgets() failed with errno 5' when quitting GAP
   - janitorial changes
