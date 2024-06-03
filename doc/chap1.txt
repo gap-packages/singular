@@ -27,8 +27,8 @@
   
   [33X[0;0YIf  [5XGAP[105X,  [5XSingular[105X,  and  the [5XGAP[105X package [5Xsingular[105X are already installed and
   working  on  his computer, the user of this interface needs to read only the
-  subsection  [2Xsing_exec[102X  ([14X1.2-4[114X), the section [14X1.3[114X, and in case of problems the
-  subsection [14X1.7-4[114X.[133X
+  subsection  [14X1.2-4[114X,  the  section [14X1.3[114X, and in case of problems the subsection
+  [14X1.7-4[114X.[133X
   
   
   [1X1.1-1 [33X[0;0YPackage evolution[133X[101X
@@ -212,8 +212,9 @@
   (before   loading   the  package)  one  of  the  first  lines  of  the  file
   [11Xsingular/gap/singular.g[111X  (that  comes  with  this  package).  Third,  it  is
   possible  to  give  the path of the [5XSingular[105X executable file directly during
-  each  [5XGAP[105X session assigning it to the variable [3Xsing_exec[103X (after this package
-  has been loaded, and before starting [5XSingular[105X), as in the example below.[133X
+  each  [5XGAP[105X  session  assigning it to the variable [2Xsing_exec[102X (either before or
+  after  this  package  has  been  loaded,  but  before starting [5XSingular[105X with
+  [2XStartSingular[102X ([14X1.3-1[114X)), as in the example below.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XLoadPackage( "singular" );[127X[104X
@@ -223,37 +224,38 @@
   [4X[32X[104X
   
   [33X[0;0YThe  directory separator is always '[11X/[111X', even under DOS/Windows or MacOS. The
-  value  of  [3Xsing_exec[103X  must  refer  to  the  text-only  version  of  [5XSingular[105X
+  value  of  [2Xsing_exec[102X  must  refer  to  the  text-only  version  of  [5XSingular[105X
   ([3XSingular[103X),  and  not  to the Emacs version ([3XESingular[103X), nor to the terminal
   window version ([3XTSingular[103X).[133X
   
   [33X[0;0YIn  a  similar way, it is possible to supply [5XSingular[105X with some command line
   options (or files to read containing user defined functions), assigning them
-  to  the  variable  [3Xsing_exec_options[103X.  This  can  be done by editing (before
+  to  the  variable  [2Xsing_exec_options[102X.  This  can  be done by editing (before
   loading    the   package)   one   of   the   first   lines   of   the   file
   [11Xsingular/gap/singular.g[111X  (that  comes with this package), or directly during
-  each  [5XGAP[105X  session  (after this package has been loaded, and before starting
-  [5XSingular[105X), as in the example below.[133X
+  each  [5XGAP[105X  session (either before or after this package has been loaded, but
+  before  starting  [5XSingular[105X)  with  [2XStartSingular[102X ([14X1.3-1[114X)), as in the example
+  below.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAdd( sing_exec_options, "--no-rc" );[127X[104X
     [4X[25Xgap>[125X [27XAdd( sing_exec_options, "/full_path/my_file" );[127X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  variable [3Xsing_exec_options[103X is initialized to [3X[ "-t" ][103X; the user can add
+  [33X[0;0YThe  variable [2Xsing_exec_options[102X is initialized to [3X[ "-t" ][103X; the user can add
   further options, but must keep [3X"-t"[103X, which is required. The possible options
   are  described in the [5XSingular[105X documentation, paragraph ``3.1.6 Command line
   options''.[133X
   
   [33X[0;0Y[5XSingular[105X  is  not executed in the current directory, but in a user-specified
   one,  or  in  a  temporary  one.  It  is  possible  to supply this directory
-  assigning  it  to  the  variable  [3XSingularTempDirectory[103X. This can be done by
+  assigning  it  to  the  variable  [2XSingularTempDirectory[102X. This can be done by
   editing  (before  loading  the  package)  one of the first lines of the file
   [11Xsingular/gap/singular.g[111X  (that  comes with this package), or directly during
-  each  [5XGAP[105X  session  (after this package has been loaded, and before starting
-  [5XSingular[105X),  as  in  the  example  below.  If  [3XSingularTempDirectory[103X  is  not
-  assigned,  [5XGAP[105X  will  create  and  use  a temporary directory, which will be
-  removed when [5XGAP[105X quits.[133X
+  each  [5XGAP[105X  session (either before or after this package has been loaded, but
+  before  starting  [5XSingular[105X)  with  [2XStartSingular[102X ([14X1.3-1[114X)), as in the example
+  below.  If  [2XSingularTempDirectory[102X is not assigned, [5XGAP[105X will create and use a
+  temporary directory, which will be removed when [5XGAP[105X quits.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSingularTempDirectory := Directory( "/tmp" );[127X[104X
@@ -261,8 +263,8 @@
   [4X[32X[104X
   
   [33X[0;0YOn  Windows,  [5XSingular[105X  version  3  may be not executed directly, but may be
-  executed   as   [3Xbash  Singular[103X.  In  this  case,  the  variables  [3Xsing_exec[103X,
-  [3Xsing_exec_options[103X,   [3XSingularTempDirectory[103X   must  reflect  this,  otherwise
+  executed   as   [3Xbash  Singular[103X.  In  this  case,  the  variables  [2Xsing_exec[102X,
+  [2Xsing_exec_options[102X,   [2XSingularTempDirectory[102X   must  reflect  this,  otherwise
   Windows  complains  that [3Xcygwin1.dll[103X is not found. The following works on my
   Windows machine.[133X
   
