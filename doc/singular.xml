@@ -56,7 +56,7 @@ it as described in
 If &GAP;, <Package>Singular</Package>, and the &GAP; package 
 <Package>singular</Package> are already installed and working on his 
 computer, the user of this interface needs to read only the subsection
-<Ref Var="sing_exec"/>,
+<Ref Subsect="sec:sing_exec"/>,
 the section <Ref Subsect="Interaction"/>,
 and in case of problems the subsection <Ref Subsect="common"/>.
 
@@ -349,7 +349,7 @@ The package <Package>singular</Package> doesn't require compilation.
 
 </Subsection>
 
-<ManSection Label="sing_exec">
+<ManSection Label="sec:sing_exec">
 <Var Name="sing_exec"/>
 <Var Name="sing_exec_options"/>
 <Var Name="SingularTempDirectory"/>
@@ -367,9 +367,10 @@ first lines of the file <File>singular/gap/singular.g</File> (that comes
 with this package).
 Third, it is possible to give the path of the
 <Package>Singular</Package> executable file directly during each &GAP;
-session assigning it to the variable <A>sing&uscore;exec</A> (after this
-package has been loaded, and before starting
-<Package>Singular</Package>), as in the example below.
+session assigning it to the variable <Ref Var="sing_exec"/>
+(either before or after this package has been loaded, but before starting
+<Package>Singular</Package> with <Ref Func="StartSingular"/>),
+as in the example below.
 
 <Example>
 gap> LoadPackage( "singular" );
@@ -381,7 +382,7 @@ gap> sing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";;
 The directory separator is always '<File>/</File>', even under
 DOS/Windows or MacOS.
 
-The value of <A>sing&uscore;exec</A> must refer to the text-only version
+The value of <Ref Var="sing_exec"/> must refer to the text-only version
 of <Package>Singular</Package> (<A>Singular</A>), and not to the Emacs
 version (<A>ESingular</A>), nor to the terminal window version
 (<A>TSingular</A>).
@@ -391,21 +392,22 @@ version (<A>ESingular</A>), nor to the terminal window version
 In a similar way, it is possible to supply <Package>Singular</Package>
 with some command line options (or files to read containing user defined
 functions), assigning them to the variable
-<A>sing&uscore;exec&uscore;options</A>. 
+<Ref Var="sing_exec_options"/>.
 
 This can be done by editing (before loading the package) one of the
 first lines of the file <File>singular/gap/singular.g</File> (that comes
 with this package), 
-or directly during each &GAP; session (after this package has been
-loaded, and before starting <Package>Singular</Package>), as in the
-example below.
+or directly during each &GAP; session
+(either before or after this package has been loaded, but before starting
+<Package>Singular</Package>) with <Ref Func="StartSingular"/>),
+as in the example below.
 
 <Log>
 gap> Add( sing_exec_options, "--no-rc" );
 gap> Add( sing_exec_options, "/full_path/my_file" );
 </Log>
 
-The variable <A>sing&uscore;exec&uscore;options</A> is initialized to
+The variable <Ref Var="sing_exec_options"/> is initialized to
 <A>[ "-t" ]</A>; the user can add further options, but must keep
 <A>"-t"</A>, which is required. The possible options are described in
 the <Package>Singular</Package> documentation, paragraph
@@ -417,17 +419,18 @@ the <Package>Singular</Package> documentation, paragraph
 <Package>Singular</Package> is not executed in the current directory, but
 in a user-specified one, or in a temporary one.
 It is possible to supply this directory assigning it to the variable
-<A>SingularTempDirectory</A>.
+<Ref Var="SingularTempDirectory"/>.
 
 This can be done by editing (before loading the package) one of the
 first lines of the file <File>singular/gap/singular.g</File> (that comes
 with this package),
-or directly during each &GAP; session (after this package has been
-loaded, and before starting <Package>Singular</Package>), as in the
-example below. 
+or directly during each &GAP; session
+(either before or after this package has been loaded, but before starting
+<Package>Singular</Package>) with <Ref Func="StartSingular"/>),
+as in the example below.
 
 
-If <A>SingularTempDirectory</A> is not assigned, &GAP; will create and use
+If <Ref Var="SingularTempDirectory"/> is not assigned, &GAP; will create and use
 a temporary directory, which will be removed when &GAP; quits.
 
 <Log>
@@ -437,8 +440,8 @@ dir("/tmp/")
 
 On Windows, <Package>Singular</Package> version 3 may be not executed
 directly, but may be executed as <A>bash Singular</A>. In this case, the
-variables <A>sing&uscore;exec</A>,
-<A>sing&uscore;exec&uscore;options</A>, <A>SingularTempDirectory</A> 
+variables <Ref Var="sing_exec"/>,
+<Ref Var="sing_exec_options"/>, <Ref Var="SingularTempDirectory"/>
 must reflect this, otherwise Windows complains that <A>cygwin1.dll</A> 
 is not found.
 The following works on my Windows machine.
