@@ -82,7 +82,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A GAP interface to Singular",
-  Autoload  := true
 ),
 
 Dependencies := rec(
@@ -93,7 +92,6 @@ Dependencies := rec(
                            "https://www.singular.uni-kl.de/"] ]
 ),
 AvailabilityTest := ReturnTrue,
-Autoload := false,
 
 TestFile := "tst/testall.g",
 Keywords := [ "Interface to Singular", "Groebner bases" ]
