@@ -538,6 +538,10 @@ gap> intmat:=[[12,34],[56,78]];
 [ [ 12, 34 ], [ 56, 78 ] ]
 gap> intvec:=[98765,4321];
 [ 98765, 4321 ]
+gap> bigint:=18446744073709551616;
+18446744073709551616
+gap> bigintmat:=[[18446744073709551616,34],[56,432109876543210]];
+[ [ 18446744073709551616, 34 ], [ 56, 432109876543210 ] ]
 gap> map:=AlgebraGeneralMappingByImages(ring,ring,[x,y],[x+y,x-y]);
 [ x, y ] -> [ x+y, x-y ]
 gap> matrix:=[[x+y, x*y],[x+y+x*y,x^2+y^2]];
@@ -557,27 +561,29 @@ gap> vector:=[x^3+y^3,+(5)^3*x^2+Z(5)^3,x*y+y^2+Z(5)^3*y];
 
 #
 gap> list1 := [ ideal, int, intmat, intvec, map, matrix, module, number,
-> poly, proc, ring, string, vector];
+> poly, proc, ring, string, vector, bigint, bigintmat ];
 [ <two-sided ideal in GF(5)[x,y], (2 generators)>, 123456, 
   [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], [ x, y ] -> [ x+y, x-y ], 
   [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
   <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
     2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
   function(  ) ... end, GF(5)[x,y], "ciao", 
-  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ], 18446744073709551616, 
+  [ [ 18446744073709551616, 34 ], [ 56, 432109876543210 ] ] ]
 gap> List( list1, SingularType);
 [ "ideal", "int", "intmat", "intvec", "map", "matrix", "module", "number", 
-  "poly", "proc", "ring", "string", "vector" ]
+  "poly", "proc", "ring", "string", "vector", "bigint", "bigintmat" ]
 
 #
 gap> list2 := [ ideal, int, intmat, intvec, matrix, module, number,
-> poly, string, vector];
+> poly, string, vector, bigint, bigintmat ];
 [ <two-sided ideal in GF(5)[x,y], (2 generators)>, 123456, 
   [ [ 12, 34 ], [ 56, 78 ] ], [ 98765, 4321 ], 
   [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
   <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
     2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
-  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ], 18446744073709551616, 
+  [ [ 18446744073709551616, 34 ], [ 56, 432109876543210 ] ] ]
 gap> list3 := SingularInterface( "id_func", [list2], "def" );
 #I  running SingularInterface( "id_func", [ "list" ], "def" )...
 #I  done SingularInterface.
@@ -591,7 +597,8 @@ gap> list3 := SingularInterface( "id_func", [list2], "def" );
   [ [ x+y, x*y ], [ x*y+x+y, x^2+y^2 ] ], 
   <free left module over PolynomialRing( GF(5), ["x", "y"] ), with 
     2 generators>, Z(5)^3, x^3+y^3+Z(5)^3*x^2+Z(5)^3*x*y+y^2+Z(5)^3*y, 
-  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ] ]
+  "ciao", [ x^3+y^3, Z(5)^3, x*y+y^2+Z(5)^3*y ], 18446744073709551616, 
+  [ [ 18446744073709551616, 34 ], [ 56, 432109876543210 ] ] ]
 
 #
 gap> for i in [2,3,4,5,7,8,9,10] do
@@ -619,7 +626,7 @@ gap> SingularCommand("","transpose(mm2)==mm");
 # this should be at the end of the test file:
 #
 gap> [ SingularNr.Process, SingularNr.Input, SingularNr.Output ];
-[ 0, 1136, 1136 ]
+[ 0, 1156, 1156 ]
 gap> SingularBaseRing;
 GF(5)[x,y]
 gap> CoefficientsRing( SingularBaseRing );

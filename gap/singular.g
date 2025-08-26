@@ -1144,6 +1144,32 @@ end );
 
 
 
+BindGlobal( "ParseGapIntmatToSingBigintmat", function ( mat )
+    local  str, dim, i, j;
+    dim := DimensionsMat( mat );
+    str := "(x->{bigintmat m[";
+    Append( str, String( dim[1] ) );
+    Append( str, "][");
+    Append( str, String( dim[2] ) );
+    Append( str, "] = " );
+    for i  in [ 1 .. dim[1] ]  do
+        Append( str, "\n" );
+        for j  in [ 1 .. dim[2] ]  do
+            Append( str, String( mat[i][j] ) );
+            if not (i = dim[1] and j = dim[2])  then
+                Append( str, "," );
+            fi;
+            if j mod 50 = 0  then
+                Append( str, "\n" );
+            fi;
+        od;
+    od;
+    Append( str, "; m})(0)" );
+    return str;
+end );
+
+
+
 BindGlobal( "ParseGapIntvecToSingIntvec", function ( vec )
     local  str, dim, i;
     dim := Length( vec );
@@ -1161,6 +1187,24 @@ BindGlobal( "ParseGapIntvecToSingIntvec", function ( vec )
     return str;
 end );
 
+
+
+BindGlobal( "ParseGapIntvecToSingBigintvec", function ( vec )
+    local  str, dim, i;
+    dim := Length( vec );
+    str := "bigintvec(";
+    for i  in [ 1 .. dim ]  do
+        Append( str, String( vec[i] ) );
+        if not i = dim  then
+            Append( str, "," );
+        fi;
+        if i mod 50 = 0  then
+            Append( str, "\n" );
+        fi;
+    od;
+    Append( str, ")" );
+    return str;
+end );
 
 
 
@@ -1851,8 +1895,35 @@ are, therefore, limited in their range (e.g., the range is between \
   intvec := [ "Variables of type intvec are lists of integers.",
 	obj -> IsRowVector( obj ) and ForAll( obj, IsSingularInt ),
 	ParseGapIntvecToSingIntvec,
-	obj -> List( SplitString( obj, ',' ), Int ),
+	obj -> List( SplitString( obj, ',', ' ' ), Int ),
 	 ],
+
+
+  bigint := [ "Variables of type bigint represent arbitrarily long integers.",
+	obj -> IsInt( obj ) and ( SingularVersion >= 4000 or
+		# because it may be still unknown
+		SingularVersion = 0 ),
+	String,
+	Int
+	],
+
+
+  bigintmat := [ "Variables of type bigintmat are matrices with arbitrarily \
+long integer entries.",
+	obj -> IsMatrix( obj ) and
+			ForAll( obj, x -> ForAll( x, IsInt ) ) and
+		( SingularVersion >= 4000 or SingularVersion = 0 ),
+	ParseGapIntmatToSingBigintmat,
+	],
+
+
+  bigintvec := [ "Variables of type bigintvec are lists of arbitrarily long \
+integers.",
+	obj -> IsRowVector( obj ) and ForAll( obj, IsInt ) and
+		( SingularVersion >= 4400 or SingularVersion = 0 ),
+	ParseGapIntvecToSingBigintvec,
+	obj -> List( SplitString( obj, ',', ' ' ), Int ),
+	],
 
 
   link := [ "Links are the communication channels of SINGULAR, i.e., \
@@ -2004,19 +2075,6 @@ have a return type 'none', see \"3.5.1 General command syntax\".",
 	],
 
 
-  bigint := [ "Variables of type bigint represent the arbitrary long \
-integers. They can only be constructed from other types (int, number).",
-#	obj -> IsInt( obj ) and ( SingularVersion >= 3002 or
-#		# because it may be still unknown
-#		SingularVersion = 0 ),
-#	obj -> Concatenation( "bigint(", String( obj ), ")" ),
-ReturnFalse,
-,
-	Int
-	],
-	    
-
-
   package := [ "The data type package is used to group identifiers into \
 collections. Introduced in Singular 3.0.0.",
 	ReturnFalse, # makes no sense in Gap
@@ -2030,10 +2088,10 @@ collections. Introduced in Singular 3.0.0.",
 # the record entries in the order that we have given them (a change introduced 
 # in GAP 4.5). So we here list the order in which they should be tested
 
-SingularDataTypeTestOrder := [ "def", "ideal", "int", "intmat", "intvec", "link", 
-  "map", "matrix", "module", "number", "poly", "proc", "qring", "resolution", 
-  "ring", "string", "vector", "list", "?unknown type?", "none", "bigint", 
-  "package" ];
+SingularDataTypeTestOrder := [ "def", "ideal", "int", "intmat", "intvec",
+  "bigint", "bigintvec", "bigintmat", "link", "map", "matrix", "module",
+  "number", "poly", "proc", "qring", "resolution", "ring", "string", "vector",
+  "list", "?unknown type?", "none", "package" ];
 
 # And check for sanity that this set is same as the names in the record
 if Set(SingularDataTypeTestOrder) <> Set(RecNames(SingularDataTypes)) then
@@ -2160,8 +2218,8 @@ ConvertSingObjToGapObj := function ( obj, type_output, singname )
         return ideal;
 
 
-    # intmat
-    elif type_output = "intmat"  then
+    # intmat / bigintmat
+    elif type_output = "intmat" or type_output = "bigintmat" then
         list:= List( SplitString( obj, ',' ,' '), Int );
         command := Concatenation( "nrows( ", singname, " );" );
         nrows := Int( SingCommandInStreamOutStream( "", command ) );
