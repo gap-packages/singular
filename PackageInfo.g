@@ -11,7 +11,7 @@
 SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "A GAP interface to Singular",
-Version := "2024.06.03",
+Version := "2025.08.26",
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 
@@ -82,7 +82,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "A GAP interface to Singular",
-  Autoload  := true
 ),
 
 Dependencies := rec(
@@ -93,7 +92,6 @@ Dependencies := rec(
                            "https://www.singular.uni-kl.de/"] ]
 ),
 AvailabilityTest := ReturnTrue,
-Autoload := false,
 
 TestFile := "tst/testall.g",
 Keywords := [ "Interface to Singular", "Groebner bases" ]
