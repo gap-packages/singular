@@ -88,6 +88,7 @@ Dependencies := rec(
   GAP := ">=4.8",
   NeededOtherPackages := [  ],
   SuggestedOtherPackages := [  ],
+  NeededSystemPackages := rec( Ubuntu := [["singular"]], Homebrew := [["singular"]] ),
   ExternalConditions := [ ["Requires the computer algebra system Singular",
                            "https://www.singular.uni-kl.de/"] ]
 ),
