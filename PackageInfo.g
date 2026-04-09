@@ -11,7 +11,7 @@
 SetPackageInfo( rec(
 PackageName := "singular",
 Subtitle := "A GAP interface to Singular",
-Version := "2025.08.26",
+Version := "2026.04.09",
 Date := Concatenation( ~.Version{[ 9, 10 ]}, "/", ~.Version{[ 6, 7 ]}, "/", ~.Version{[ 1 .. 4 ]} ),
 License := "GPL-2.0-or-later",
 

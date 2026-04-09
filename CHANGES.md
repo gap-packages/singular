@@ -1,5 +1,8 @@
 This file describes changes in the GAP package `singular`.
 
+- 2026.04.09
+  - janitorial changes
+
 - 2025.08.26
     - Add support for bigint, bigintvec, and bigintmat
       (contributed by Jerry James)
