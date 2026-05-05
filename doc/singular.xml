@@ -464,7 +464,36 @@ In this case, with a standard installation of Cygwin and
 
 </Description>
 
-</ManSection> 
+</ManSection>
+
+<ManSection>
+<Func Name="IsSingularExecutableAvailable" Arg = ""/>
+<Description>
+
+
+The function <A>IsSingularExecutableAvailable</A> checks whether the
+current value of <Ref Var="sing_exec"/> already points to an executable
+file, and otherwise tries to resolve it automatically. In particular, if
+<Ref Var="sing_exec"/> names only a directory, then the file
+<File>Singular</File> inside that directory is tried; if it contains no
+directory separator, then it is searched in the system program path; and
+if <Ref Var="sing_exec"/> is not set or cannot be used, then the program
+name <File>Singular</File> is searched in the system program path.
+
+<Example>
+gap> IsSingularExecutableAvailable();
+true
+</Example>
+
+If the function returns <K>true</K>, then <Ref Var="sing_exec"/> has been
+normalized to a usable executable path. If it returns <K>false</K>, then
+the package still does not know how to start <Package>Singular</Package>,
+and <Ref Var="sing_exec"/> should be set explicitly before calling
+<Ref Func="StartSingular"/>.
+
+</Description>
+
+</ManSection>
 
 
 
@@ -488,6 +517,8 @@ After the package <Package>singular</Package> has been loaded,
 <Package>Singular</Package> is started automatically when one of the
 functions of the interface is called. Alternatively, one can start
 <Package>Singular</Package> with the command <A>StartSingular</A>.
+To check beforehand whether the executable can be found, use
+<Ref Func="IsSingularExecutableAvailable"/>.
 
 <Example>
 gap> StartSingular();

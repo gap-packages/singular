@@ -231,8 +231,8 @@ end );
 
 
 
-BindGlobal( "CheckSingularExecutableAndTempDir", function (  )
-    local i, IsExec;
+BindGlobal( "IsSingularExecutableAvailable", function (  )
+    local IsExec;
 
     # check the Singular executable file, and if needed try to
     # autodetermine, or print an appropriate error message
@@ -260,8 +260,15 @@ BindGlobal( "CheckSingularExecutableAndTempDir", function (  )
         fi;
     fi;
 
+    return IsBound( sing_exec ) and IsExec( sing_exec );
+end );
+
+
+BindGlobal( "CheckSingularExecutableAndTempDir", function (  )
+    local i;
+
     # check the executable file, if failed print an error message
-    while not IsBound( sing_exec ) or not IsExec( sing_exec ) do
+    while not IsSingularExecutableAvailable() do
         Print( "  Type 'sing_exec:=\"<path>\"; return;' where <path>\n" );
         Print( "  is the path of the Singular executable file on your \
 system.\n" );
