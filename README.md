@@ -37,6 +37,10 @@ Installing `singular`:
         gap> LoadPackage("singular");
         true
 
+   To check whether GAP can already find the Singular executable, run
+
+        gap> IsSingularExecutableAvailable();
+
 4. The documentation is in the `doc` subdirectory: it is more up-to-date 
    than this README file.
 
