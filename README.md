@@ -1,233 +1,267 @@
-[![CI](https://github.com/gap-packages/singular/actions/workflows/CI.yml/badge.svg)](https://github.com/gap-packages/singular/actions/workflows/CI.yml)
-[![Code Coverage](https://codecov.io/github/gap-packages/singular/coverage.svg)](https://codecov.io/gh/gap-packages/singular)
+# GitHubPagesForGAP
 
-# singular: a GAP interface to Singular
+This repository can be used to quickly set up a website hosted by
+[GitHub](https://github.com/) for GAP packages using a GitHub repository.
+Specifically, this uses [GitHub pages](https://pages.github.com/)
+by adding a `gh-pages` branch to your package repository which
+contains data generated from the `PackageInfo.g` file of your package.
 
-<https://gap-packages.github.io/singular/>
-   
-This is the README file for the package `singular`; a GAP interface
-to the computer algebra system Singular <https://www.singular.uni-kl.de/>.
+## Initial setup
 
-The package has no maintainer at the moment. To make a version of the 
-Singular package working under GAP 4.5, in 2011 a bug in the interface was
-fixed by Paul Smith and a new package archive for the GAP 4.5 release was 
-prepared in 2012 by Alexander Konovalov. Currently we do not plan any 
-further development of this package. The rest of this file belongs to the 
-README of the package from its previous release on 2006/07/23.
+The easiest way to do this is to run the `setup-gh-pages` shell script
+provided in the [GitHubPagesForGAP]() from within a git clone of your
+package's GitHub repository.
 
-------------------------------------------------------------------------------
+In case this does not work, or if you want to really know what's going
+on, you can also follow the manual instructions described after the fold.
 
-Installing `singular`:
+------
 
-1. unpack `singular.tar.gz` in the `pkg` subdirectory of the GAP root
-   directory.
+The following instructions assume you do not already have a `gh-pages`
+branch in your repository. If you do have one, you should delete it before
+following these instructions.
 
-2. If the Singular executable is in your search path, then it is ok: GAP
-   will find it. If not, edit the file `pkg/singular/gap/singular.g`: at
-   the beginning of this file, the full path to the Singular executable
-   on your system must be added. For instance:
+1. Go into your clone of your package repository.
 
-        sing_exec:="/usr/local/bin/Singular";
+2. Setup a `gh-pages` branch in a `gh-pages` subdirectory.
 
-   Alteratively, one can give this path inside a GAP session, with the
-   same command.
+   Users with a recent enough git version (recommended is >= 2.7.0)
+   can do this using a "worktree", via the following commands:
 
-3. It should work. From within GAP things are started with
+   ```sh
+   # Add a new remote pointing to the GitHubPagesForGAP repository
+   git remote add -f gh-gap https://github.com/gap-system/GitHubPagesForGAP
 
-        gap> LoadPackage("singular");
-        true
+   # Create a fresh gh-pages branch from the new remote
+   git branch gh-pages gh-gap/gh-pages --no-track
 
-4. The documentation is in the `doc` subdirectory: it is more up-to-date 
-   than this README file.
+   # Create a new worktree and change into it
+   git worktree add gh-pages gh-pages
+   cd gh-pages
+   ```
 
+   Everybody else should instead do the following, with the URL
+   in the initial clone command suitably adjusted:
 
-------------------------------------------------------------------------------
+   ```sh
+   # Create a fresh clone of your repository, and change into it
+   git clone https://github.com/USERNAME/REPOSITORY gh-pages
+   cd gh-pages
 
+   # Add a new remote pointing to the GitHubPagesForGAP repository
+   git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+   git fetch gh-gap
 
-Preliminary announcement of August 2003 (and preliminary documentation):
+   # Create a fresh gh-pages branch from the new remote
+   git checkout -b gh-pages gh-gap/gh-pages --no-track
+   ```
 
-Dear Gap developers,
-this is the announcement that the experimental version of the package
-"singular" has been released.
+5. Add in copies of your `PackageInfo.g`, `README` (or `README.md`) and manual:
 
-This package, written by Willem de Graaf and myself, provides an interface
-to the system Singular ("SINGULAR is a Computer Algebra system for
-polynomial computations with emphasis on the special needs of commutative
-algebra, algebraic geometry, and singularity theory.
-SINGULAR's main computational objects are ideals and modules over a large
-variety of baserings. The baserings are polynomial rings or localizations
-thereof over a field (e.g., finite fields, the rationals, floats,
-algebraic extensions, transcendental extensions) or quotient rings with
-respect to an ideal.
-SINGULAR features one of the fastest and most general implementations of
-various algorithms for computing Groebner resp. standard bases. The
-implementation includes Buchberger's algorithm (if the ordering is a well
-ordering) and Mora's algorithm (if the ordering is a tangent cone
-ordering) as special cases. Furthermore, it provides polynomial
-factorizations, resultant, characteristic set and gcd computations, syzygy
-and free-resolution computations, and many more related functionalities."
-See https://www.singular.uni-kl.de/ . Singular is not included in the
-package, but can be downloaded for free from that site.)
+   ```
+   cp -f ../PackageInfo.g ../README* .
+   cp -f ../doc/*.{css,html,js,txt} doc/
+   ```
 
-This package can hang the Gap session (you will have to
-type <ctrl>-C twice, and you will lose the content of the session, if it
-was not saved with SaveWorkspace). This should not happen during normal
-use (please report if it happens to you), but only with code designed to
-hang Gap, such as
-    SingularLibrary("all");
-    SingularInterface("execute", ["pause()"], "def" );
+6. Now run the `update.g` GAP script. This extracts data from your
+   `PackageInfo.g` file and puts that data into `_data/package.yml`.
+   From this, the website template can populate the web pages with
+   some sensible default values.
 
+   ```
+   gap update.g
+   ```
 
-Hints, bug reports, patches, requests of other functionalities, and so on
-are welcome, please submit them at
-<https://github.com/gap-packages/singular/issues>
-Please add the output of SingularReportInformation(); to your report.
+7. Commit and push everything.
 
-```
-# load
+   ```
+   git add PackageInfo.g README* doc/ _data/package.yml
+   git commit -m "Setup gh-pages based on GitHubPagesForGAP"
+   git push --set-upstream origin gh-pages
+   ```
 
-LoadPackage("singular");
+That's it. You can now see your new package website under
+https://USERNAME.github.io/REPOSITORY/ (of course after
+adjusting USERNAME and REPOSITORY suitably).
 
 
-# specify the Singular executable (not needed if Singular is in the path)
+## Using an existing gh-pages branch
 
-sing_exec:= "/home/wdg/Singular/2-0-3/ix86-Linux/Singular";
+If you previously set up [GitHubPagesForGAP]() and thus already have a `gh-pages`
+branch, you may on occasion have need to make a fresh clone of your package
+repository, and then also would like to recreate the `gh-pages` directory.
 
+The easiest way to do this is to run the `setup-gh-pages` shell script
+provided in the [GitHubPagesForGAP]() from within a git clone of your
+package's GitHub repository.
 
-# let's define some Gap objects
+In case this does not work, or if you want to really know what's going
+on, you can also follow the manual instructions described after the fold.
 
-R:=PolynomialRing( Rationals, ["x", "y", "z"] : old );;
-gen:=GeneratorsOfLeftOperatorRingWithOne(R);;
-x:=gen[1];;y:=gen[2];;z:=gen[3];;
-pol1:=-3*x*z^3+x^3+x*y*z;;
-pol2:=-3*x^2*z^3+x^4+x^2*y*z-3*x*z^3+x^3+x*y*z;;
-pol3:=x*y+x*z+x+y+z;;
-I:=Ideal( R, [ pol1, pol2, pol3] );;
+------
 
+Users with a recent enough git version (recommended is >= 2.7)
+can do this using a "worktree", via the following commands:
 
-# set the basering in singular (this is done automatically by the other
-# functions when the arguments are rings or ideals).
+   ```sh
+   git branch gh-pages origin/gh-pages
+   git worktree add gh-pages gh-pages
+   ```
 
-SingularSetBaseRing( R );
+If you are using an older version of git, you can instead use a second clone
+of your repository instead:
 
+   ```sh
+   git clone -b gh-pages https://github.com/USERNAME/REPOSITORY gh-pages
+   ```
 
-# Let be "Singfunc" the name of a function of Singular, and GapList a list
-# of Gap objects. Then the function
-#
-# SingularInterface( "Singfunc", GapList, type_output );
-#
-# will convert the objects in the list GapList info Singular objects, will
-# apply Singfunc to them from within Singular, and will convert to output
-# back into a Gap objects.
-# The argument type_output must be one of "def",
-# "ideal", "int", "intmat", "intvec", "link", "list", "map", "matrix",
-# "module", "number", "poly", "proc", "qring", "resolution", "ring",
-# "string", "vector", and tells to the interface the type in Singular of
-# the output of Singfunc. In doubt you can use "def".
-# See in the documentation of Singular the chapter "4. Data types".
 
-SingularInterface( "jacob", [ pol1 ], "ideal" );
-SingularInterface( "dim", [ I ], "int" );
-SingularInterface( "std", [ I ], "ideal" );
+## Adjusting the content and layout
 
-# when the output is an ideal, use GeneratorsOfTwoSidedIdeal to get the
-# generators.
+[GitHubPagesForGAP]() tries to automatically provide good defaults for
+most packages. However, you can tweak everything about it:
 
+* To adjust the page layout, edit the files `stylesheets/styles.css`
+and `_layouts/default.html`.
 
-# this calculates the Groebner Basis
+* To adjust the content of the front page, edit `index.md` (resp.
+  for the content of the sidebar, edit `_layouts/default.html`
 
-GroebnerBasis( I );
+* You can also add additional pages, in various formats (HTML,
+Markdown, Textile, ...).
 
+For details, please consult the [Jekyll](http://jekyllrb.com/)
+manual.
 
-# sometimes we need only to know whether the Groebner Basis is trivial
-# (i.e. equal to the unit) or not.
 
-HasTrivialGroebnerBasis( I );
+## Testing the site locally
 
+If you would like to test your site on your own machine, without
+uploading it to GitHub (where it is visible to the public), you can do
+so by installing [Jekyll](http://jekyllrb.com/), the static web site
+generator used by GitHub to power GitHub Pages.
 
-# This loads (in Singular) the library general.lib
+Once you have installed Jekyll as described on its homepage, you can
+test the website locally as follows:
 
-SingularLibrary( "general.lib");
+1. Go to the `gh-pages` directory we created above.
 
+2. Run jekyll (this launches a tiny web server on your machine):
 
-# the gcd of polynomials (also multivariate ones)
+   ```
+   jekyll serve -w
+   ```
 
-GcdUsingSingular( pol1, pol2, pol3 );
+3. Visit the URL http://localhost:4000 in a web browser.
 
 
-# factorizations of polynomials (also multivariate ones)
+## Updating after you made a release
 
-FactorsUsingSingularNC( pol1 );
+Whenever you make a release of your package (and perhaps more often than
+that), you will want to update your website. The easiest way is to use
+the `release` script from the [ReleaseTools][], which performs all
+the necessary steps for you, except for the very last of actually
+publishing the package (and it can do even that for you, if you
+pass the `-p` option to it).
 
+However, you can also do it manually. The steps for doing it are quite
+similar to the above:
 
-# this checks also the output of Singular
+1. Go to the `gh-pages` directory we created above.
 
-FactorsUsingSingular( pol2 );
+2. Add in copies of your `PackageInfo.g`, `README` (or `README.md`) and manual:
 
+   ```
+   cp -f ../PackageInfo.g ../README* .
+   cp -f ../doc/*.{css,html,js,txt} doc/
+   ```
 
-# As i/o streams do consume system resources, and only a limited number
-# can be open at any time, it is wise to close Singular when it will be
-# not needed anymore.
+3. Now run the `update.g` GAP script.
 
-CloseSingular();
+4. Commit and push the work we have just done.
 
-# Singular will start again when one of the functions above is called, or
-# by StartSingular();
+   ```
+   git add PackageInfo.g README* doc/ _data/package.yml
+   git commit -m "Update web pages"
+   git push
+   ```
 
-# Not that the time used by Singular is not reported by the function 
-# Runtimes(); until the Singular session is terminated. The cpu time resp. 
-# the wall clock time used by a singular session can by get with:
+A few seconds after you have done this, your changes will be online
+under https://USERNAME.github.io/REPOSITORY/ .
 
-Int( SingularCommand( "", "timer" ) );
-Int( SingularCommand( "", "rtimer" ) );
-```
 
+## Updating to a newer version of GitHubPagesForGAP
 
-Greetings,
-Marco Costantini
+Normally you should not have to ever do this. However, if you really want to,
+you can attempt to update to the most recent version of [GitHubPagesForGAP]() via
+the following instructions. The difficulty of such an update depends on how
+much you tweaked the site after initially cloning [GitHubPagesForGAP]().
 
-------------------------------------------------------------------------------
+1. Go to the `gh-pages` directory we created above.
+   Make sure that there are no uncommitted changes, as they will be lost
+   when following these instructions.
 
-Addendum
+2. Make sure the `gh-gap` remote exists and has the correct URL. If in doubt,
+   just re-add it:
+   ```
+   git remote remove gh-gap
+   git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
+   ```
 
-** Reserved chars or strings:
+3. Attempt to merge the latest GitHubPagesForGAP.
+   ```
+   git pull gh-gap gh-pages
+   ```
 
-Don't use the following chars or strings with the interface:
+4. If this produced no errors and just worked, skip to the next step.
+   But it is quite likely that you will have conflicts in the file
+   `_data/package.yml`, or in your `README` or `PackageInfo.g` files.
+   These can usually be resolved by entering this:
+   ```
+   cp ../PackageInfo.g ../README* .
+   gap update.g
+   git add PackageInfo.g README* _data/package.yml
+   ```
+   If you are lucky, these were the only conflicts (check with `git status`).
+   If no merge conflicts remain, finish with this command:
+   ```
+   git commit -m "Merge gh-gap/gh-pages"
+   ```
+   If you still have merge conflicts, and don't know how to resolve them, or
+   get stuck some other way, you can abort the merge process and revert to the
+   original state by issuing this command:
+   ```
+   git merge --abort
+   ```
 
-@	marks the end of the Singular output
+5. You should be done now. Don't forget to push your changes if you want them
+   to become public.
 
-'	delimits the useful Singular output 
 
-$	the interface discards all the '$' sent to Singular
+## Packages using GitHubPagesForGAP
 
-GAP_...	all the names of the Singular variables defined by the interface 
-	begin with "GAP_": don't use these names for your variables
+The majority of packages listed on <https://gap-packages.github.io> use
+[GitHubPagesForGAP](). If you want some specific examples, here are some:
 
+* <https://gap-packages.github.io/anupq>
+* <https://gap-packages.github.io/cvec>
+* <https://gap-packages.github.io/genss>
+* <https://gap-packages.github.io/io>
+* <https://gap-packages.github.io/NormalizInterface>
+* <https://gap-packages.github.io/nq>
+* <https://gap-packages.github.io/orb>
+* <https://gap-packages.github.io/polenta>
+* <https://gap-packages.github.io/recog>
 
 
+## Contact
 
-** Type conversions:
+Please submit bug reports, suggestions for improvements and patches via
+the [issue tracker](https://github.com/gap-system/GitHubPagesForGAP/issues).
 
-```
-type    Gap -> Singular                 Singular -> Gap
-        * := sets basering              U := only on Unix or with Gap >=4.4.2
+You can also contact me directly via [email](max@quendi.de).
 
-def     (no sense)                      U (ask Singular for the type)
-ideal   *ParseGapIdealToSingIdeal       done
-int     ParseToSingInt                  Int
-intmat  ParseGapIntmatToSingIntmat      U done
-intvec  ParseGapIntvecToSingIntvec      done
-link                                    U (done)
-list    ParseGapListToSingList          U done
-map	(planned)
-matrix  done                            U done
-module	*ParseGapModuleToSingModule	(U) done
-number  ParseGapNumberToSingNumber      ParseSingNumberToGapNumber
-poly    ParseGapPolyToSingPoly          ParseSingPolyToGapPoly
-proc                                    U ParseSingProcToGapFunction
-qring
-resolution
-ring    *ParseGapRingToSingRing         (planned)
-string  done                            x->x;
-vector  ParseGapVectorToSingVector      (U) done
-```
+Copyright (c) 2013-2025 Max Horn
+
+[GitHubPagesForGAP]: https://github.com/gap-system/GitHubPagesForGAP
+[ReleaseTools]: https://github.com/gap-system/ReleaseTools
