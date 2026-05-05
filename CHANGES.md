@@ -1,5 +1,8 @@
 This file describes changes in the GAP package `singular`.
 
+- 2026.05.05
+  - Add `IsSingularExecutableAvailable` helper
+
 - 2026.04.09
   - janitorial changes
 
