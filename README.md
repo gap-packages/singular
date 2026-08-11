@@ -11,7 +11,7 @@ to the computer algebra system Singular <https://www.singular.uni-kl.de/>.
 The package has no maintainer at the moment. To make a version of the 
 Singular package working under GAP 4.5, in 2011 a bug in the interface was
 fixed by Paul Smith and a new package archive for the GAP 4.5 release was 
-prepared in 2012 by Alexander Konovalov. Currently we do not plan any 
+prepared in 2012 by Olexandr Konovalov. Currently we do not plan any 
 further development of this package. The rest of this file belongs to the 
 README of the package from its previous release on 2006/07/23.
 
