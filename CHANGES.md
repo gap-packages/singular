@@ -1,55 +1,61 @@
 This file describes changes in the GAP package `singular`.
 
-- 2026.05.05
-  - Add `IsSingularExecutableAvailable` helper
+## 2026.05.05 (2026-05-05)
 
-- 2026.04.09
-  - janitorial changes
+- Add `IsSingularExecutableAvailable` helper
 
-- 2025.08.26
-    - Add support for bigint, bigintvec, and bigintmat
-      (contributed by Jerry James)
+## 2026.04.09 (2026-04-09)
 
-- 2024.06.03
-  - Do not overwrite variables `sing_exec`, `sing_exec_options`,
-    `SingularTempDirectory` when the package gets loaded
+- janitorial changes
 
-- 2023.02.09
-  - Avoid errors 'fgets() failed with errno 5' when quitting GAP
-  - janitorial changes
+## 2025.08.26 (2025-08-26)
 
-- 2022.09.23
-  - janitorial changes
+- Add support for bigint, bigintvec, and bigintmat
+  (contributed by Jerry James)
 
-- 2020.12.18
-  - Fix broken reference in the manual to GAP Packages chapter
-  - janitorial changes
+## 2024.06.03 (2024-06-03)
 
-- 2019.10.01
+- Do not overwrite variables `sing_exec`, `sing_exec_options`,
+  `SingularTempDirectory` when the package gets loaded
 
-  - fix test suite to pass in GAP 4.11, as well as in older GAP versions
-  - janitorial changes
+## 2023.02.09 (2023-02-09)
 
-- 2019.02.22
+- Avoid errors 'fgets() failed with errno 5' when quitting GAP
+- janitorial changes
 
-  - clarify that license is GPL 2 or later
+## 2022.09.23 (2022-09-23)
 
-- 2018.09.10
+- janitorial changes
 
-  - migrate package to GitHub
-  - various janitorial changes
+## 2020.12.18 (2020-12-18)
 
-- 12.04.28
+- Fix broken reference in the manual to GAP Packages chapter
+- janitorial changes
 
-- 11.08.11
+## 2019.10.01 (2019-10-01)
 
-- 06.07.23
+- fix test suite to pass in GAP 4.11, as well as in older GAP versions
+- janitorial changes
 
-- 06.03.19
+## 2019.02.22 (2019-02-22)
 
-- 06.01.09
+- clarify that license is GPL 2 or later
 
-- 4.04.15
+## 2018.09.10 (2018-09-10)
 
-- 4.04.07
+- migrate package to GitHub
+- various janitorial changes
 
+## 12.04.28 (2012-04-28)
+
+## 11.08.11 (2011-08-11)
+
+## 06.07.23 (2006-07-23)
+
+## 06.03.19 (2006-03-19)
+
+## 06.01.09 (2006-01-09)
+
+## 4.04.15 (2004-04-15)
+
+## 4.04.07 (2004-04-07)
